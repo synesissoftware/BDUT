@@ -50,8 +50,8 @@
 #ifndef BDUT_DOCUMENTATION_SKIP_SECTION
 # define BDUT_VER_BDUT_H_BDUT_MAJOR     2
 # define BDUT_VER_BDUT_H_BDUT_MINOR     0
-# define BDUT_VER_BDUT_H_BDUT_REVISION  1
-# define BDUT_VER_BDUT_H_BDUT_EDIT      5
+# define BDUT_VER_BDUT_H_BDUT_REVISION  2
+# define BDUT_VER_BDUT_H_BDUT_EDIT      6
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -77,7 +77,7 @@
 #define BDUT_VER_MAJOR                                      0
 #define BDUT_VER_MINOR                                      2
 #define BDUT_VER_PATCH                                      0
-#define BDUT_VER                                            0x00020041
+#define BDUT_VER                                            0x00020042
 
 /* /////////////////////////////////////////////////////////////////////////
  * includes
@@ -326,9 +326,6 @@ BDUT_report_assertion_failure_and_abort_(
     ,   line
     ,   function
     ,   message
-    );
-
-    fprintf(stderr, "%s:%d:%s: calling `exit(1)`\n", __FILE__, __LINE__, __FUNCTION__
     );
 
     exit(1);
