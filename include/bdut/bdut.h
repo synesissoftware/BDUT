@@ -4,7 +4,9 @@
  * Purpose: Brain-Dead Unit-Testing
  *
  * Created: 18th July 2020
- * Updated: 11th January 2024
+ * Updated: 23rd January 2024
+ *
+ * Home:    http://github.com/synesissoftware/BDUT
  *
  * Copyright (c) 2020-2024, Matthew Wilson and Synesis Information Systems
  * All rights reserved.
@@ -77,7 +79,7 @@
 #define BDUT_VER_MAJOR                                      0
 #define BDUT_VER_MINOR                                      2
 #define BDUT_VER_PATCH                                      0
-#define BDUT_VER                                            0x00020042
+#define BDUT_VER                                            0x00020043
 
 /* /////////////////////////////////////////////////////////////////////////
  * includes

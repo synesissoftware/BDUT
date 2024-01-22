@@ -7,6 +7,8 @@
 - [Table of Contents](#table-of-contents)
 - [Introduction](#introduction)
 - [Installation](#installation)
+  - [CMake installation](#cmake-installation)
+  - [Manual installation](#manual-installation)
 - [Examples](#examples)
 - [Project Information](#project-information)
   - [Where to get help](#where-to-get-help)
@@ -23,7 +25,14 @@
 
 ## Installation
 
-T.B.C.
+### CMake installation
+
+Currently, **CMake** support is not yet provided.
+
+
+### Manual installation
+
+Since **BDUT** is intended to be bundled into other open-source libraries, the simplest way to use it is to add a directory **bdut** under your project's **include** directory, into which you can then simply copy **bdut.h**.
 
 
 ## Examples
@@ -55,9 +64,12 @@ Projects in which **BDUT** is used for testing include:
 * [**b64**](https://github.com/synesissoftware/b64)
 * [**cstring**](https://github.com/synesissoftware/cstring)
 * [**shwild**](https://github.com/synesissoftware/shwild)
- 
+
 
 ### License
 
 **BDUT** is released under the 3-clause BSD license. See [LICENSE](./LICENSE) for details.
+
+
+<!-- ########################### end of file ########################### -->
 
