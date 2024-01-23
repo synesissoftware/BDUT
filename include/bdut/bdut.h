@@ -132,6 +132,9 @@
  * @param actual The actual value
  */
 
+#define BDUT_ASSERT_EQ(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), ==, "actual value of `" #actual "` not equal-to expected value " #expected)
+#define BDUT_ASSERT_NE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), !=, "actual value of `" #actual "` not unequal-to expected value " #expected)
+
 /** @def BDUT_ASSERT_LT(expected, actual)
  *
  * @brief Asserts the the \c actual value is less than the \c expected value
@@ -140,9 +143,7 @@
  * @param actual The actual value
  */
 
-#define BDUT_ASSERT_EQ(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), ==, "actual value of `" #actual "` not equal to expected value " #expected)
-#define BDUT_ASSERT_NE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), !=, "actual value of `" #actual "` not unequal to expected value " #expected)
-#define BDUT_ASSERT_LT(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), <, "actual value of `" #actual "` not less-than to expected value " #expected)
+#define BDUT_ASSERT_LT(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), <, "actual value of `" #actual "` not less-than expected value " #expected)
 
 /** @def BDUT_ASSERT_STRING_CONTAINS(needle, haystack)
  *
