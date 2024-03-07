@@ -3,7 +3,6 @@
 
 /.git-old/
 /.vs/
-/.vscode/
 
 /_build/
 /_internal/
@@ -13,6 +12,7 @@
 /lib/
 
 /include/b64/
+/include/cstring/
 /include/recls/
 /include/shwild/
 /include/xcontract/
@@ -20,6 +20,7 @@
 /include/xtests/
 
 /src/b64/
+/src/cstring/
 /src/recls/
 /src/shwild/
 /src/xcontract/
