@@ -4,7 +4,7 @@
  * Purpose: Brain-Dead Unit-Testing
  *
  * Created: 18th July 2020
- * Updated: 7th March 2024
+ * Updated: 10th July 2024
  *
  * Home:    http://github.com/synesissoftware/BDUT
  *
@@ -45,6 +45,7 @@
 #ifndef BDUT_INCL_BDUT_H_BDUT
 #define BDUT_INCL_BDUT_H_BDUT
 
+
 /* /////////////////////////////////////////////////////////////////////////
  * version information
  */
@@ -53,8 +54,9 @@
 # define BDUT_VER_BDUT_H_BDUT_MAJOR     2
 # define BDUT_VER_BDUT_H_BDUT_MINOR     0
 # define BDUT_VER_BDUT_H_BDUT_REVISION  2
-# define BDUT_VER_BDUT_H_BDUT_EDIT      7
+# define BDUT_VER_BDUT_H_BDUT_EDIT      8
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
+
 
 /* /////////////////////////////////////////////////////////////////////////
  * version
@@ -79,7 +81,8 @@
 #define BDUT_VER_MAJOR                                      0
 #define BDUT_VER_MINOR                                      2
 #define BDUT_VER_PATCH                                      0
-#define BDUT_VER                                            0x00020045
+#define BDUT_VER                                            0x00020046
+
 
 /* /////////////////////////////////////////////////////////////////////////
  * includes
@@ -382,7 +385,7 @@ BDUT_report_string_contains_failure_and_abort_(
 # if defined(__cplusplus) && \
      __cplusplus >= 201402L
 
-    using std::sprintf;
+    using std::snprintf;
     using std::strlen;
 # endif
 
@@ -505,7 +508,6 @@ BDUT_reference_all_impl_functions_(void)
     ((void)&BDUT_report_string_contains_failure_and_abort_);
 }
 # endif
-
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 
 

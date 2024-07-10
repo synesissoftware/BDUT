@@ -3,17 +3,24 @@
 ScriptPath=$0
 Dir=$(cd $(dirname "$ScriptPath"); pwd)
 Basename=$(basename "$ScriptPath")
-CMakePath=$Dir/_build
+CMakeDir=$Dir/_build
+
+RunMake=1
 
 
 # ##########################################################
 # command-line handling
 
 while [[ $# -gt 0 ]]; do
-    case $1 in
-        --help)
 
-            cat << EOF
+  case $1 in
+    -M|--no-make)
+
+      RunMake=0
+      ;;
+    --help)
+
+      cat << EOF
 BDUT, is a very simple - simplistic, in fact - small, header-only, standalone library for C and C++. Its intent is to be bundled into other projects for which it is not desired to couple to a more sophisticated library.
 Copyright (c) 2020-2024, Matthew Wilson and Synesis Information Systems
 Runs all (matching) unit-test programs
@@ -24,6 +31,10 @@ Flags/options:
 
     behaviour:
 
+    -M
+    --no-make
+        does not execute CMake and make before running tests
+
 
     standard flags:
 
@@ -32,45 +43,64 @@ Flags/options:
 
 EOF
 
-            exit 0
-            ;;
-        *)
+      exit 0
+      ;;
+    *)
 
-            >&2 echo "$ScriptPath: unrecognised argument '$1'; use --help for usage"
+      >&2 echo "$ScriptPath: unrecognised argument '$1'; use --help for usage"
 
-            exit 1
-            ;;
-    esac
+      exit 1
+      ;;
+  esac
 
-    shift
+  shift
 done
 
 
 # ##########################################################
 # main()
 
-mkdir -p $CMakePath || exit 1
-
-cd $CMakePath
-
-echo "Executing make and then running all test programs"
-
 status=0
 
-if make; then
+if [ $RunMake -ne 0 ]; then
 
-    for f in $(find $Dir -type f -perm +111 '(' -name 'test_*' -o -name 'test.*' ')')
-    do
+  echo "Executing make and then running all test programs"
 
-        echo
-        echo "executing $f:"
+  mkdir -p $CMakeDir || exit 1
 
-        # NOTE: we do not break on fail, because, this being a unit-testing library, the scratch-tests actually fail
-        $f
-    done
-else
+  cd $CMakeDir
+
+  if make; then
+
+    :
+  else
 
     status=$?
+  fi
+else
+
+  if [ ! -d "$CMakeDir" ] || [ ! -f "$CMakeDir/CMakeCache.txt" ] || [ ! -d "$CMakeDir/CMakeFiles" ]; then
+
+    >&2 echo "$ScriptPath: cannot run in '--no-make' mode without a previous successful build step"
+  else
+
+    echo "Running all test programs"
+  fi
+
+  cd $CMakeDir
+fi
+
+if [ $status -eq 0 ]; then
+
+  for f in $(find $Dir -type f '(' -name 'test_unit*' -o -name 'test.unit.*' -o -name 'test_component*' -o -name 'test.component.*' ')' -exec test -x {} \; -print)
+  do
+
+    echo
+    echo "executing $f:"
+
+    # NOTE: we do not break on fail, because, this being a unit-testing library, some tests actually fail intentionally
+    $f
+  done
 fi
 
 cd ->/dev/null

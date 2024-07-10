@@ -1,6 +1,6 @@
 
 add_executable(test.scratch.BDUT_ASSERT_STRING_CONTAINS
-    main.c
+	main.c
 )
 
 link_directories(${CMAKE_SOURCE_DIR}/projects/core)

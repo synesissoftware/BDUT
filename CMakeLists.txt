@@ -5,7 +5,7 @@
 # Purpose:  Top-level CMake lists file for BDUT
 #
 # Created:  7th March 2024
-# Updated:  7th March 2024
+# Updated:  10th July 2024
 #
 # ######################################################################## #
 
@@ -19,7 +19,7 @@ cmake_minimum_required(VERSION 3.20 FATAL_ERROR)
 file(TO_CMAKE_PATH "${CMAKE_CURRENT_BINARY_DIR}/CMakeLists.txt" LOC_PATH)
 if(EXISTS "${LOC_PATH}")
 
-    message(FATAL_ERROR "You cannot build in a source directory (or any directory with a CMakeLists.txt file). Please make a build subdirectory. Feel free to remove CMakeCache.txt and CMakeFiles.")
+	message(FATAL_ERROR "You cannot build in a source directory (or any directory with a CMakeLists.txt file). Please make a build subdirectory. Feel free to remove CMakeCache.txt and CMakeFiles.")
 endif()
 
 # directory for CMake specific extensions and source files.
@@ -32,9 +32,9 @@ set(CMAKE_INCLUDE_DIRECTORIES_BEFORE ON)
 # project
 
 project(BDUT
-    DESCRIPTION "BDUT, is a very simple - simplistic, in fact - small, header-only, standalone library for C and C++. Its intent is to be bundled into other projects for which it is not desired to couple to a more sophisticated library."
-    HOMEPAGE_URL "https://github.com/synesissoftware/BDUT"
-    LANGUAGES C CXX
+	DESCRIPTION "BDUT, is a very simple - simplistic, in fact - small, header-only, standalone library for C and C++. Its intent is to be bundled into other projects for which it is not desired to couple to a more sophisticated library."
+	HOMEPAGE_URL "https://github.com/synesissoftware/BDUT"
+	LANGUAGES C CXX
 )
 
 string(TOLOWER ${PROJECT_NAME} PROJECT_NAME_LOWER)
@@ -91,9 +91,9 @@ include(CTest)
 
 if(BUILD_TESTING)
 
-    message("-- enabled building of tests ...")
+	message("-- enabled building of tests ...")
 
-    add_subdirectory(test)
+	add_subdirectory(test)
 endif()
 
 
@@ -102,10 +102,10 @@ endif()
 
 
 install(
-    DIRECTORY ${CMAKE_SOURCE_DIR}/include/bdut/
-    DESTINATION include/bdut/
-    FILES_MATCHING
-    PATTERN "*.h*"
+	DIRECTORY ${CMAKE_SOURCE_DIR}/include/bdut/
+	DESTINATION include/bdut/
+	FILES_MATCHING
+	PATTERN "*.h*"
 )
 
 
@@ -117,21 +117,21 @@ include(CMakePackageConfigHelpers)
 set(EXPORT_NAME ${PROJECT_NAME_LOWER})
 
 configure_package_config_file(
-    ${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EXPORT_NAME}-config.cmake.in
-    ${CMAKE_CURRENT_BINARY_DIR}/cmake/${EXPORT_NAME}-config.cmake
-    INSTALL_DESTINATION ${LIB_INSTALL_DIR}/${EXPORT_NAME}/cmake
+	${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EXPORT_NAME}-config.cmake.in
+	${CMAKE_CURRENT_BINARY_DIR}/cmake/${EXPORT_NAME}-config.cmake
+	INSTALL_DESTINATION ${LIB_INSTALL_DIR}/${EXPORT_NAME}/cmake
 )
 
 write_basic_package_version_file(
-    ${CMAKE_CURRENT_BINARY_DIR}/cmake/${EXPORT_NAME}-config-version.cmake
-    VERSION ${PROJECT_VERSION}
-    COMPATIBILITY AnyNewerVersion
+	${CMAKE_CURRENT_BINARY_DIR}/cmake/${EXPORT_NAME}-config-version.cmake
+	VERSION ${PROJECT_VERSION}
+	COMPATIBILITY AnyNewerVersion
 )
 
 install( FILES
-    "${CMAKE_CURRENT_BINARY_DIR}/cmake/${EXPORT_NAME}-config.cmake"
-    "${CMAKE_CURRENT_BINARY_DIR}/cmake/${EXPORT_NAME}-config-version.cmake"
-    DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${EXPORT_NAME}
+	"${CMAKE_CURRENT_BINARY_DIR}/cmake/${EXPORT_NAME}-config.cmake"
+	"${CMAKE_CURRENT_BINARY_DIR}/cmake/${EXPORT_NAME}-config-version.cmake"
+	DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${EXPORT_NAME}
 )
 
 
