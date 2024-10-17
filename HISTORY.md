@@ -1,6 +1,14 @@
 #  **BDUT** History
 
 
+## 18th October 2024 - 0.3.0 (alpha1)
+
+ * added coloured output (on failed messages);
+ * Windows compatibility;
+ * added two examples (one C, one C++);
+ * minor fixes to failure messages;
+
+
 ## 18th October 2024 - 0.2.1
 
 * compiler compatibility around `__FUNCTION__` / `__func__`;
