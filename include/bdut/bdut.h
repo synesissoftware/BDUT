@@ -103,6 +103,7 @@
 
 #ifdef _WIN32
 
+# include <io.h>
 #else
 
 # include <unistd.h>
@@ -327,9 +328,7 @@ BDUT_isatty_(
 {
 #ifdef _WIN32
 
-    ((void)&stm);
-
-    return 0;
+    return _isatty(_fileno(stm));
 #else
 
     return isatty(fileno(stm));
