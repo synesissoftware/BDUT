@@ -53,8 +53,8 @@
 #ifndef BDUT_DOCUMENTATION_SKIP_SECTION
 # define BDUT_VER_BDUT_H_BDUT_MAJOR     2
 # define BDUT_VER_BDUT_H_BDUT_MINOR     0
-# define BDUT_VER_BDUT_H_BDUT_REVISION  3
-# define BDUT_VER_BDUT_H_BDUT_EDIT      9
+# define BDUT_VER_BDUT_H_BDUT_REVISION  4
+# define BDUT_VER_BDUT_H_BDUT_EDIT      10
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 
 
@@ -286,7 +286,7 @@
       !defined(__clang__) && \
       1
 
-#   define BDUT_INLINE_                                     inline
+#   define BDUT_INLINE_                                     static inline
 # else
 
 #   define BDUT_INLINE_                                     static
