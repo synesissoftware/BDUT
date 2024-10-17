@@ -52,9 +52,9 @@
 
 #ifndef BDUT_DOCUMENTATION_SKIP_SECTION
 # define BDUT_VER_BDUT_H_BDUT_MAJOR     2
-# define BDUT_VER_BDUT_H_BDUT_MINOR     0
-# define BDUT_VER_BDUT_H_BDUT_REVISION  5
-# define BDUT_VER_BDUT_H_BDUT_EDIT      11
+# define BDUT_VER_BDUT_H_BDUT_MINOR     1
+# define BDUT_VER_BDUT_H_BDUT_REVISION  0
+# define BDUT_VER_BDUT_H_BDUT_EDIT      12
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 
 
@@ -79,9 +79,9 @@
  */
 
 #define BDUT_VER_MAJOR                                      0
-#define BDUT_VER_MINOR                                      2
-#define BDUT_VER_PATCH                                      2
-#define BDUT_VER                                            0x000202ff
+#define BDUT_VER_MINOR                                      3
+#define BDUT_VER_PATCH                                      0
+#define BDUT_VER                                            0x00030041
 
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -99,6 +99,13 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+#endif
+
+#ifdef _WIN32
+
+#else
+
+# include <unistd.h>
 #endif
 
 
@@ -312,6 +319,23 @@ void
 BDUT_reference_all_impl_functions_(void);
 # endif
 
+BDUT_INLINE_
+int
+BDUT_isatty_(
+    FILE* stm
+)
+{
+#ifdef _WIN32
+
+    ((void)&stm);
+
+    return 0;
+#else
+
+    return isatty(fileno(stm));
+#endif
+}
+
 
 /** @brief Determines whether \c needle is found within \c haystack
  *
@@ -380,6 +404,15 @@ BDUT_report_assertion_failure_and_abort_(
     ((void)&BDUT_reference_all_impl_functions_);
 # endif
 
+    char const* clr_pre = "";
+    char const* clr_post = "";
+
+    if (BDUT_isatty_(stdout))
+    {
+        clr_pre = "\x1B[1;31m";
+        clr_post = "\033[0m";
+    }
+
     ((void)&expr);
 
     if (NULL == function ||
@@ -387,9 +420,11 @@ BDUT_report_assertion_failure_and_abort_(
     {
         fprintf(
             stderr
-        ,   "ASSERTION FAILURE:\n\n%s:%d: assertion failed: %s\n"
+        ,   "ASSERTION FAILURE:\n\n%s:%d: %sassertion failed%s: %s\n"
         ,   file
         ,   line
+        ,   clr_pre
+        ,   clr_post
         ,   message
         );
     }
@@ -397,10 +432,12 @@ BDUT_report_assertion_failure_and_abort_(
     {
         fprintf(
             stderr
-        ,   "ASSERTION FAILURE:\n\n%s:%d:%s: assertion failed: %s\n"
+        ,   "ASSERTION FAILURE:\n\n%s:%d:%s: %sassertion failed%s: %s\n"
         ,   file
         ,   line
         ,   function
+        ,   clr_pre
+        ,   clr_post
         ,   message
         );
     }
