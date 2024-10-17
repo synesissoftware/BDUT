@@ -88,6 +88,8 @@ include(BuildType)
 # ################################################
 # dependencies and options
 
+option(BUILD_EXAMPLES "Build examples" ON)
+
 
 # ######################################
 # dependencies
@@ -117,6 +119,17 @@ include(GNUInstallDirs)
 
 # ################################################
 # examples
+
+
+if(BUILD_EXAMPLES)
+
+	message("-- enabled building of examples ...")
+
+	add_subdirectory(examples)
+else(BUILD_EXAMPLES)
+
+	message("-- disabled building of examples - define BUILD_EXAMPLES to enable")
+endif(BUILD_EXAMPLES)
 
 
 # ################################################
@@ -162,7 +175,7 @@ write_basic_package_version_file(
 	COMPATIBILITY AnyNewerVersion
 )
 
-install( FILES
+install(FILES
 	"${CMAKE_CURRENT_BINARY_DIR}/cmake/${EXPORT_NAME}-config.cmake"
 	"${CMAKE_CURRENT_BINARY_DIR}/cmake/${EXPORT_NAME}-config-version.cmake"
 	DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${EXPORT_NAME}
