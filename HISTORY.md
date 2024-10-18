@@ -1,6 +1,14 @@
 #  **BDUT** History
 
 
+## 18th October 2024 - 0.3.0 (alpha2)
+
+ * CMake installation fix;
+ * GCC fix;
+ * Added example programs;
+ * README.md example(s);
+
+
 ## 18th October 2024 - 0.3.0 (alpha1)
 
  * added coloured output (on failed messages);

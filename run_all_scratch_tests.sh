@@ -105,8 +105,6 @@ if [ $status -eq 0 ]; then
     echo "Running all scratch test programs"
   fi
 
-  echo "CMakeDir=$CMakeDir"
-
   for f in $(find $CMakeDir -type f '(' -name 'test_scratch*' -o -name 'test.scratch.*' ')' -exec test -x {} \; -print)
   do
 

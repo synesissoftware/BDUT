@@ -53,8 +53,8 @@
 #ifndef BDUT_DOCUMENTATION_SKIP_SECTION
 # define BDUT_VER_BDUT_H_BDUT_MAJOR     2
 # define BDUT_VER_BDUT_H_BDUT_MINOR     1
-# define BDUT_VER_BDUT_H_BDUT_REVISION  0
-# define BDUT_VER_BDUT_H_BDUT_EDIT      12
+# define BDUT_VER_BDUT_H_BDUT_REVISION  1
+# define BDUT_VER_BDUT_H_BDUT_EDIT      13
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 
 
@@ -81,7 +81,7 @@
 #define BDUT_VER_MAJOR                                      0
 #define BDUT_VER_MINOR                                      3
 #define BDUT_VER_PATCH                                      0
-#define BDUT_VER                                            0x00030041
+#define BDUT_VER                                            0x00030042
 
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -249,8 +249,8 @@
 #  define BDUT_FUNCTION_                                    __FUNCTION__
 # elif defined(__DMC__) && __DMC__ >= 0x850
 #  define BDUT_FUNCTION_                                    __FUNCTION__
-# elif defined(__GNUC__) && __GNUC__ >= 3
-#  define BDUT_FUNCTION_                                    __FUNCTION__
+# elif defined(__GNUC__)
+#  define BDUT_FUNCTION_                                    __func__
 # elif defined(__INTEL_COMPILER) && __INTEL_COMPILER >= 700
 #  define BDUT_FUNCTION_                                    __FUNCTION__
 # elif defined(__MWERKS__) && (__MWERKS__ & 0xFF00) >= 0x3000
