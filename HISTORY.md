@@ -1,6 +1,11 @@
 #  **BDUT** History
 
 
+## 17th November 2024 - 0.3.1
+
+* fixed warning (VC++);
+
+
 ## 18th October 2024 - 0.3.0 (alpha2)
 
  * CMake installation fix;
