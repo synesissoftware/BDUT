@@ -4,7 +4,7 @@
  * Purpose: Brain-Dead Unit-Testing
  *
  * Created: 18th July 2020
- * Updated: 18th October 2024
+ * Updated: 18th November 2024
  *
  * Home:    http://github.com/synesissoftware/BDUT
  *
@@ -53,8 +53,8 @@
 #ifndef BDUT_DOCUMENTATION_SKIP_SECTION
 # define BDUT_VER_BDUT_H_BDUT_MAJOR     2
 # define BDUT_VER_BDUT_H_BDUT_MINOR     1
-# define BDUT_VER_BDUT_H_BDUT_REVISION  1
-# define BDUT_VER_BDUT_H_BDUT_EDIT      13
+# define BDUT_VER_BDUT_H_BDUT_REVISION  2
+# define BDUT_VER_BDUT_H_BDUT_EDIT      14
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 
 
@@ -80,8 +80,8 @@
 
 #define BDUT_VER_MAJOR                                      0
 #define BDUT_VER_MINOR                                      3
-#define BDUT_VER_PATCH                                      0
-#define BDUT_VER                                            0x00030042
+#define BDUT_VER_PATCH                                      1
+#define BDUT_VER                                            0x000301ff
 
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -91,11 +91,13 @@
 #if defined(__cplusplus) && \
     __cplusplus >= 201402L
 
+# include <cstddef>
 # include <cstdio>
 # include <cstdlib>
 # include <cstring>
 #else
 
+# include <stddef.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
@@ -466,6 +468,7 @@ BDUT_report_string_contains_failure_and_abort_(
 # if defined(__cplusplus) && \
      __cplusplus >= 201402L
 
+    using std::size_t;
     using std::snprintf;
     using std::strlen;
 # endif
@@ -480,10 +483,8 @@ BDUT_report_string_contains_failure_and_abort_(
     }
 
     {
-        /* NOTE: all lengths are `int` because that's required by `"%.*s"` and thus save on casting */
-
-        int const   needle_length   =   (NULL == needle) ? 0 : strlen(needle);
-        int const   haystack_length =   (NULL == haystack) ? 0 : strlen(haystack);
+        size_t const     needle_length   =   (NULL == needle) ? 0 : strlen(needle);
+        size_t const     haystack_length =   (NULL == haystack) ? 0 : strlen(haystack);
 
         /* build a message, ensuring it cannot overflow the fixed stack buffer */
 
@@ -493,6 +494,8 @@ BDUT_report_string_contains_failure_and_abort_(
 
         int const   cch_fmt     = BDUT_NUM_ELEMENTS_(fmt) - 1;
         int const   cch_message = BDUT_NUM_ELEMENTS_(message);
+
+        /* NOTE: all lengths are `int` because that's required by `"%.*s"` and thus save on casting */
 
         int         width_needle        =   BDUT_STATIC_CAST_(int, needle_length);
         int         width_haystack      =   BDUT_STATIC_CAST_(int, haystack_length);
