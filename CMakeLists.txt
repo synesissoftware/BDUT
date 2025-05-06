@@ -67,32 +67,108 @@ set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS ON)
 
+if(MSVC)
+
+	if(MSVC_VERSION LESS 1930)
+
+		set(CMAKE_C_STANDARD 90)
+		set(CMAKE_CXX_STANDARD 98)
+	endif()
+
+	if(MSVC_USE_MT)
+
+		set(CMAKE_MSVC_RUNTIME_LIBRARY "MultiThreaded$<$<CONFIG:Debug>:Debug>")
+	endif(MSVC_USE_MT)
+else(MSVC)
+
+	if(MSVC_USE_MT)
+
+		# this here just to absorb warning about not using `MSVC_USE_MT` (to
+		# enable **prepare_cmake.sh** to be simple)
+	endif(MSVC_USE_MT)
+endif(MSVC)
+
 
 # ##########################################################
-# install
+# dependencies, includes, options
 
-# provides install directory variables as defined by the GNU Coding Standards.
+# ################################################
+# includes - 1
+
+include(BuildType)
+include(LanguageFullVersion)
+
+
+# ################################################
+# dependencies, features, and options
+
+# ######################################
+# options
+
+option(BUILD_EXAMPLES "Build examples" OFF)
+
+
+# ######################################
+# features
+
+
+# ######################################
+# dependencies
+
+
+
+
+
+# ################################################
+# includes - 2
+
+include(CMakePackageConfigHelpers)
+if(BUILD_TESTING)
+
+	include(CTest)
+endif(BUILD_TESTING)
 include(GNUInstallDirs)
 
 
 # ##########################################################
-# build
+# targets
 
-# load/default `CMAKE_BUILD_TYPE`
-include(BuildType)
+# ################################################
+# custom definitions
 
 
-# ##########################################################
-# test
+# ################################################
+# main libraries
 
-include(CTest)
+
+# ################################################
+# examples
+
+
+# ################################################
+# tests
 
 if(BUILD_TESTING)
 
 	message("-- enabled building of tests ...")
 
 	add_subdirectory(test)
-endif()
+else(BUILD_TESTING)
+
+	message("-- disabled building of tests - define BUILD_TESTING to enable")
+endif(BUILD_TESTING)
+
+
+# ##########################################################
+# build
+
+
+add_library(BDUT INTERFACE)
+
+target_include_directories(BDUT INTERFACE
+	$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+	$<INSTALL_INTERFACE:include>
+)
 
 
 # ##########################################################
@@ -117,7 +193,7 @@ set(EXPORT_NAME ${PROJECT_NAME_LOWER})
 configure_package_config_file(
 	${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EXPORT_NAME}-config.cmake.in
 	${CMAKE_CURRENT_BINARY_DIR}/cmake/${EXPORT_NAME}-config.cmake
-	INSTALL_DESTINATION ${LIB_INSTALL_DIR}/${EXPORT_NAME}/cmake
+	INSTALL_DESTINATION ${CMAKE_INSTALL_LIBDIR}/${EXPORT_NAME}/cmake
 )
 
 write_basic_package_version_file(

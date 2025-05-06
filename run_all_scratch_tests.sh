@@ -9,7 +9,6 @@ MakeCmd=${SIS_CMAKE_MAKE_COMMAND:-${SIS_CMAKE_COMMAND:-$DefaultMakeCmd}}
 
 ListOnly=0
 RunMake=1
-Verbosity=${XTESTS_VERBOSITY:-${TEST_VERBOSITY:-3}}
 
 
 # ##########################################################
@@ -31,7 +30,7 @@ while [[ $# -gt 0 ]]; do
       cat << EOF
 BDUT, is a very simple - simplistic, in fact - small, header-only, standalone library for C and C++. Its intent is to be bundled into other projects for which it is not desired to couple to a more sophisticated library.
 Copyright (c) 2020-2024, Matthew Wilson and Synesis Information Systems
-Runs all (matching) unit-test programs
+Runs all (matching) scratch-test programs
 
 $ScriptPath [ ... flags/options ... ]
 
@@ -46,9 +45,6 @@ Flags/options:
     -M
     --no-make
         does not execute CMake and make before running tests
-
-    --verbosity <verbosity>
-        specifies an explicit verbosity for the unit-test(s)
 
 
     standard flags:
@@ -81,7 +77,7 @@ if [ $RunMake -ne 0 ]; then
 
   if [ $ListOnly -eq 0 ]; then
 
-    echo "Executing build (via command \`$MakeCmd\`) and then running all component and unit test programs"
+    echo "Executing build (via command \`$MakeCmd\`) and then running all scratch test programs"
 
     mkdir -p $CMakeDir || exit 1
 
@@ -104,13 +100,13 @@ if [ $status -eq 0 ]; then
 
   if [ $ListOnly -ne 0 ]; then
 
-    echo "Listing all component and unit test programs"
+    echo "Listing all scratch (and performance) test programs"
   else
 
-    echo "Running all component and unit test programs"
+    echo "Running all scratch (and performance) test programs"
   fi
 
-  for f in $(find $CMakeDir -type f '(' -name 'test_unit*' -o -name 'test.unit.*' -o -name 'test_component*' -o -name 'test.component.*' ')' -exec test -x {} \; -print)
+  for f in $(find $CMakeDir -type f '(' -name 'test_scratch*' -o -name 'test.scratch.*' -o -name 'test_performance*' -o -name 'test.performance.*' ')' -exec test -x {} \; -print)
   do
 
     if [ $ListOnly -ne 0 ]; then
@@ -120,16 +116,10 @@ if [ $status -eq 0 ]; then
       continue
     fi
 
-    if [ $Verbosity -ge 3 ]; then
+    echo
+    echo "executing $f:"
 
-      echo
-    fi
-    if [ $Verbosity -ge 2 ]; then
-
-      echo "executing $f:"
-    fi
-
-    # NOTE: we do not break on fail, because, this being a unit-testing library, some tests actually fail intentionally
+    # NOTE: we do not break on fail, because, this being a unit-testing library, the scratch-tests actually fail
     $f
   done
 fi

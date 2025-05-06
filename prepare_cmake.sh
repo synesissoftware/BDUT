@@ -8,12 +8,14 @@ CMakeDir=${SIS_CMAKE_BUILD_DIR:-$Dir/_build}
 MakeCmd=${SIS_CMAKE_MAKE_COMMAND:-${SIS_CMAKE_COMMAND:-$DefaultMakeCmd}}
 
 
-CMakeExamplesDisabled=0
-CMakeTestingDisabled=0
-CMakeVerboseMakefile=0
 Configuration=Release
+ExamplesDisabled=0
+MSVC_MT=0
+MinGW=0
 RunMake=0
 STLSoftDirGiven=
+TestingDisabled=0
+VerboseMakefile=0
 
 
 # ##########################################################
@@ -37,6 +39,10 @@ while [[ $# -gt 0 ]]; do
     --disable-testing|-T)
 
       TestingDisabled=1
+      ;;
+    --mingw)
+
+      MinGW=1
       ;;
     --run-make|-m)
 
@@ -75,6 +81,9 @@ Flags/options:
         necessary, for example, when installing on a system that does not
         (yet) have xTests - which itself depends on STLSOFT - installed
 
+    --mingw
+        uses explicitly the "MinGW Makefiles" generator
+
     -m
     --run-make
         executes make after a successful running of CMake
@@ -108,20 +117,33 @@ mkdir -p $CMakeDir || exit 1
 
 cd $CMakeDir
 
-echo "Executing CMake"
+echo "Executing CMake (in ${CMakeDir})"
 
-if [ $CMakeExamplesDisabled -eq 0 ]; then CMakeBuildExamplesFlag="ON" ; else CMakeBuildExamplesFlag="OFF" ; fi
+if [ $ExamplesDisabled -eq 0 ]; then CMakeBuildExamplesFlag="ON" ; else CMakeBuildExamplesFlag="OFF" ; fi
+if [ $TestingDisabled -eq 0 ]; then CMakeBuildTestingFlag="ON" ; else CMakeBuildTestingFlag="OFF" ; fi
+if [ $VerboseMakefile -eq 0 ]; then CMakeVerboseMakefileFlag="OFF" ; else CMakeVerboseMakefileFlag="ON" ; fi
 
-if [ $CMakeTestingDisabled -eq 0 ]; then CMakeBuildTestingFlag="ON" ; else CMakeBuildTestingFlag="OFF" ; fi
+if [ $MinGW -ne 0 ]; then
 
-if [ $CMakeVerboseMakefile -eq 0 ]; then CMakeVerboseMakefileFlag="OFF" ; else CMakeVerboseMakefileFlag="ON" ; fi
+  cmake \
+    -DBUILD_EXAMPLES:BOOL=$CMakeBuildExamplesFlag \
+    -DBUILD_TESTING:BOOL=$CMakeBuildTestingFlag \
+    -DCMAKE_BUILD_TYPE=$Configuration \
+    -G "MinGW Makefiles" \
+    -S $Dir \
+    -B $CMakeDir \
+    || (cd ->/dev/null ; exit 1)
+else
 
-cmake \
-  -DBUILD_EXAMPLES:BOOL=$CMakeBuildExamplesFlag \
-  -DBUILD_TESTING:BOOL=$CMakeBuildTestingFlag \
-  -DCMAKE_BUILD_TYPE=$Configuration \
-  -DCMAKE_VERBOSE_MAKEFILE:BOOL=$CMakeVerboseMakefileFlag \
-  .. || (cd ->/dev/null ; exit 1)
+  cmake \
+    -DBUILD_EXAMPLES:BOOL=$CMakeBuildExamplesFlag \
+    -DBUILD_TESTING:BOOL=$CMakeBuildTestingFlag \
+    -DCMAKE_BUILD_TYPE=$Configuration \
+    -DCMAKE_VERBOSE_MAKEFILE:BOOL=$CMakeVerboseMakefileFlag \
+    -S $Dir \
+    -B $CMakeDir \
+    || (cd ->/dev/null ; exit 1)
+fi
 
 status=0
 
