@@ -97,6 +97,7 @@ endif(MSVC)
 
 include(BuildType)
 include(LanguageFullVersion)
+include(TargetMacros)
 
 
 # ################################################

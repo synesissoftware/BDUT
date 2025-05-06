@@ -1,13 +1,2 @@
-
-add_executable(test.scratch.BDUT_ASSERT_LE
-	main.c
-)
-
-link_directories(${CMAKE_SOURCE_DIR}/projects/core)
-
-target_link_libraries(test.scratch.BDUT_ASSERT_LE
-)
-
-
-# ############################## end of file ############################# #
-
+# SIS:AUTO_GENERATED: Remove this line if you edit the file, otherwise it will be overwritten
+define_example_program(test.scratch.BDUT_ASSERT_LE main.c)
