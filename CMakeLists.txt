@@ -5,7 +5,7 @@
 # Purpose:  Top-level CMake lists file for BDUT
 #
 # Created:  7th March 2024
-# Updated:  10th July 2024
+# Updated:  6th May 2025
 #
 # ######################################################################## #
 
@@ -56,8 +56,6 @@ set(PROJECT_VERSION_MAJOR ${_VERSION_MAJOR})
 set(PROJECT_VERSION_MINOR ${_VERSION_MINOR})
 set(PROJECT_VERSION_PATCH ${_VERSION_PATCH})
 set(PROJECT_VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
-
-message(NOTICE "Generating CMake build scripts for ${PROJECT_NAME} ${PROJECT_VERSION}")
 
 
 # adhere strictly to C and C++ standards plus extensions. These are actually
@@ -133,6 +131,12 @@ install( FILES
 	"${CMAKE_CURRENT_BINARY_DIR}/cmake/${EXPORT_NAME}-config-version.cmake"
 	DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${EXPORT_NAME}
 )
+
+
+# ##########################################################
+# completion
+
+message(NOTICE "Generating CMake build scripts for ${PROJECT_NAME} ${PROJECT_VERSION}, for C${CMAKE_C_STANDARD} C++${CMAKE_CXX_STANDARD}, with build type ${CMAKE_BUILD_TYPE}")
 
 
 # ############################## end of file ############################# #

@@ -22,23 +22,23 @@ STLSoftDirGiven=
 while [[ $# -gt 0 ]]; do
 
   case $1 in
-    -v|--cmake-verbose-makefile)
+    --cmake-verbose-makefile|-v)
 
-      CMakeVerboseMakefile=1
+      VerboseMakefile=1
       ;;
-    -d|--debug-configuration)
+    --debug-configuration|-d)
 
       Configuration=Debug
       ;;
-    -E|--disable-examples)
+    --disable-examples|-E)
 
-      CMakeExamplesDisabled=1
+      ExamplesDisabled=1
       ;;
-    -T|--disable-testing)
+    --disable-testing|-T)
 
-      CMakeTestingDisabled=1
+      TestingDisabled=1
       ;;
-    -m|--run-make)
+    --run-make|-m)
 
       RunMake=1
       ;;
@@ -57,8 +57,8 @@ Flags/options:
 
     -v
     --cmake-verbose-makefile
-        configures CMake to run verbosely (by setting
-        CMAKE_VERBOSE_MAKEFILE=ON)
+        configures CMake to run verbosely (by setting CMAKE_VERBOSE_MAKEFILE
+        to be ON)
 
     -d
     --debug-configuration
@@ -127,16 +127,16 @@ status=0
 
 if [ $RunMake -ne 0 ]; then
 
-  echo "Executing make"
+  echo "Executing build (via command \`$MakeCmd\`)"
 
-  make
+  $MakeCmd
 
   status=$?
 fi
 
 cd ->/dev/null
 
-if [ $CMakeVerboseMakefile -ne 0 ]; then
+if [ $VerboseMakefile -ne 0 ]; then
 
   echo -e "contents of $CMakeDir:"
   ls -al $CMakeDir

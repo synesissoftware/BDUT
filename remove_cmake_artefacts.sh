@@ -4,8 +4,6 @@ ScriptPath=$0
 Dir=$(cd $(dirname "$ScriptPath"); pwd)
 Basename=$(basename "$ScriptPath")
 CMakeDir=${SIS_CMAKE_BUILD_DIR:-$Dir/_build}
-[[ -n "$MSYSTEM" ]] && DefaultMakeCmd=mingw32-make.exe || DefaultMakeCmd=make
-MakeCmd=${SIS_CMAKE_MAKE_COMMAND:-${SIS_CMAKE_COMMAND:-$DefaultMakeCmd}}
 
 Directories=(
     CMakeFiles
@@ -24,8 +22,6 @@ Files=(
     cmake_install.cmake
     install_manifest.txt
 )
-
-OsIsWindows=0
 
 
 # ##########################################################
@@ -80,6 +76,7 @@ EOF
       exit 0
       ;;
     *)
+
       >&2 echo "$ScriptPath: unrecognised argument '$1'; use --help for usage"
 
       exit 1
