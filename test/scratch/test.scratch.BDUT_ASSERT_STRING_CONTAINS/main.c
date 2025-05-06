@@ -6,6 +6,9 @@
 
 int main(int argc, char* argv[])
 {
+    ((void)&argc);
+    ((void)&argv);
+
     BDUT_ASSERT_STRING_CONTAINS("", "abcdefghijklmnopqrstuvwxyz");
     BDUT_ASSERT_STRING_CONTAINS("abc", "abcdefghijklmnopqrstuvwxyz");
 

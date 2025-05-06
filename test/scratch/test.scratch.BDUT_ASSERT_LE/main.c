@@ -6,6 +6,9 @@
 
 int main(int argc, char* argv[])
 {
+    ((void)&argc);
+    ((void)&argv);
+
     BDUT_ASSERT_LE(1, 2);
     BDUT_ASSERT_LE(-1, 1);
 

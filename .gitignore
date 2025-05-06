@@ -85,17 +85,28 @@ include/stlsoft/internal/dos2unix.has.been.performed
 # files (by pattern)
 
 *~
+*.???_obj
 *.a
 *.app
+*.aps
 *.b64
 *.bak
+*.chm
+*.d
 *.dll
+*.dsp
 *.dylib
 *.exe
 *.gch
 *.idb
 *.ilk
+*.iobj
+*.ipch
+*.ipdb
+*.la
+*.lai
 *.lib
+*.lo
 *.log
 *.ncb
 *.o
@@ -106,10 +117,12 @@ include/stlsoft/internal/dos2unix.has.been.performed
 *.out
 *.pch
 *.pdb
+*.rar
 *.res
 *.sbr
 *.scc
 *.sdf
+*.slo
 *.so
 *.suo
 *.swp
@@ -118,5 +131,6 @@ include/stlsoft/internal/dos2unix.has.been.performed
 *.unsuccessfulbuild
 *.vcproj*.user
 *.vcxproj*.user
+*.xcuserstate
 *.zip
 
