@@ -1,6 +1,11 @@
 #  **BDUT** History
 
 
+## 6th May 2025 - 0.3.2 (release candidate 1)
+
+* Multiple CMake-related improvements;
+
+
 ## 18th November 2024 - 0.3.1
 
 * fixed warning (VC++);

@@ -1,6 +1,24 @@
 #  **BDUT** Changes
 
 
+## 6th May 2025 - 0.3.2 (release candidate 1)
+
+Summary:
+--------
+
+* Multiple CMake-related improvements;
+
+Changes:
+--------
+
+Multiple CMake-related improvements:
+ * added and applied target macros;
+ * added '--mingw' flag to **prepare_cmake.sh**;
+ * added '--list-only' flag to **run_all_unit_tests.sh**;
+ * added **run_all_scratch_tests.sh**;
+ * ARM64 support;
+
+
 ## 0.2.0 (alpha5) - 7th March 2024
 
 * added **CMake** support and boilerplate files;
