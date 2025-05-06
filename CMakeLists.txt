@@ -57,7 +57,6 @@ set(PROJECT_VERSION_MINOR ${_VERSION_MINOR})
 set(PROJECT_VERSION_PATCH ${_VERSION_PATCH})
 set(PROJECT_VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
 
-
 # adhere strictly to C and C++ standards plus extensions. These are actually
 # useless since we do not compile anything; they merely state our intention.
 set(CMAKE_C_STANDARD 17)
@@ -115,9 +114,10 @@ option(BUILD_EXAMPLES "Build examples" OFF)
 
 # ######################################
 # dependencies
-
-
-
+#
+# required:
+#
+# optional:
 
 
 # ################################################
@@ -141,9 +141,27 @@ include(GNUInstallDirs)
 # ################################################
 # main libraries
 
+add_library(BDUT INTERFACE)
+
+target_include_directories(BDUT INTERFACE
+	$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+	$<INSTALL_INTERFACE:include>
+)
+
 
 # ################################################
 # examples
+
+
+if(BUILD_EXAMPLES)
+
+	message("-- enabled building of examples ...")
+
+	add_subdirectory(examples)
+else(BUILD_EXAMPLES)
+
+	message("-- disabled building of examples - define BUILD_EXAMPLES to enable")
+endif(BUILD_EXAMPLES)
 
 
 # ################################################
@@ -164,17 +182,14 @@ endif(BUILD_TESTING)
 # build
 
 
-add_library(BDUT INTERFACE)
-
-target_include_directories(BDUT INTERFACE
-	$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
-	$<INSTALL_INTERFACE:include>
-)
-
-
 # ##########################################################
 # install
 
+
+install(TARGETS BDUT
+	EXPORT project-targets
+	PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR}
+)
 
 install(
 	DIRECTORY ${CMAKE_SOURCE_DIR}/include/bdut/
@@ -187,9 +202,7 @@ install(
 # ##########################################################
 # export
 
-include(CMakePackageConfigHelpers)
-
-set(EXPORT_NAME ${PROJECT_NAME_LOWER})
+set(EXPORT_NAME ${PROJECT_NAME_UPPER})
 
 configure_package_config_file(
 	${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EXPORT_NAME}-config.cmake.in
@@ -203,7 +216,13 @@ write_basic_package_version_file(
 	COMPATIBILITY AnyNewerVersion
 )
 
-install( FILES
+install(EXPORT project-targets
+	NAMESPACE "${PROJECT_NAME}::"
+	FILE "${EXPORT_NAME}-targets.cmake"
+	DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${EXPORT_NAME}
+)
+
+install(FILES
 	"${CMAKE_CURRENT_BINARY_DIR}/cmake/${EXPORT_NAME}-config.cmake"
 	"${CMAKE_CURRENT_BINARY_DIR}/cmake/${EXPORT_NAME}-config-version.cmake"
 	DESTINATION ${CMAKE_INSTALL_LIBDIR}/cmake/${EXPORT_NAME}

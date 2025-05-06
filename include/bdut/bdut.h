@@ -52,9 +52,9 @@
 
 #ifndef BDUT_DOCUMENTATION_SKIP_SECTION
 # define BDUT_VER_BDUT_H_BDUT_MAJOR     2
-# define BDUT_VER_BDUT_H_BDUT_MINOR     0
+# define BDUT_VER_BDUT_H_BDUT_MINOR     1
 # define BDUT_VER_BDUT_H_BDUT_REVISION  3
-# define BDUT_VER_BDUT_H_BDUT_EDIT      9
+# define BDUT_VER_BDUT_H_BDUT_EDIT      15
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 
 
@@ -79,9 +79,9 @@
  */
 
 #define BDUT_VER_MAJOR                                      0
-#define BDUT_VER_MINOR                                      2
-#define BDUT_VER_PATCH                                      0
-#define BDUT_VER                                            0x000200c1
+#define BDUT_VER_MINOR                                      3
+#define BDUT_VER_PATCH                                      2
+#define BDUT_VER                                            0x000302c1
 
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -91,14 +91,24 @@
 #if defined(__cplusplus) && \
     __cplusplus >= 201402L
 
+# include <cstddef>
 # include <cstdio>
 # include <cstdlib>
 # include <cstring>
 #else
 
+# include <stddef.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <string.h>
+#endif
+
+#ifdef _WIN32
+
+# include <io.h>
+#else
+
+# include <unistd.h>
 #endif
 
 
@@ -135,8 +145,8 @@
  * @param actual The actual value
  */
 
-#define BDUT_ASSERT_EQ(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), ==, "actual value of `" #actual "` not equal-to expected value " #expected)
-#define BDUT_ASSERT_NE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), !=, "actual value of `" #actual "` not unequal-to expected value " #expected)
+#define BDUT_ASSERT_EQ(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), ==, "actual value of `" #actual "` not equal-to expected value `" #expected "`")
+#define BDUT_ASSERT_NE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), !=, "actual value of `" #actual "` not unequal-to expected value `" #expected "`")
 
 /** @def BDUT_ASSERT_GE(expected, actual)
  *
@@ -170,10 +180,10 @@
  * @param actual The actual value
  */
 
-#define BDUT_ASSERT_GE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), >=, "actual value of `" #actual "` not greater-than-or-equal-to expected value " #expected)
-#define BDUT_ASSERT_GT(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), >, "actual value of `" #actual "` not greater-than expected value " #expected)
-#define BDUT_ASSERT_LE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), <=, "actual value of `" #actual "` not less-than-or-equal-to expected value " #expected)
-#define BDUT_ASSERT_LT(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), <, "actual value of `" #actual "` not less-than expected value " #expected)
+#define BDUT_ASSERT_GE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), >=, "actual value of `" #actual "` not greater-than-or-equal-to expected value `" #expected "`")
+#define BDUT_ASSERT_GT(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), >, "actual value of `" #actual "` not greater-than expected value `" #expected "`")
+#define BDUT_ASSERT_LE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), <=, "actual value of `" #actual "` not less-than-or-equal-to expected value `" #expected "`")
+#define BDUT_ASSERT_LT(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), <, "actual value of `" #actual "` not less-than expected value `" #expected "`")
 
 /** @def BDUT_ASSERT_STRING_CONTAINS(needle, haystack)
  *
@@ -188,7 +198,7 @@
  *   assertions
  */
 
-#define BDUT_ASSERT_STRING_CONTAINS(needle, haystack)       ( !BDUT_strcontains_(haystack, needle) ? BDUT_report_string_contains_failure_and_abort_(__FILE__, __LINE__, __FUNCTION__, needle, haystack) : BDUT_STATIC_CAST_(void, 0) )
+#define BDUT_ASSERT_STRING_CONTAINS(needle, haystack)       ( !BDUT_strcontains_(haystack, needle) ? BDUT_report_string_contains_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, needle, haystack) : BDUT_STATIC_CAST_(void, 0) )
 
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -225,9 +235,38 @@
  */
 
 
-# define BDUT_ASSERT_(expr, msg)                            ( (!(expr)) ? BDUT_report_assertion_failure_and_abort_(__FILE__, __LINE__, __FUNCTION__, #expr, msg) : BDUT_STATIC_CAST_(void, 0) )
+# define BDUT_ASSERT_(expr, msg)                            ( (!(expr)) ? BDUT_report_assertion_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, #expr, msg) : BDUT_STATIC_CAST_(void, 0) )
 
 # define BDUT_CHECK_COMPARE_(expected, actual, op, msg)     BDUT_ASSERT_((expected) op (actual), msg)
+
+
+
+
+#if 0
+# elif defined(__BORLANDC__) && (__BORLANDC__ & 0xfff0) >= 0x0620
+#  define BDUT_FUNCTION_                                    __FUNC__
+# elif defined(__clang__)
+#  define BDUT_FUNCTION_                                    __func__
+# elif defined(__COMO__)
+#  define BDUT_FUNCTION_                                    __FUNCTION__
+# elif defined(__DMC__) && __DMC__ >= 0x850
+#  define BDUT_FUNCTION_                                    __FUNCTION__
+# elif defined(__GNUC__)
+#  define BDUT_FUNCTION_                                    __func__
+# elif defined(__INTEL_COMPILER) && __INTEL_COMPILER >= 700
+#  define BDUT_FUNCTION_                                    __FUNCTION__
+# elif defined(__MWERKS__) && (__MWERKS__ & 0xFF00) >= 0x3000
+#  define BDUT_FUNCTION_                                    __FUNCTION__
+# elif defined(__SUNPRO_C) || defined(__SUNPRO_CC)
+#  define BDUT_FUNCTION_                                    __func__
+# elif defined(__WATCOMC__) && __WATCOMC__ >= 1240
+#  define BDUT_FUNCTION_                                    __FUNCTION__
+# elif defined(_MSC_VER) && _MSC_VER >= 1300
+#  define BDUT_FUNCTION_                                    __FUNCTION__
+#else /* ? compiler */
+#  define BDUT_FUNCTION_                                    ""
+#endif /* compiler */
+
 
 # if defined(__cplusplus) && \
      __cplusplus >= 201703L
@@ -257,7 +296,7 @@
       !defined(__clang__) && \
       1
 
-#   define BDUT_INLINE_                                     inline
+#   define BDUT_INLINE_                                     static inline
 # else
 
 #   define BDUT_INLINE_                                     static
@@ -282,6 +321,21 @@ static
 void
 BDUT_reference_all_impl_functions_(void);
 # endif
+
+BDUT_INLINE_
+int
+BDUT_isatty_(
+    FILE* stm
+)
+{
+#ifdef _WIN32
+
+    return _isatty(_fileno(stm));
+#else
+
+    return isatty(fileno(stm));
+#endif
+}
 
 
 /** @brief Determines whether \c needle is found within \c haystack
@@ -321,7 +375,8 @@ BDUT_strcontains_(
  *
  * @param file The source file
  * @param line The source line
- * @param function The source function
+ * @param function The source function. May be NULL if the compiler is not
+ *  recognised to support function identification
  * @param expr The expression. Currently unused
  * @param message The message
  */
@@ -350,16 +405,43 @@ BDUT_report_assertion_failure_and_abort_(
     ((void)&BDUT_reference_all_impl_functions_);
 # endif
 
+    char const* clr_pre = "";
+    char const* clr_post = "";
+
+    if (BDUT_isatty_(stdout))
+    {
+        clr_pre = "\x1B[1;31m";
+        clr_post = "\033[0m";
+    }
+
     ((void)&expr);
 
-    fprintf(
-        stderr
-    ,   "ASSERTION FAILURE:\n\n%s:%d:%s: assertion failed: %s\n"
-    ,   file
-    ,   line
-    ,   function
-    ,   message
-    );
+    if (NULL == function ||
+        '\0' == function[0])
+    {
+        fprintf(
+            stderr
+        ,   "ASSERTION FAILURE:\n\n%s:%d: %sassertion failed%s: %s\n"
+        ,   file
+        ,   line
+        ,   clr_pre
+        ,   clr_post
+        ,   message
+        );
+    }
+    else
+    {
+        fprintf(
+            stderr
+        ,   "ASSERTION FAILURE:\n\n%s:%d:%s: %sassertion failed%s: %s\n"
+        ,   file
+        ,   line
+        ,   function
+        ,   clr_pre
+        ,   clr_post
+        ,   message
+        );
+    }
 
     exit(1);
 }
@@ -368,7 +450,8 @@ BDUT_report_assertion_failure_and_abort_(
  *
  * @param file The source file
  * @param line The source line
- * @param function The source function
+ * @param function The source function. May be NULL if the compiler is not
+ *  recognised to support function identification
  * @param needle The string to be found within \c haystack
  * @param haystack The string in which to find \c needle
  */
@@ -385,6 +468,7 @@ BDUT_report_string_contains_failure_and_abort_(
 # if defined(__cplusplus) && \
      __cplusplus >= 201402L
 
+    using std::size_t;
     using std::snprintf;
     using std::strlen;
 # endif
@@ -399,10 +483,8 @@ BDUT_report_string_contains_failure_and_abort_(
     }
 
     {
-        /* NOTE: all lengths are `int` because that's required by `"%.*s"` and thus save on casting */
-
-        int const   needle_length   =   (NULL == needle) ? 0 : strlen(needle);
-        int const   haystack_length =   (NULL == haystack) ? 0 : strlen(haystack);
+        size_t const     needle_length   =   (NULL == needle) ? 0 : strlen(needle);
+        size_t const     haystack_length =   (NULL == haystack) ? 0 : strlen(haystack);
 
         /* build a message, ensuring it cannot overflow the fixed stack buffer */
 
@@ -412,6 +494,8 @@ BDUT_report_string_contains_failure_and_abort_(
 
         int const   cch_fmt     = BDUT_NUM_ELEMENTS_(fmt) - 1;
         int const   cch_message = BDUT_NUM_ELEMENTS_(message);
+
+        /* NOTE: all lengths are `int` because that's required by `"%.*s"` and thus save on casting */
 
         int         width_needle        =   BDUT_STATIC_CAST_(int, needle_length);
         int         width_haystack      =   BDUT_STATIC_CAST_(int, haystack_length);

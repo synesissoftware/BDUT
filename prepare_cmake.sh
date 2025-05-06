@@ -152,7 +152,6 @@ if [ $RunMake -ne 0 ]; then
   echo "Executing build (via command \`$MakeCmd\`)"
 
   $MakeCmd
-
   status=$?
 fi
 
