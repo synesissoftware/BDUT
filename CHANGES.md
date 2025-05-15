@@ -1,6 +1,11 @@
 #  **BDUT** Changes
 
 
+## 15th May 2025 - 0.3.2
+
+* Minor warnings (observed with Visual C++);
+
+
 ## 6th May 2025 - 0.3.2 (release candidate 1)
 
 Summary:
