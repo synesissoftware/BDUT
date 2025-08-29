@@ -81,7 +81,7 @@
 #define BDUT_VER_MAJOR                                      0
 #define BDUT_VER_MINOR                                      4
 #define BDUT_VER_PATCH                                      0
-#define BDUT_VER_ALPHABETA                                  0x42
+#define BDUT_VER_ALPHABETA                                  0x43
 
 #define BDUT_VER \
     (0\
