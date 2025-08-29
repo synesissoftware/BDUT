@@ -1,6 +1,13 @@
 # BDUT <!-- omit in toc -->
 
-**B**rain-**D**ead **U**nit-**T**esting, for C and C++.
+![Language](https://img.shields.io/badge/C%2B%2B-00599C?style=flat&logo=c%2B%2B&logoColor=white)
+[![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
+[![GitHub release](https://img.shields.io/github/v/release/synesissoftware/BDUT.svg)](https://github.com/synesissoftware/BDUT/releases/latest)
+[![Last Commit](https://img.shields.io/github/last-commit/synesissoftware/BDUT)](https://github.com/synesissoftware/BDUT/commits/master)
+
+
+**B**rain-**D**ead **U**nit-**T**esting, extremely lightweight, single-header unit-testing for C and C++.
+
 
 ## Table of Contents
 
@@ -48,7 +55,7 @@ int main()
 {
   BDUT_ASSERT_EQ(1, 2);
 
-  return 0;
+  return BDUT_TESTS_PASSED(argc, argv);
 }
 ```
 
@@ -58,25 +65,23 @@ The output of this will be along the lines of:
 ~/open-source/BDUT/examples/c/example_1/main.cpp:7:main: assertion failed: actual value of `2` not equal-to expected value `1`
 ```
 
-or a in:
+or as in:
 
 ```C++
 /* examples/cpp/example_1 */
 
 #include <bdut/bdut.h>
 
-#include <iostream>
-
 
 int main(int argc, char* argv[])
 {
-    BDUT_ASSERT_STRING_CONTAINS("", "abcdefghijklmnopqrstuvwxyz");
-    BDUT_ASSERT_STRING_CONTAINS("abc", "abcdefghijklmnopqrstuvwxyz");
+  BDUT_ASSERT_STRING_CONTAINS("", "abcdefghijklmnopqrstuvwxyz");
+  BDUT_ASSERT_STRING_CONTAINS("abc", "abcdefghijklmnopqrstuvwxyz");
 
-    /* this one will fail */
-    BDUT_ASSERT_STRING_CONTAINS("abd", "abcdefghijklmnopqrstuvwxyz");
+  /* this one will fail */
+  BDUT_ASSERT_STRING_CONTAINS("abd", "abcdefghijklmnopqrstuvwxyz");
 
-    return 0;
+  return BDUT_TESTS_PASSED(argc, argv);
 }
 ```
 

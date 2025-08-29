@@ -1,6 +1,22 @@
 #  **BDUT** Changes
 
 
+## 30th August 2025 - 0.4.0 (alpha 2)
+
+* CTest compatibility;
+
+
+## 30th August 2025 - 0.4.0 (alpha 1)
+
+* added `BDUT_TESTS_PASSED()`;
+
+
+## 30th August 2025 - 0.3.3
+
+* Fixed `BDUT_ASSERT_GE()`, `BDUT_ASSERT_GT()`, `BDUT_ASSERT_LE()`, `BDUT_ASSERT_LT()`;
+* Added **test.unit.version**;
+
+
 ## 15th May 2025 - 0.3.2
 
 * Minor warnings (observed with Visual C++);
