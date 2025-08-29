@@ -1,6 +1,11 @@
 #  **BDUT** Changes
 
 
+## 30th August 2025 - 0.4.0 (alpha 2)
+
+* CTest compatibility;
+
+
 ## 30th August 2025 - 0.4.0 (alpha 1)
 
 * added `BDUT_TESTS_PASSED()`;
