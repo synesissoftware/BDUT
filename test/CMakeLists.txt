@@ -31,7 +31,13 @@ if((MSVC) AND (MSVC_VERSION GREATER_EQUAL 1914))
 endif()
 
 
-add_subdirectory(scratch)
+foreach(d component performance scratch unit)
+
+	if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${d}")
+
+		add_subdirectory(${d})
+	endif()
+endforeach()
 
 
 # ############################## end of file ############################# #
