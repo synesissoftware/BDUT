@@ -4,7 +4,7 @@
  * Purpose: Brain-Dead Unit-Testing
  *
  * Created: 18th July 2020
- * Updated: 29th August 2025
+ * Updated: 30th August 2025
  *
  * Home:    http://github.com/synesissoftware/BDUT
  *
@@ -52,9 +52,9 @@
 
 #ifndef BDUT_DOCUMENTATION_SKIP_SECTION
 # define BDUT_VER_BDUT_H_BDUT_MAJOR     2
-# define BDUT_VER_BDUT_H_BDUT_MINOR     1
-# define BDUT_VER_BDUT_H_BDUT_REVISION  5
-# define BDUT_VER_BDUT_H_BDUT_EDIT      17
+# define BDUT_VER_BDUT_H_BDUT_MINOR     2
+# define BDUT_VER_BDUT_H_BDUT_REVISION  0
+# define BDUT_VER_BDUT_H_BDUT_EDIT      18
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 
 
@@ -79,9 +79,9 @@
  */
 
 #define BDUT_VER_MAJOR                                      0
-#define BDUT_VER_MINOR                                      3
-#define BDUT_VER_PATCH                                      3
-#define BDUT_VER_ALPHABETA                                  0xFF
+#define BDUT_VER_MINOR                                      4
+#define BDUT_VER_PATCH                                      0
+#define BDUT_VER_ALPHABETA                                  0x41
 
 #define BDUT_VER \
     (0\
@@ -209,6 +209,18 @@
  */
 
 #define BDUT_ASSERT_STRING_CONTAINS(needle, haystack)       ( !BDUT_strcontains_(haystack, needle) ? BDUT_report_string_contains_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, needle, haystack) : BDUT_STATIC_CAST_(void, 0) )
+
+
+/** @def BDUT_TESTS_PASSED(argc, argv)
+ *
+ * @brief Invoked after all tests are evaluated and, implicitly, have
+ *   passed
+ *
+ * @param argc The program's \c argc, or 0;
+ * @param argv The program's \c argv, or \c NULL;
+ */
+
+#define BDUT_TESTS_PASSED(argc, argv)                       BDUT_report_tests_passed_(__FILE__, __LINE__, BDUT_FUNCTION_, argc, argv)
 
 
 /* /////////////////////////////////////////////////////////////////////////
@@ -587,6 +599,47 @@ BDUT_report_string_contains_failure_and_abort_(
     }
 }
 
+BDUT_INLINE_
+int
+BDUT_report_tests_passed_(
+    char const*     file
+,   int             line
+,   char const*     function
+,   int             argc
+,   char*           argv[]
+)
+{
+# if defined(__cplusplus) && \
+    __cplusplus >= 201402L
+
+    using std::exit;
+    using std::fprintf;
+# endif
+
+    ((void)&file);
+    ((void)&line);
+    ((void)&function);
+
+    char const* clr_pre = "";
+    char const* clr_post = "";
+
+    if (BDUT_isatty_(stdout))
+    {
+        clr_pre = "\x1B[1;32m";
+        clr_post = "\033[0m";
+    }
+
+    if (0 != argc && NULL != argv)
+    {
+        fprintf(stdout, "%s: %sALL TESTS PASSED%s\n", argv[0], clr_pre, clr_post);
+    }
+    else
+    {
+        fprintf(stdout, "%sALL TESTS PASSED%s\n", clr_pre, clr_post);
+    }
+
+    return 0;
+}
 
 # if 1 && \
      !defined(__cplusplus) && \
@@ -600,6 +653,7 @@ BDUT_reference_all_impl_functions_(void)
     ((void)&BDUT_strcontains_);
     ((void)&BDUT_report_assertion_failure_and_abort_);
     ((void)&BDUT_report_string_contains_failure_and_abort_);
+    ((void)&BDUT_report_tests_passed_);
 }
 # endif
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
