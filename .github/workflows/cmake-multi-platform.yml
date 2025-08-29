@@ -32,6 +32,10 @@ jobs:
           - cl
           - clang
           - gcc
+        cpp_compiler:
+          - cl
+          - clang
+          - g++
         include:
           - os: ubuntu-latest
             c_compiler: clang
