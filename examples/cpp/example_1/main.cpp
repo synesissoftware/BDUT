@@ -1,8 +1,6 @@
 
 #include <bdut/bdut.h>
 
-#include <iostream>
-
 
 int main(int argc, char* argv[])
 {
@@ -13,9 +11,7 @@ int main(int argc, char* argv[])
     BDUT_ASSERT_STRING_CONTAINS("abd", "abcdefghijklmnopqrstuvwxyz");
 
 
-    std::cout << argv[0] << ": ALL TESTS PASSED" << std::endl;
-
-    return 0;
+    return BDUT_TESTS_PASSED(argc, argv);
 }
 
 
