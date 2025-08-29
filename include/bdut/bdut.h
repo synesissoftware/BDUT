@@ -4,7 +4,7 @@
  * Purpose: Brain-Dead Unit-Testing
  *
  * Created: 18th July 2020
- * Updated: 13th May 2025
+ * Updated: 29th August 2025
  *
  * Home:    http://github.com/synesissoftware/BDUT
  *
@@ -53,8 +53,8 @@
 #ifndef BDUT_DOCUMENTATION_SKIP_SECTION
 # define BDUT_VER_BDUT_H_BDUT_MAJOR     2
 # define BDUT_VER_BDUT_H_BDUT_MINOR     1
-# define BDUT_VER_BDUT_H_BDUT_REVISION  4
-# define BDUT_VER_BDUT_H_BDUT_EDIT      16
+# define BDUT_VER_BDUT_H_BDUT_REVISION  5
+# define BDUT_VER_BDUT_H_BDUT_EDIT      17
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 
 
@@ -80,8 +80,8 @@
 
 #define BDUT_VER_MAJOR                                      0
 #define BDUT_VER_MINOR                                      3
-#define BDUT_VER_PATCH                                      2
-#define BDUT_VER_ALPHABETA                                  0xff
+#define BDUT_VER_PATCH                                      3
+#define BDUT_VER_ALPHABETA                                  0xFF
 
 #define BDUT_VER \
     (0\
@@ -190,10 +190,10 @@
  * @param actual The actual value
  */
 
-#define BDUT_ASSERT_GE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), >=, "actual value of `" #actual "` not greater-than-or-equal-to expected value `" #expected "`")
-#define BDUT_ASSERT_GT(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), >, "actual value of `" #actual "` not greater-than expected value `" #expected "`")
-#define BDUT_ASSERT_LE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), <=, "actual value of `" #actual "` not less-than-or-equal-to expected value `" #expected "`")
-#define BDUT_ASSERT_LT(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), <, "actual value of `" #actual "` not less-than expected value `" #expected "`")
+#define BDUT_ASSERT_GE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), <=, "actual value of `" #actual "` not greater-than-or-equal-to expected value `" #expected "`")
+#define BDUT_ASSERT_GT(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), <, "actual value of `" #actual "` not greater-than expected value `" #expected "`")
+#define BDUT_ASSERT_LE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), >=, "actual value of `" #actual "` not less-than-or-equal-to expected value `" #expected "`")
+#define BDUT_ASSERT_LT(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), >, "actual value of `" #actual "` not less-than expected value `" #expected "`")
 
 /** @def BDUT_ASSERT_STRING_CONTAINS(needle, haystack)
  *
