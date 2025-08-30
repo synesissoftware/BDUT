@@ -54,7 +54,7 @@
 # define BDUT_VER_BDUT_H_BDUT_MAJOR     2
 # define BDUT_VER_BDUT_H_BDUT_MINOR     2
 # define BDUT_VER_BDUT_H_BDUT_REVISION  0
-# define BDUT_VER_BDUT_H_BDUT_EDIT      18
+# define BDUT_VER_BDUT_H_BDUT_EDIT      19
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 
 
@@ -81,7 +81,7 @@
 #define BDUT_VER_MAJOR                                      0
 #define BDUT_VER_MINOR                                      4
 #define BDUT_VER_PATCH                                      0
-#define BDUT_VER_ALPHABETA                                  0x43
+#define BDUT_VER_ALPHABETA                                  0xFF
 
 #define BDUT_VER \
     (0\
