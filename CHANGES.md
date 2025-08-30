@@ -1,5 +1,10 @@
 #  **BDUT** Changes
 
+## 30th August 2025 - 0.4.0
+
+* 0.4.0;
+
+
 ## 30th August 2025 - 0.4.0 (alpha 3)
 
 * GitHub Actions;

@@ -1,6 +1,13 @@
 #  **BDUT** History
 
 
+## 30th August 2025 - 0.4.0
+
+* GitHub Actions;
+* CTest compatibility;
+* added `BDUT_TESTS_PASSED()`;
+
+
 ## 30th August 2025 - 0.3.3
 
 * Fixed `BDUT_ASSERT_GE()`, `BDUT_ASSERT_GT()`, `BDUT_ASSERT_LE()`, `BDUT_ASSERT_LT()`;
