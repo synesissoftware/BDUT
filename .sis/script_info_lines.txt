@@ -1,0 +1,2 @@
+BDUT, is a very simple - simplistic, in fact - small, header-only, standalone library for C and C++. Its intent is to be bundled into other projects for which it is not desired to couple to a more sophisticated library.
+Copyright (c) 2020-2025, Matthew Wilson and Synesis Information Systems
