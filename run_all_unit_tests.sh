@@ -26,6 +26,11 @@ while [[ $# -gt 0 ]]; do
 
       RunMake=0
       ;;
+    --verbosity)
+
+      shift
+      Verbosity=$1
+      ;;
     --help)
 
       [ -f "$Dir/.sis/script_info_lines.txt" ] && cat "$Dir/.sis/script_info_lines.txt"
