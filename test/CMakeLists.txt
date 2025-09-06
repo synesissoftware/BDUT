@@ -5,7 +5,7 @@ if(UNIX)
 
 	add_definitions(-DUNIX)
 	add_definitions(-Dunix)
-endif()
+endif(UNIX)
 
 if(WIN32)
 

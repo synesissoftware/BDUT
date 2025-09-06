@@ -55,9 +55,8 @@ while [[ $# -gt 0 ]]; do
 
   case $1 in
     --help)
+      [ -f "$Dir/.sis/script_info_lines.txt" ] && cat "$Dir/.sis/script_info_lines.txt"
       cat << EOF
-BDUT, is a very simple - simplistic, in fact - small, header-only, standalone library for C and C++. Its intent is to be bundled into other projects for which it is not desired to couple to a more sophisticated library.
-Copyright (c) 2020-2024, Matthew Wilson and Synesis Information Systems
 Removes all known CMake artefacts
 
 $ScriptPath [ ... flags/options ... ]
