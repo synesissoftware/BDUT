@@ -1,5 +1,6 @@
 #  **BDUT** Changes
 
+
 ## 6th September 2025
 
 * badges;
@@ -9,11 +10,6 @@
 * README;
 * settings;
 * .gitattributes;
-
-
-## 30th August 2025 - 0.4.0
-
-* 0.4.0;
 
 
 ## 30th August 2025 - 0.4.0 (alpha 3)
