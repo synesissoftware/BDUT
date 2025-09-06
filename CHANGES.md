@@ -1,5 +1,16 @@
 #  **BDUT** Changes
 
+## 6th September 2025
+
+* badges;
+* added **run_all_unit_tests.cmd**;
+* CMake helper scripts now define default make command as "mingw32-make.xe" if recognise MinGW;
+* \*.sh : ~ moved info-lines into ./.sis/script_info_lines.txt;
+* README;
+* settings;
+* .gitattributes;
+
+
 ## 30th August 2025 - 0.4.0
 
 * 0.4.0;
