@@ -7,7 +7,6 @@ CMakeDir=${SIS_CMAKE_BUILD_DIR:-$Dir/_build}
 [[ -n "$MSYSTEM" ]] && DefaultMakeCmd=mingw32-make.exe || DefaultMakeCmd=make
 MakeCmd=${SIS_CMAKE_MAKE_COMMAND:-${SIS_CMAKE_COMMAND:-$DefaultMakeCmd}}
 
-
 ListOnly=0
 RunMake=1
 
@@ -106,7 +105,7 @@ if [ $status -eq 0 ]; then
     echo "Running all example programs"
   fi
 
-  for f in $(find $CMakeDir -type f '(' -name 'example*' ')' -exec test -x {} \; -print)
+  for f in $(find $CMakeDir/examples -type f -exec test -x {} \; -print)
   do
 
     if [ $ListOnly -ne 0 ]; then
@@ -119,7 +118,6 @@ if [ $status -eq 0 ]; then
     echo
     echo "executing $f:"
 
-    # NOTE: we do not break on fail, because, this being a unit-testing library, the scratch-tests actually fail
     $f
   done
 fi
