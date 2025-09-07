@@ -76,9 +76,7 @@ Flags/options:
 
     -T
     --disable-testing
-        disables building of tests (by setting BUILD_TESTING=OFF). This is
-        necessary, for example, when installing on a system that does not
-        (yet) have xTests - which itself depends on STLSOFT - installed
+        disables building of tests (by setting BUILD_TESTING=OFF)
 
     --mingw
         uses explicitly the "MinGW Makefiles" generator
