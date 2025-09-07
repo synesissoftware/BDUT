@@ -11,36 +11,33 @@
 /ipch/
 /lib/
 
-/include/b64/
-/include/cstring/
-/include/recls/
-/include/shwild/
-/include/xcontract/
-/include/xcover/
-/include/xtests/
+/doc/
+/dox/
+/ideas/
+/releases/
+/scratch/
+/temp/
 
-/src/b64/
-/src/cstring/
-/src/recls/
-/src/shwild/
-/src/xcontract/
-/src/xcover/
-/src/xtests/
-
+Debug Multithreaded DLL/
 Debug Multithreaded Dll/
 Debug Multithreaded/
 Debug/
+DebugDLL/
 DebugDll/
 DebugMTDLL/
+DebugMTDll/
 DebugMt/
 DebugNox/
 DebugUNIX/
 DebugUnix/
+Release Multithreaded DLL/
 Release Multithreaded Dll/
 Release Multithreaded/
 Release/
+ReleaseDLL/
 ReleaseDll/
 ReleaseMTDLL/
+ReleaseMTDll/
 ReleaseMt/
 ReleaseNox/
 ReleaseUnix/
@@ -48,8 +45,10 @@ UDebug/
 UDebugMt/
 URelease/
 UReleaseMt/
+Unicode Debug Multithreaded DLL/
 Unicode Debug Multithreaded Dll/
 Unicode Debug Multithreaded/
+Unicode Release Multithreaded DLL/
 Unicode Release Multithreaded Dll/
 Unicode Release Multithreaded/
 
@@ -59,7 +58,6 @@ x64/
 
 # directories (by pattern)
 
-/dox/*/
 /include-*/
 
 
@@ -73,13 +71,13 @@ list_changes.cmd
 logging-bailout.txt
 prepare.cmd
 sh.exe.stackdump
+tidydir.cmd
 update_deps.cmd
 
 build/makefile.tmpl
 build/makefile.tools.xml
-
-include/stlsoft/dos2unix.has.been.performed
-include/stlsoft/internal/dos2unix.has.been.performed
+build/shwild.tmplgen
+test/testpatterns.orj
 
 
 # files (by pattern)
@@ -133,4 +131,11 @@ include/stlsoft/internal/dos2unix.has.been.performed
 *.vcxproj*.user
 *.xcuserstate
 *.zip
+
+RCa0*
+RCb0*
+
+build/*.tmplgen
+build/*.tmpl
+build/*.tools.xml
 

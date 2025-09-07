@@ -85,7 +85,7 @@ if [ $RunMake -ne 0 ]; then
 
   if [ $ListOnly -eq 0 ]; then
 
-    echo "Executing build (via command \`$MakeCmd\`) and then running all scratch test programs"
+    echo "Executing build (via command \`$MakeCmd\`) and then running all scratch (and performance) test programs"
 
     mkdir -p $CMakeDir || exit 1
 

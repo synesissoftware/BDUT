@@ -18,5 +18,5 @@
 *.vcxproj linguist-detectable=false
 
 CMakeLists.txt linguist-language=CMake
-makefile linguist-detectable=true
+makefile linguist-detectable=false
 
