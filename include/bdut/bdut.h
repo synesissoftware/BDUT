@@ -325,6 +325,25 @@
 #  endif
 #  define BDUT_STATIC_CAST_(t, v)                           ((t)(v))
 # endif
+
+# if defined(__cplusplus) && \
+     __cplusplus >= 201402L
+
+#  define BDUT_NORETURN_                                    [[noreturn]]
+# elif defined(_MSC_VER)
+
+#  define BDUT_NORETURN_                                    __declspec(noreturn)
+# elif defined(__GNUC__) || defined(__clang__)
+
+#  define BDUT_NORETURN_                                    __attribute__((noreturn))
+# elif defined(__STDC_VERSION__) && \
+       __STDC_VERSION__ >= 201112L
+
+#  define BDUT_NORETURN_                                    _Noreturn
+# else
+
+#  define BDUT_NORETURN_
+# endif
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 
 
@@ -402,6 +421,7 @@ BDUT_strcontains_(
  * @param expr The expression. Currently unused
  * @param message The message
  */
+BDUT_NORETURN_
 BDUT_INLINE_
 void
 BDUT_report_assertion_failure_and_abort_(
@@ -477,6 +497,7 @@ BDUT_report_assertion_failure_and_abort_(
  * @param needle The string to be found within \c haystack
  * @param haystack The string in which to find \c needle
  */
+BDUT_NORETURN_
 BDUT_INLINE_
 void
 BDUT_report_string_contains_failure_and_abort_(
