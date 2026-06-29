@@ -1,6 +1,15 @@
 #  **BDUT** Changes
 
 
+## 29th June 2026
+
+* **README** — reconciled **Installation** (manual copy and CMake/`find_package(BDUT)`/`BDUT::BDUT`); added passing and failure **Examples** sections; fixed C example (`main.c`, `argc`/`argv`);
+* **INSTALL.md** — replaced placeholder with full build, test, install, and consumer CMake guide;
+* **FAQ.md** — updated Q1/Q2 for CMake and existing tests; added Q3 on intentional failure demos;
+* **NEWS.md** — corrected **0.4.0** release tag link;
+* **TODO.md** — replaced **xTests** boilerplate with **BDUT**-specific completed and pending OSS items;
+
+
 ## 6th September 2025
 
 * badges;

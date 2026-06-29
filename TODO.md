@@ -1,15 +1,24 @@
-# xTests - TODO list
+# BDUT - TODO list
 
 
-## xTests 0.2.x TODOs:
+## BDUT 0.4.x (completed)
 
-* [x] **CMake** build (or, at least, installation) setup - ✅;;
+* [x] ~~~**CMake** build, install, and package export (`BDUT-config.cmake`)~~~ - ✅
+* [x] ~~~**CTest** integration for unit tests~~~ - ✅
+* [x] ~~~**GitHub Actions** multi-platform CI~~~ - ✅
+* [x] ~~~README badges~~~ - ✅
 
 
-## xTests 0.3+ TODOs:
+## BDUT 0.4.x / 0.5+ (documentation and OSS)
 
-* \<none>
+* [x] ~~~Reconcile README, INSTALL, and FAQ with CMake/tests reality~~~ - ✅
+* [ ] **EXAMPLES.md** — index for **examples/** and **test/scratch/** (passing vs intentional failures)
+* [ ] **CONTRIBUTING.md** and GitHub issue/PR templates
+* [ ] Macro API reference table in README
+* [ ] Expand **CTest** coverage beyond **test.unit.version**
+* [ ] Remove stale **projects/core** references from example **CMakeLists.txt**
+* [ ] Consumer **FetchContent** snippet in INSTALL
+* [ ] Optional **vcpkg** port
 
 
 <!-- ########################### end of file ########################### -->
-
