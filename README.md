@@ -22,6 +22,7 @@
 - [Installation](#installation)
   - [Manual installation](#manual-installation)
   - [CMake installation](#cmake-installation)
+- [API reference](#api-reference)
 - [Examples](#examples)
   - [Passing example](#passing-example)
   - [Failure output examples](#failure-output-examples)
@@ -70,6 +71,36 @@ target_link_libraries(my_tests PRIVATE BDUT::BDUT)
 ```
 
 Because **BDUT** is header-only, no library file is linked; the imported target supplies the include path. See [INSTALL.md](./INSTALL.md) for configure, build, test, and install options.
+
+
+## API reference
+
+Include the header once:
+
+```c
+#include <bdut/bdut.h>
+```
+
+Write tests as sequential assertions in `main()`. When all pass, return `BDUT_TESTS_PASSED(argc, argv)`.
+
+| Macro | Description |
+|-------|-------------|
+| `BDUT_ASSERT_TRUE(expr)` | Asserts that `expr` is true |
+| `BDUT_ASSERT_FALSE(expr)` | Asserts that `expr` is false |
+| `BDUT_ASSERT_EQ(expected, actual)` | Asserts `actual == expected` |
+| `BDUT_ASSERT_NE(expected, actual)` | Asserts `actual != expected` |
+| `BDUT_ASSERT_GE(expected, actual)` | Asserts `actual >= expected` |
+| `BDUT_ASSERT_GT(expected, actual)` | Asserts `actual > expected` |
+| `BDUT_ASSERT_LE(expected, actual)` | Asserts `actual <= expected` |
+| `BDUT_ASSERT_LT(expected, actual)` | Asserts `actual < expected` |
+| `BDUT_ASSERT_STRING_CONTAINS(needle, haystack)` | Asserts `needle` is a substring of `haystack` |
+| `BDUT_TESTS_PASSED(argc, argv)` | Call after all assertions pass; prints success and returns 0 |
+
+On failure, **BDUT** prints file, line, optional function name, and a message to **stderr**, then calls `exit(1)`.
+
+Version macros (`BDUT_VER_MAJOR`, `BDUT_VER_MINOR`, `BDUT_VER_PATCH`, `BDUT_VER`, etc.) are defined in **include/bdut/bdut.h**.
+
+For a full index of sample programs (passing and intentional failures), see [EXAMPLES.md](./EXAMPLES.md).
 
 
 ## Examples
@@ -165,7 +196,7 @@ The output of this will be along the lines of:
 
 ### Contribution guidelines
 
-Defect reports, feature requests, and pull requests are welcome on https://github.com/synesissoftware/BDUT.
+Defect reports, feature requests, and pull requests are welcome on https://github.com/synesissoftware/BDUT. See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup, coding standards, and pull request expectations.
 
 
 ### Dependencies

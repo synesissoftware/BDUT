@@ -1,0 +1,8 @@
+blank_issues_enabled: true
+contact_links:
+  - name: BDUT FAQ
+    url: https://github.com/synesissoftware/BDUT/blob/master/FAQ.md
+    about: Common questions about building, testing, and intentional failure demos
+  - name: Installation guide
+    url: https://github.com/synesissoftware/BDUT/blob/master/INSTALL.md
+    about: CMake configure, build, install, and consumer setup

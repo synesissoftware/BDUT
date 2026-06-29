@@ -13,6 +13,10 @@
 * **TargetMacros.cmake** — **define_automated_test_program** / **define_example_program** propagate the **BDUT** interface target;
 * **run_all_unit_tests.sh**, **run_all_scratch_tests.sh** — removed **xTests** verbosity alias;
 * **test.unit.version** — aligned version assertions with **0.4.1** (alpha 1) in **bdut.h**;
+* **EXAMPLES.md** — index of passing and intentional-failure sample programs;
+* **README** — macro API reference table; links to **EXAMPLES.md**;
+* **CONTRIBUTING.md** — development setup, standards, and PR guidance;
+* **.github/** — issue templates (bug, feature) and pull request template;
 
 
 ## 6th September 2025

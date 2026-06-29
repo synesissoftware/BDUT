@@ -29,7 +29,7 @@ Additional programs under **test/scratch/** exercise assertion macros; **test.sc
 
 By design. **BDUT** is a unit-test *assertion* library, not a test runner with pass/fail reporting for multiple cases. The **examples/** tree and several **test/scratch/** programs contain failing assertions so you can see typical failure messages (file, line, function, and message text).
 
-Programs intended to pass include **test.unit.version** (via **CTest**) and **test/scratch/test.scratch.all_pass**. See [README.md](./README.md#examples) for a minimal passing example.
+Programs intended to pass include **test.unit.version** (via **CTest**) and **test/scratch/test.scratch.all_pass**. See [README.md](./README.md#examples) for a minimal passing example and [EXAMPLES.md](./EXAMPLES.md) for a full program index.
 
 
 <!-- ########################### end of file ########################### -->

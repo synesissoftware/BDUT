@@ -12,9 +12,9 @@
 ## BDUT 0.4.x / 0.5+ (documentation and OSS)
 
 * [x] ~~~Reconcile README, INSTALL, and FAQ with CMake/tests reality~~~ - ✅
-* [ ] **EXAMPLES.md** — index for **examples/** and **test/scratch/** (passing vs intentional failures)
-* [ ] **CONTRIBUTING.md** and GitHub issue/PR templates
-* [ ] Macro API reference table in README
+* [x] ~~~**EXAMPLES.md** — index for **examples/** and **test/scratch/** (passing vs intentional failures)~~~ - ✅
+* [x] ~~~**CONTRIBUTING.md** and GitHub issue/PR templates~~~ - ✅
+* [x] ~~~Macro API reference table in README~~~ - ✅
 * [ ] Expand **CTest** coverage beyond **test.unit.version**
 * [x] ~~~Remove stale **projects/core** references from example **CMakeLists.txt**; link examples/tests via **BDUT::BDUT**~~~ - ✅
 * [ ] Consumer **FetchContent** snippet in INSTALL
