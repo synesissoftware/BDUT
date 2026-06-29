@@ -16,7 +16,7 @@
 * [ ] **CONTRIBUTING.md** and GitHub issue/PR templates
 * [ ] Macro API reference table in README
 * [ ] Expand **CTest** coverage beyond **test.unit.version**
-* [ ] Remove stale **projects/core** references from example **CMakeLists.txt**
+* [x] ~~~Remove stale **projects/core** references from example **CMakeLists.txt**; link examples/tests via **BDUT::BDUT**~~~ - ✅
 * [ ] Consumer **FetchContent** snippet in INSTALL
 * [ ] Optional **vcpkg** port
 

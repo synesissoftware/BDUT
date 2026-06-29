@@ -169,6 +169,8 @@ endif(UNIX)
 
 add_library(BDUT INTERFACE)
 
+add_library(BDUT::BDUT ALIAS BDUT)
+
 target_include_directories(BDUT INTERFACE
 	$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
 	$<INSTALL_INTERFACE:include>

@@ -22,7 +22,7 @@ If you are working on **BDUT** itself, or want to run its examples and tests, us
 
 Yes. **test.unit.version** is registered with **CTest** and runs in CI. It verifies the version macros in **bdut.h**.
 
-Additional programs under **test/scratch/** exercise assertion macros; **test.scratch.all_pass** is a comprehensive passing demo. Other scratch programs and the **examples/** programs fail **deliberately** to show what assertion output looks like — they are documentation aids, not failing tests.
+Additional programs under **test/scratch/** exercise assertion macros; **test.scratch.all_pass** is a comprehensive passing demo. Other scratch programs and the **examples/** programs **fail deliberately** to show what assertion output looks like — they are documentation aids, not failing tests.
 
 
 ## Q3: "Why do some programs in the repository fail when I run them?"

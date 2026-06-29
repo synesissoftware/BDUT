@@ -43,6 +43,7 @@ function(define_automated_test_program program_name entry_point_source_name)
 
 	target_link_libraries(${program_name}
 		PRIVATE
+			BDUT::BDUT
 	)
 
 	define_target_compile_options(${program_name})
@@ -62,6 +63,7 @@ function(define_example_program program_name entry_point_source_name)
 
 	target_link_libraries(${program_name}
 		PRIVATE
+			BDUT::BDUT
 	)
 
 	define_target_compile_options(${program_name})

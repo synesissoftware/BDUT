@@ -17,8 +17,8 @@
 
 ## Table of Contents
 
-- [Table of Contents](#table-of-contents)
 - [Introduction](#introduction)
+- [Table of Contents](#table-of-contents)
 - [Installation](#installation)
   - [Manual installation](#manual-installation)
   - [CMake installation](#cmake-installation)

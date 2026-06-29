@@ -1,6 +1,4 @@
 
-include_directories(${CMAKE_SOURCE_DIR}/include)
-
 if(UNIX)
 
 	add_definitions(-DUNIX)
