@@ -1,0 +1,6 @@
+The package provides CMake targets:
+
+    find_package(BDUT CONFIG REQUIRED)
+    target_link_libraries(main PRIVATE BDUT::BDUT)
+
+**BDUT** is header-only; the imported target supplies the include path only.

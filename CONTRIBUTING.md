@@ -83,6 +83,7 @@ When adding or changing behaviour, update as appropriate:
 - [README.md](./README.md) — overview, installation, API summary
 - [INSTALL.md](./INSTALL.md) — build, install, consumer CMake
 - [EXAMPLES.md](./EXAMPLES.md) — index of sample programs
+- [vcpkg/README.md](./vcpkg/README.md) — overlay port install and maintainer notes
 - [FAQ.md](./FAQ.md) — common questions
 - [CHANGES.md](./CHANGES.md) — release notes
 

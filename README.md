@@ -70,7 +70,7 @@ add_executable(my_tests main.c)
 target_link_libraries(my_tests PRIVATE BDUT::BDUT)
 ```
 
-Because **BDUT** is header-only, no library file is linked; the imported target supplies the include path. See [INSTALL.md](./INSTALL.md) for **`find_package`**, **`add_subdirectory`**, **`FetchContent`**, configure, build, test, and install options.
+Because **BDUT** is header-only, no library file is linked; the imported target supplies the include path. See [INSTALL.md](./INSTALL.md) for **`find_package`**, **`add_subdirectory`**, **`FetchContent`**, **[vcpkg](./vcpkg/README.md)**, configure, build, test, and install options.
 
 
 ## API reference

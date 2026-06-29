@@ -14,11 +14,12 @@
     - [After install (`find_package`)](#after-install-find_package)
     - [Local subdirectory (`add_subdirectory`)](#local-subdirectory-add_subdirectory)
     - [Fetch at configure time (`FetchContent`)](#fetch-at-configure-time-fetchcontent)
+    - [Via vcpkg](#via-vcpkg)
 
 
 ## Overview
 
-**BDUT** is a single-header, header-only library. The public API is entirely in **include/bdut/bdut.h**. There is nothing to compile for normal use: you either copy that header into your project, or consume it from CMake via **`add_subdirectory`**, **`FetchContent`**, or **`find_package(BDUT)`** after install.
+**BDUT** is a single-header, header-only library. The public API is entirely in **include/bdut/bdut.h**. There is nothing to compile for normal use: you either copy that header into your project, or consume it from CMake via **`add_subdirectory`**, **`FetchContent`**, **`find_package(BDUT)`** after install, or **[vcpkg](#via-vcpkg)**.
 
 The CMake machinery in this repository exists to build **examples** and **tests**, to run those tests via **CTest**, and to install headers and CMake package files for downstream consumers.
 
@@ -210,6 +211,40 @@ target_link_libraries(my_tests PRIVATE BDUT::BDUT)
 ```
 
 Pin **`GIT_TAG`** to a [release tag](https://github.com/synesissoftware/BDUT/releases) or a commit SHA for reproducible builds. **`GIT_SHALLOW TRUE`** is optional for faster clones.
+
+
+#### Via vcpkg
+
+An overlay port ships in **[vcpkg/ports/bdut](./vcpkg/ports/bdut/)** (see **[vcpkg/README.md](./vcpkg/README.md)**). Install into your vcpkg instance:
+
+```bash
+/path/to/vcpkg install bdut --overlay-ports=/path/to/BDUT/vcpkg/ports
+```
+
+For the latest **master** (instead of the pinned port version):
+
+```bash
+/path/to/vcpkg install bdut --overlay-ports=/path/to/BDUT/vcpkg/ports --head
+```
+
+Configure your project with the vcpkg toolchain file, then:
+
+```cmake
+cmake_minimum_required(VERSION 3.20)
+project(my_project_tests C)
+
+find_package(BDUT CONFIG REQUIRED)
+
+add_executable(my_tests main.c)
+target_link_libraries(my_tests PRIVATE BDUT::BDUT)
+```
+
+Example:
+
+```bash
+cmake -B _build -S . -DCMAKE_TOOLCHAIN_FILE=/path/to/vcpkg/scripts/buildsystems/vcpkg.cmake
+cmake --build _build
+```
 
 
 <!-- ########################### end of file ########################### -->

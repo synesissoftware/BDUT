@@ -18,7 +18,7 @@
 * [x] ~~~Expand **CTest** coverage beyond **test.unit.version**~~~ - ✅
 * [x] ~~~Remove stale **projects/core** references from example **CMakeLists.txt**; link examples/tests via **BDUT::BDUT**~~~ - ✅
 * [x] ~~~Consumer **FetchContent** snippet in INSTALL~~~ - ✅
-* [ ] Optional **vcpkg** port
+* [x] ~~~Optional **vcpkg** port~~~ - ✅ (overlay port in **vcpkg/ports/bdut/**)
 
 
 <!-- ########################### end of file ########################### -->
