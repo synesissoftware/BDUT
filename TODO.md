@@ -15,7 +15,7 @@
 * [x] ~~~**EXAMPLES.md** — index for **examples/** and **test/scratch/** (passing vs intentional failures)~~~ - ✅
 * [x] ~~~**CONTRIBUTING.md** and GitHub issue/PR templates~~~ - ✅
 * [x] ~~~Macro API reference table in README~~~ - ✅
-* [ ] Expand **CTest** coverage beyond **test.unit.version**
+* [x] ~~~Expand **CTest** coverage beyond **test.unit.version**~~~ - ✅
 * [x] ~~~Remove stale **projects/core** references from example **CMakeLists.txt**; link examples/tests via **BDUT::BDUT**~~~ - ✅
 * [ ] Consumer **FetchContent** snippet in INSTALL
 * [ ] Optional **vcpkg** port

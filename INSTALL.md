@@ -114,7 +114,7 @@ Or, from the build directory:
 $ ctest --test-dir ${SIS_CMAKE_BUILD_DIR:-./_build}
 ```
 
-The primary automated test is **test.unit.version**, which verifies version macros.
+The primary automated tests are **test.unit.version**, **test.unit.assert_true_false**, **test.unit.compare**, and **test.unit.string_contains** under **test/unit/**.
 
 Scratch programs under **test/scratch/** are built as examples (not registered with CTest) because several of them **fail deliberately** to demonstrate assertion output. Run them manually, e.g.:
 

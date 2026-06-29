@@ -20,16 +20,23 @@ If you are working on **BDUT** itself, or want to run its examples and tests, us
 
 ## Q2: "Does BDUT have its own unit-tests?"
 
-Yes. **test.unit.version** is registered with **CTest** and runs in CI. It verifies the version macros in **bdut.h**.
+Yes. Four unit-test programs under **test/unit/** are registered with **CTest** and run in CI:
 
-Additional programs under **test/scratch/** exercise assertion macros; **test.scratch.all_pass** is a comprehensive passing demo. Other scratch programs and the **examples/** programs **fail deliberately** to show what assertion output looks like — they are documentation aids, not failing tests.
+* **test.unit.version** — version macros in **bdut.h**
+* **test.unit.assert_true_false** — `BDUT_ASSERT_TRUE` / `BDUT_ASSERT_FALSE`
+* **test.unit.compare** — equality and ordering comparison macros
+* **test.unit.string_contains** — `BDUT_ASSERT_STRING_CONTAINS`
+
+See [EXAMPLES.md](./EXAMPLES.md) for paths and macro coverage.
+
+Additional programs under **test/scratch/** and **examples/** include intentional failures for documentation; **test.scratch.all_pass** is a manual combined passing demo.
 
 
 ## Q3: "Why do some programs in the repository fail when I run them?"
 
 By design. **BDUT** is a unit-test *assertion* library, not a test runner with pass/fail reporting for multiple cases. The **examples/** tree and several **test/scratch/** programs contain failing assertions so you can see typical failure messages (file, line, function, and message text).
 
-Programs intended to pass include **test.unit.version** (via **CTest**) and **test/scratch/test.scratch.all_pass**. See [README.md](./README.md#examples) for a minimal passing example and [EXAMPLES.md](./EXAMPLES.md) for a full program index.
+Programs intended to pass in CI are the **test.unit.*** programs under **test/unit/**. **test/scratch/test.scratch.all_pass** is an additional manual smoke test. See [README.md](./README.md#examples) for a minimal passing example and [EXAMPLES.md](./EXAMPLES.md) for a full program index.
 
 
 <!-- ########################### end of file ########################### -->

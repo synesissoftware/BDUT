@@ -8,6 +8,8 @@ This index lists the sample programs shipped with **BDUT**. See [README.md](./RE
 - [Overview](#overview)
 - [Passing programs](#passing-programs)
 - [Intentional failure demos](#intentional-failure-demos)
+  - [examples/](#examples)
+  - [test/scratch/](#testscratch)
 - [Building and running](#building-and-running)
 
 
@@ -17,7 +19,7 @@ This index lists the sample programs shipped with **BDUT**. See [README.md](./RE
 
 | Group | Purpose | Registered with CTest? |
 |-------|---------|----------------------|
-| **Passing** | Exercise macros that succeed; exit 0 after `BDUT_TESTS_PASSED()` | **test.unit.version** only (see **test/unit/**) |
+| **Passing** | Exercise macros that succeed; exit 0 after `BDUT_TESTS_PASSED()` | **test/unit/** (see below) |
 | **Intentional failure** | Demonstrate assertion failure messages on stderr | No — run manually |
 
 The **examples/** tree and most **test/scratch/** programs are in the second group by design.
@@ -28,11 +30,14 @@ The **examples/** tree and most **test/scratch/** programs are in the second gro
 | Program | Source | Macros exercised |
 |---------|--------|------------------|
 | **test.unit.version** | [test/unit/test.unit.version/entry.c](./test/unit/test.unit.version/entry.c) | Version macros (`BDUT_VER_*`) |
-| **test.scratch.all_pass** | [test/scratch/test.scratch.all_pass/main.c](./test/scratch/test.scratch.all_pass/main.c) | `BDUT_ASSERT_EQ`, `BDUT_ASSERT_NE`, ordering comparisons, `BDUT_ASSERT_STRING_CONTAINS` |
+| **test.unit.assert_true_false** | [test/unit/test.unit.assert_true_false/entry.c](./test/unit/test.unit.assert_true_false/entry.c) | `BDUT_ASSERT_TRUE`, `BDUT_ASSERT_FALSE` |
+| **test.unit.compare** | [test/unit/test.unit.compare/entry.c](./test/unit/test.unit.compare/entry.c) | `BDUT_ASSERT_EQ`, `BDUT_ASSERT_NE`, `BDUT_ASSERT_GE`, `BDUT_ASSERT_GT`, `BDUT_ASSERT_LE`, `BDUT_ASSERT_LT` |
+| **test.unit.string_contains** | [test/unit/test.unit.string_contains/entry.c](./test/unit/test.unit.string_contains/entry.c) | `BDUT_ASSERT_STRING_CONTAINS` |
+| **test.scratch.all_pass** | [test/scratch/test.scratch.all_pass/main.c](./test/scratch/test.scratch.all_pass/main.c) | Combined macro smoke test (manual) |
 
-**test.unit.version** is the automated regression test run by **CTest** and CI.
+All **test.unit.*** programs are registered with **CTest** and run in CI.
 
-**test.scratch.all_pass** is the comprehensive manual passing demo; the [README passing example](./README.md#passing-example) is adapted from it.
+**test.scratch.all_pass** mirrors much of the unit coverage in one manual demo; the [README passing example](./README.md#passing-example) is adapted from it.
 
 
 ## Intentional failure demos

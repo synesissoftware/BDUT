@@ -17,6 +17,7 @@
 * **README** — macro API reference table; links to **EXAMPLES.md**;
 * **CONTRIBUTING.md** — development setup, standards, and PR guidance;
 * **.github/** — issue templates (bug, feature) and pull request template;
+* **test/unit/** — added **test.unit.assert_true_false**, **test.unit.compare**, and **test.unit.string_contains** for **CTest**/CI;
 
 
 ## 6th September 2025
