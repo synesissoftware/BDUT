@@ -70,5 +70,15 @@ function(define_example_program program_name entry_point_source_name)
 endfunction(define_example_program)
 
 
+function(define_failure_demo_program program_name entry_point_source_name)
+
+	list(APPEND X_MSVC_CUSTOM_WARNINGS_TO_BE_SUPPRESSED
+		4702
+	)
+
+	define_example_program(${program_name} ${entry_point_source_name})
+endfunction(define_failure_demo_program)
+
+
 # ############################## end of file ############################# #
 

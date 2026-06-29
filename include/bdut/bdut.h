@@ -208,7 +208,12 @@
  *   assertions
  */
 
-#define BDUT_ASSERT_STRING_CONTAINS(needle, haystack)       ( !BDUT_strcontains_(haystack, needle) ? BDUT_report_string_contains_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, needle, haystack) : BDUT_STATIC_CAST_(void, 0) )
+#define BDUT_ASSERT_STRING_CONTAINS(needle, haystack) \
+    do { \
+        if (!BDUT_strcontains_((haystack), (needle))) { \
+            BDUT_report_string_contains_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, (needle), (haystack)); \
+        } \
+    } while (0)
 
 
 /** @def BDUT_TESTS_PASSED(argc, argv)
@@ -257,7 +262,12 @@
  */
 
 
-# define BDUT_ASSERT_(expr, msg)                            ( (!(expr)) ? BDUT_report_assertion_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, #expr, msg) : BDUT_STATIC_CAST_(void, 0) )
+# define BDUT_ASSERT_(expr, msg) \
+    do { \
+        if (!(expr)) { \
+            BDUT_report_assertion_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, #expr, msg); \
+        } \
+    } while (0)
 
 # define BDUT_CHECK_COMPARE_(expected, actual, op, msg)     BDUT_ASSERT_((expected) op (actual), msg)
 

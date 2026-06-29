@@ -21,7 +21,8 @@
 * **INSTALL.md** — consumer **`FetchContent`** guide; split **`find_package`** / **`add_subdirectory`** / **`FetchContent`** sections;
 * **CMakeLists.txt**, **cmake/BuildType.cmake** — use **`CMAKE_CURRENT_SOURCE_DIR`** so **BDUT** configures correctly as a subdirectory or **FetchContent** dependency;
 * **vcpkg/** — overlay port (**vcpkg/ports/bdut/**) with **INSTALL.md** consumer instructions;
-* **bdut.h** — mark assertion abort helpers **`BDUT_NORETURN_`** (fixes MSVC **C4702** on intentional-failure examples with **/WX**);
+* **bdut.h** — mark assertion abort helpers **`BDUT_NORETURN_`**; rewrite **`BDUT_ASSERT_`** / **`BDUT_ASSERT_STRING_CONTAINS`** as **`do`/`while`** (fixes MSVC **C4702** with **/WX** on intentional-failure demos);
+* **TargetMacros.cmake** — added **`define_failure_demo_program`** (**`/wd4702`**) for intentional-failure examples and scratch tests;
 
 
 ## 6th September 2025
