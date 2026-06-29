@@ -18,6 +18,8 @@
 * **CONTRIBUTING.md** — development setup, standards, and PR guidance;
 * **.github/** — issue templates (bug, feature) and pull request template;
 * **test/unit/** — added **test.unit.assert_true_false**, **test.unit.compare**, and **test.unit.string_contains** for **CTest**/CI;
+* **INSTALL.md** — consumer **`FetchContent`** guide; split **`find_package`** / **`add_subdirectory`** / **`FetchContent`** sections;
+* **CMakeLists.txt**, **cmake/BuildType.cmake** — use **`CMAKE_CURRENT_SOURCE_DIR`** so **BDUT** configures correctly as a subdirectory or **FetchContent** dependency;
 
 
 ## 6th September 2025

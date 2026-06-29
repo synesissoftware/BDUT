@@ -11,11 +11,14 @@
   - [Run tests](#run-tests)
   - [Install](#install)
   - [Consume from another CMake project](#consume-from-another-cmake-project)
+    - [After install (`find_package`)](#after-install-find_package)
+    - [Local subdirectory (`add_subdirectory`)](#local-subdirectory-add_subdirectory)
+    - [Fetch at configure time (`FetchContent`)](#fetch-at-configure-time-fetchcontent)
 
 
 ## Overview
 
-**BDUT** is a single-header, header-only library. The public API is entirely in **include/bdut/bdut.h**. There is nothing to compile for normal use: you either copy that header into your project, or install it via CMake so that `find_package(BDUT)` provides the include path through an `INTERFACE` imported target.
+**BDUT** is a single-header, header-only library. The public API is entirely in **include/bdut/bdut.h**. There is nothing to compile for normal use: you either copy that header into your project, or consume it from CMake via **`add_subdirectory`**, **`FetchContent`**, or **`find_package(BDUT)`** after install.
 
 The CMake machinery in this repository exists to build **examples** and **tests**, to run those tests via **CTest**, and to install headers and CMake package files for downstream consumers.
 
@@ -144,7 +147,12 @@ This installs **bdut.h** under **include/bdut/** and exports **BDUT-config.cmake
 
 ### Consume from another CMake project
 
-After installation (or when using **BDUT** as a subdirectory), link your test executable against the imported target:
+**BDUT** exposes an `INTERFACE` target **`BDUT::BDUT`** that propagates the include path. No separate link library is required.
+
+
+#### After install (`find_package`)
+
+After [installing](#install) **BDUT** on the host (or setting `CMAKE_PREFIX_PATH` to your install prefix):
 
 ```cmake
 cmake_minimum_required(VERSION 3.20)
@@ -156,14 +164,52 @@ add_executable(my_tests main.c)
 target_link_libraries(my_tests PRIVATE BDUT::BDUT)
 ```
 
-No separate link library is required; **BDUT::BDUT** is an `INTERFACE` target that propagates the include directory.
 
-Alternatively, add **BDUT** as a subdirectory without installing:
+#### Local subdirectory (`add_subdirectory`)
+
+If **BDUT** is already present in your tree (clone, submodule, or sibling directory):
 
 ```cmake
+cmake_minimum_required(VERSION 3.20)
+project(my_project_tests C)
+
+set(BUILD_TESTING OFF CACHE BOOL "" FORCE)
+set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+
 add_subdirectory(path/to/BDUT)
+
+add_executable(my_tests main.c)
 target_link_libraries(my_tests PRIVATE BDUT::BDUT)
 ```
+
+Disable **BDUT**'s own examples and tests so your project does not build them unnecessarily.
+
+
+#### Fetch at configure time (`FetchContent`)
+
+To download **BDUT** automatically at configure time (no system install and no submodule):
+
+```cmake
+cmake_minimum_required(VERSION 3.20)
+project(my_project_tests C)
+
+include(FetchContent)
+
+set(BUILD_TESTING OFF CACHE BOOL "" FORCE)
+set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
+
+FetchContent_Declare(
+    BDUT
+    GIT_REPOSITORY https://github.com/synesissoftware/BDUT.git
+    GIT_TAG        0.4.0
+)
+FetchContent_MakeAvailable(BDUT)
+
+add_executable(my_tests main.c)
+target_link_libraries(my_tests PRIVATE BDUT::BDUT)
+```
+
+Pin **`GIT_TAG`** to a [release tag](https://github.com/synesissoftware/BDUT/releases) or a commit SHA for reproducible builds. **`GIT_SHALLOW TRUE`** is optional for faster clones.
 
 
 <!-- ########################### end of file ########################### -->

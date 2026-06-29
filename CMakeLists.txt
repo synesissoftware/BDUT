@@ -43,7 +43,7 @@ string(TOUPPER ${PROJECT_NAME} PROJECT_NAME_UPPER)
 # handle version number
 set(RX_PROJ_TAG "${PROJECT_NAME_UPPER}")
 set(RX_WS "[ \t]")
-file(READ "${CMAKE_SOURCE_DIR}/include/${PROJECT_NAME_LOWER}/${PROJECT_NAME_LOWER}.h" _header_file)
+file(READ "${CMAKE_CURRENT_SOURCE_DIR}/include/${PROJECT_NAME_LOWER}/${PROJECT_NAME_LOWER}.h" _header_file)
 string(REGEX MATCH "#${RX_WS}*define${RX_WS}+_?${RX_PROJ_TAG}_VER_MAJOR${RX_WS}+([0-9]+)" MAJOR_DUMMY ${_header_file})
 set(_VERSION_MAJOR ${CMAKE_MATCH_1})
 string(REGEX MATCH "#${RX_WS}*define${RX_WS}+_?${RX_PROJ_TAG}_VER_MINOR${RX_WS}+([0-9]+)" MINOR_DUMMY ${_header_file})
@@ -172,7 +172,7 @@ add_library(BDUT INTERFACE)
 add_library(BDUT::BDUT ALIAS BDUT)
 
 target_include_directories(BDUT INTERFACE
-	$<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+	$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
 	$<INSTALL_INTERFACE:include>
 )
 
@@ -215,7 +215,7 @@ install(TARGETS BDUT
 )
 
 install(
-	DIRECTORY ${CMAKE_SOURCE_DIR}/include/bdut/
+	DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/include/bdut/
 	DESTINATION include/bdut/
 	FILES_MATCHING
 	PATTERN "*.h*"

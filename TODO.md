@@ -17,7 +17,7 @@
 * [x] ~~~Macro API reference table in README~~~ - ✅
 * [x] ~~~Expand **CTest** coverage beyond **test.unit.version**~~~ - ✅
 * [x] ~~~Remove stale **projects/core** references from example **CMakeLists.txt**; link examples/tests via **BDUT::BDUT**~~~ - ✅
-* [ ] Consumer **FetchContent** snippet in INSTALL
+* [x] ~~~Consumer **FetchContent** snippet in INSTALL~~~ - ✅
 * [ ] Optional **vcpkg** port
 
 
