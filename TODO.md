@@ -1,16 +1,29 @@
-# BDUT - TODO list
+# BDUT - TODO <!-- omit in toc -->
 
 
-## BDUT 0.4.x (completed)
+## Table of Contents <!-- omit in toc -->
+
+- [Functional improvements](#functional-improvements)
+- [Performance improvements](#performance-improvements)
+- [Packaging improvements](#packaging-improvements)
+
+
+## Functional improvements
+
+* \<none>
+
+
+## Performance improvements
+
+* \<none>
+
+
+## Packaging improvements
 
 * [x] ~~~**CMake** build, install, and package export (`BDUT-config.cmake`)~~~ - ✅
 * [x] ~~~**CTest** integration for unit tests~~~ - ✅
 * [x] ~~~**GitHub Actions** multi-platform CI~~~ - ✅
 * [x] ~~~README badges~~~ - ✅
-
-
-## BDUT 0.4.x / 0.5+ (documentation and OSS)
-
 * [x] ~~~Reconcile README, INSTALL, and FAQ with CMake/tests reality~~~ - ✅
 * [x] ~~~**EXAMPLES.md** — index for **examples/** and **test/scratch/** (passing vs intentional failures)~~~ - ✅
 * [x] ~~~**CONTRIBUTING.md** and GitHub issue/PR templates~~~ - ✅
