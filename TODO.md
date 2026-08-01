@@ -1,15 +1,37 @@
-# xTests - TODO list
+# BDUT - TODO <!-- omit in toc -->
 
 
-## xTests 0.2.x TODOs:
+## Table of Contents <!-- omit in toc -->
 
-* [x] **CMake** build (or, at least, installation) setup - ✅;;
+- [Functional improvements](#functional-improvements)
+- [Performance improvements](#performance-improvements)
+- [Packaging improvements](#packaging-improvements)
 
 
-## xTests 0.3+ TODOs:
+## Functional improvements
 
 * \<none>
 
 
-<!-- ########################### end of file ########################### -->
+## Performance improvements
 
+* \<none>
+
+
+## Packaging improvements
+
+* [x] ~~~**CMake** build, install, and package export (`BDUT-config.cmake`)~~~ - ✅
+* [x] ~~~**CTest** integration for unit tests~~~ - ✅
+* [x] ~~~**GitHub Actions** multi-platform CI~~~ - ✅
+* [x] ~~~README badges~~~ - ✅
+* [x] ~~~Reconcile README, INSTALL, and FAQ with CMake/tests reality~~~ - ✅
+* [x] ~~~**EXAMPLES.md** — index for **examples/** and **test/scratch/** (passing vs intentional failures)~~~ - ✅
+* [x] ~~~**CONTRIBUTING.md** and GitHub issue/PR templates~~~ - ✅
+* [x] ~~~Macro API reference table in README~~~ - ✅
+* [x] ~~~Expand **CTest** coverage beyond **test.unit.version**~~~ - ✅
+* [x] ~~~Remove stale **projects/core** references from example **CMakeLists.txt**; link examples/tests via **BDUT::BDUT**~~~ - ✅
+* [x] ~~~Consumer **FetchContent** snippet in INSTALL~~~ - ✅
+* [x] ~~~Optional **vcpkg** port~~~ - ✅ (overlay port in **vcpkg/ports/bdut/**)
+
+
+<!-- ########################### end of file ########################### -->

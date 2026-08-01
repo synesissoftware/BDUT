@@ -1,2 +1,2 @@
 # SIS:AUTO_GENERATED: Remove this line if you edit the file, otherwise it will be overwritten
-define_failure_demo_program(test.scratch.BDUT_ASSERT_STRING_CONTAINS main.c)
+define_automated_test_program(test.unit.string_contains entry.c)

@@ -1,13 +1,2 @@
-
-add_executable(example_1-cpp
-	main.cpp
-)
-
-link_directories(${CMAKE_SOURCE_DIR}/projects/core)
-
-target_link_libraries(example_1-cpp
-)
-
-
-# ############################## end of file ############################# #
-
+# SIS:AUTO_GENERATED: Remove this line if you edit the file, otherwise it will be overwritten
+define_failure_demo_program(example_1-cpp main.cpp)

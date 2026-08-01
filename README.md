@@ -10,14 +10,22 @@
 **B**rain-**D**ead **U**nit-**T**esting, extremely lightweight, single-header unit-testing for C and C++.
 
 
+## Introduction
+
+**B**rain-**D**ead **U**nit-**T**esting, is a very simple - simplistic, in fact - small, header-only, standalone library for C and C++. Its intent is to be bundled into other projects for which it is not desired to couple to a more sophisticated library.
+
+
 ## Table of Contents
 
-- [Table of Contents](#table-of-contents)
 - [Introduction](#introduction)
+- [Table of Contents](#table-of-contents)
 - [Installation](#installation)
-  - [CMake installation](#cmake-installation)
   - [Manual installation](#manual-installation)
+  - [CMake installation](#cmake-installation)
+- [API reference](#api-reference)
 - [Examples](#examples)
+  - [Passing example](#passing-example)
+  - [Failure output examples](#failure-output-examples)
 - [Project Information](#project-information)
   - [Where to get help](#where-to-get-help)
   - [Contribution guidelines](#contribution-guidelines)
@@ -26,33 +34,120 @@
   - [License](#license)
 
 
-## Introduction
-
-**B**rain-**D**ead **U**nit-**T**esting, is a very simple - simplistic, in fact - small, header-only, standalone library for C and C++. Its intent is to be bundled into other projects for which it is not desired to couple to a more sophisticated library.
-
-
 ## Installation
 
-### CMake installation
-
-Currently, **CMake** support is not yet provided.
+**BDUT** is a single-header library with **no dependencies**. You can use it by copying the header into your project, or by installing it via **CMake** and using `find_package()`. See [INSTALL.md](./INSTALL.md) for full build, test, and install instructions.
 
 
 ### Manual installation
 
-Since **BDUT** is intended to be bundled into other open-source libraries, the simplest way to use it is to add a directory **bdut** under your project's **include** directory, into which you can then simply copy **bdut.h**.
+Since **BDUT** is intended to be bundled into other open-source libraries, the simplest way to use it is to add a directory **bdut** under your project's **include** directory, into which you can then simply copy **bdut.h** from **include/bdut/bdut.h** in this distribution.
+
+Your consumer code then uses:
+
+```c
+#include <bdut/bdut.h>
+```
+
+
+### CMake installation
+
+**BDUT** provides CMake 3.20+ support: an `INTERFACE` library target, install rules, and an exported `BDUT-config.cmake` package so downstream projects can use `find_package(BDUT)`.
+
+Quick start (from a clone of this repository):
+
+```bash
+./prepare_cmake.sh -m
+sudo cmake --install ${SIS_CMAKE_BUILD_DIR:-./_build} --config Release
+```
+
+After installation, a CMake consumer can link against **BDUT** as follows:
+
+```cmake
+find_package(BDUT REQUIRED)
+
+add_executable(my_tests main.c)
+target_link_libraries(my_tests PRIVATE BDUT::BDUT)
+```
+
+Because **BDUT** is header-only, no library file is linked; the imported target supplies the include path. See [INSTALL.md](./INSTALL.md) for **`find_package`**, **`add_subdirectory`**, **`FetchContent`**, **[vcpkg](./vcpkg/README.md)**, configure, build, test, and install options.
+
+
+## API reference
+
+Include the header once:
+
+```c
+#include <bdut/bdut.h>
+```
+
+Write tests as sequential assertions in `main()`. When all pass, return `BDUT_TESTS_PASSED(argc, argv)`.
+
+| Macro | Description |
+|-------|-------------|
+| `BDUT_ASSERT_TRUE(expr)` | Asserts that `expr` is true |
+| `BDUT_ASSERT_FALSE(expr)` | Asserts that `expr` is false |
+| `BDUT_ASSERT_EQ(expected, actual)` | Asserts `actual == expected` |
+| `BDUT_ASSERT_NE(expected, actual)` | Asserts `actual != expected` |
+| `BDUT_ASSERT_GE(expected, actual)` | Asserts `actual >= expected` |
+| `BDUT_ASSERT_GT(expected, actual)` | Asserts `actual > expected` |
+| `BDUT_ASSERT_LE(expected, actual)` | Asserts `actual <= expected` |
+| `BDUT_ASSERT_LT(expected, actual)` | Asserts `actual < expected` |
+| `BDUT_ASSERT_STRING_CONTAINS(needle, haystack)` | Asserts `needle` is a substring of `haystack` |
+| `BDUT_TESTS_PASSED(argc, argv)` | Call after all assertions pass; prints success and returns 0 |
+
+On failure, **BDUT** prints file, line, optional function name, and a message to **stderr**, then calls `exit(1)`.
+
+Version macros (`BDUT_VER_MAJOR`, `BDUT_VER_MINOR`, `BDUT_VER_PATCH`, `BDUT_VER`, etc.) are defined in **include/bdut/bdut.h**.
+
+For a full index of sample programs (passing and intentional failures), see [EXAMPLES.md](./EXAMPLES.md).
 
 
 ## Examples
 
-**BDUT** is included simply into any C or C++ project by `#include`ing its header file, as in:
+**BDUT** is included into any C or C++ project by `#include`ing its header file and invoking assertion macros. Call `BDUT_TESTS_PASSED(argc, argv)` at the end of `main()` when all assertions have passed.
+
+
+### Passing example
+
+The following program (adapted from **test/scratch/test.scratch.all_pass**) exercises several macros and completes successfully:
 
 ```C
-/* examples/c/example_1 */
+/* test/scratch/test.scratch.all_pass/main.c */
 
 #include <bdut/bdut.h>
 
-int main()
+int main(int argc, char* argv[])
+{
+  BDUT_ASSERT_EQ(123, 123);
+  BDUT_ASSERT_NE(123, 321);
+
+  BDUT_ASSERT_LE(123, 123);
+  BDUT_ASSERT_GE(123, 123);
+
+  BDUT_ASSERT_STRING_CONTAINS("abc", "abcdef");
+
+  return BDUT_TESTS_PASSED(argc, argv);
+}
+```
+
+On success, output is along the lines of:
+
+```bash
+my_tests: ALL TESTS PASSED
+```
+
+
+### Failure output examples
+
+The **examples/** programs under this repository are deliberately written to fail, in order to illustrate assertion output. For example:
+
+```C
+/* examples/c/example_1/main.c */
+
+#include <bdut/bdut.h>
+
+int main(int argc, char* argv[])
 {
   BDUT_ASSERT_EQ(1, 2);
 
@@ -63,16 +158,15 @@ int main()
 The output of this will be along the lines of:
 
 ```bash
-~/open-source/BDUT/examples/c/example_1/main.cpp:7:main: assertion failed: actual value of `2` not equal-to expected value `1`
+~/open-source/BDUT/examples/c/example_1/main.c:7:main: assertion failed: actual value of `2` not equal-to expected value `1`
 ```
 
-or as in:
+Similarly, the C++ example **examples/cpp/example_1** demonstrates string containment failure:
 
 ```C++
-/* examples/cpp/example_1 */
+/* examples/cpp/example_1/main.cpp */
 
 #include <bdut/bdut.h>
-
 
 int main(int argc, char* argv[])
 {
@@ -102,7 +196,7 @@ The output of this will be along the lines of:
 
 ### Contribution guidelines
 
-Defect reports, feature requests, and pull requests are welcome on https://github.com/synesissoftware/BDUT.
+Defect reports, feature requests, and pull requests are welcome on https://github.com/synesissoftware/BDUT. See [CONTRIBUTING.md](./CONTRIBUTING.md) for development setup, coding standards, and pull request expectations.
 
 
 ### Dependencies
@@ -125,4 +219,3 @@ Projects in which **BDUT** is used for testing include:
 
 
 <!-- ########################### end of file ########################### -->
-

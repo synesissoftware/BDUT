@@ -1,6 +1,30 @@
 #  **BDUT** Changes
 
 
+## 29th June 2026 - 0.4.1
+
+* **README** — reconciled **Installation** (manual copy and CMake/`find_package(BDUT)`/`BDUT::BDUT`); added passing and failure **Examples** sections; fixed C example (`main.c`, `argc`/`argv`);
+* **INSTALL.md** — replaced placeholder with full build, test, install, and consumer CMake guide;
+* **FAQ.md** — updated Q1/Q2 for CMake and existing tests; added Q3 on intentional failure demos;
+* **NEWS.md** — corrected **0.4.0** release tag link;
+* **TODO.md** — replaced **xTests** boilerplate with **BDUT**-specific completed and pending OSS items;
+* **CMakeLists.txt** — added **BDUT::BDUT** alias for in-tree builds;
+* **examples/**, **test/** — link via **BDUT::BDUT** (removed stale **projects/core** references and directory-scope **include_directories**);
+* **TargetMacros.cmake** — **define_automated_test_program** / **define_example_program** propagate the **BDUT** interface target;
+* **run_all_unit_tests.sh**, **run_all_scratch_tests.sh** — removed **xTests** verbosity alias;
+* **test.unit.version** — aligned version assertions with **0.4.1** (alpha 1) in **bdut.h**;
+* **EXAMPLES.md** — index of passing and intentional-failure sample programs;
+* **README** — macro API reference table; links to **EXAMPLES.md**;
+* **CONTRIBUTING.md** — development setup, standards, and PR guidance;
+* **.github/** — issue templates (bug, feature) and pull request template;
+* **test/unit/** — added **test.unit.assert_true_false**, **test.unit.compare**, and **test.unit.string_contains** for **CTest**/CI;
+* **INSTALL.md** — consumer **`FetchContent`** guide; split **`find_package`** / **`add_subdirectory`** / **`FetchContent`** sections;
+* **CMakeLists.txt**, **cmake/BuildType.cmake** — use **`CMAKE_CURRENT_SOURCE_DIR`** so **BDUT** configures correctly as a subdirectory or **FetchContent** dependency;
+* **vcpkg/** — overlay port (**vcpkg/ports/bdut/**) with **INSTALL.md** consumer instructions;
+* **bdut.h** — mark assertion abort helpers **`BDUT_NORETURN_`**; rewrite **`BDUT_ASSERT_`** / **`BDUT_ASSERT_STRING_CONTAINS`** as **`do`/`while`** (fixes MSVC **C4702** with **/WX** on intentional-failure demos);
+* **TargetMacros.cmake** — added **`define_failure_demo_program`** (**`/wd4702`**) for intentional-failure examples and scratch tests;
+
+
 ## 6th September 2025
 
 * badges;

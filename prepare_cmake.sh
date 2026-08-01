@@ -19,7 +19,6 @@ ExamplesDisabled=0
 MSVC_MT=0
 MinGW="${MinGW:=0}"
 RunMake=0
-STLSoftDirGiven=
 TestingDisabled=0
 VerboseMakefile=0
 

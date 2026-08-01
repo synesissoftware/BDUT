@@ -1,0 +1,67 @@
+name: Bug report
+description: Report incorrect behaviour, build failure, or documentation error
+title: "[Bug]: "
+labels: ["bug"]
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for reporting a problem. Please fill in as much as you can.
+
+  - type: textarea
+    id: description
+    attributes:
+      label: What happened?
+      description: Describe the bug and what you expected instead.
+      placeholder: Assertion output, build error, wrong docs, etc.
+    validations:
+      required: true
+
+  - type: input
+    id: version
+    attributes:
+      label: BDUT version
+      description: Release tag or BDUT_VER_* from include/bdut/bdut.h
+      placeholder: e.g. 0.4.1
+    validations:
+      required: true
+
+  - type: input
+    id: os
+    attributes:
+      label: Operating system
+      placeholder: e.g. macOS 15, Ubuntu 24.04, Windows 11
+    validations:
+      required: true
+
+  - type: input
+    id: compiler
+    attributes:
+      label: Compiler
+      placeholder: e.g. Apple Clang 17, GCC 13, MSVC 2022
+    validations:
+      required: true
+
+  - type: input
+    id: cmake
+    attributes:
+      label: CMake version (if applicable)
+      placeholder: e.g. 3.28
+
+  - type: textarea
+    id: reproduce
+    attributes:
+      label: Steps to reproduce
+      description: Commands, minimal source, or link to a branch
+      placeholder: |
+        1. ./prepare_cmake.sh -m
+        2. ...
+    validations:
+      required: true
+
+  - type: textarea
+    id: logs
+    attributes:
+      label: Relevant log output
+      description: Configure/build output or assertion messages
+      render: shell
