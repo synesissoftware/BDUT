@@ -40,7 +40,7 @@ int main(int argc, char* argv[])
     }
 
     {
-        BDUT_ASSERT_EQ(0x41, BDUT_VER_ALPHABETA);
+        BDUT_ASSERT_EQ(0xFF, BDUT_VER_ALPHABETA);
 
         BDUT_ASSERT_LE(0xFF, BDUT_VER_ALPHABETA);
     }
