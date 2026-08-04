@@ -4,9 +4,16 @@ name: CMake on multiple platforms
 
 on:
   push:
-    branches: [ "master", "dev", "gha" ]
+    branches:
+      - master
+      - dev
+      - boilerplate
+      - rc1
+      - rc2
+      - rc3
+      - rc4
+      - rc5
   pull_request:
-    branches: [ "master", "dev", "gha" ]
 
 jobs:
   build:
