@@ -5,7 +5,7 @@
 # Purpose:  Top-level CMake lists file for BDUT
 #
 # Created:  7th March 2024
-# Updated:  7th September 2025
+# Updated:  31st July 2026
 #
 # ######################################################################## #
 
@@ -67,6 +67,11 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS ON)
 
 if(MSVC)
+
+	if(MSVC_VERSION LESS 1800)
+
+		add_compile_options("/wd4996")
+	endif()
 
 	if(MSVC_VERSION LESS 1930)
 
