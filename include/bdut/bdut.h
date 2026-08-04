@@ -394,16 +394,16 @@ BDUT_isatty_(
     !defined(__STRICT_ANSI__) ||\
     0
 
-    /* fileno() is POSIX. Prefer it when feature-test macros or a non-strict
-     * dialect indicate that POSIX declarations are visible.
+    /* `fileno()` is POSIX. Prefer it when feature-test macros or a
+     * non-strict dialect indicate that POSIX declarations are visible.
      */
 
     return isatty(fileno(stm));
 #else
 
     /* Strict ISO C (e.g. -std=c11): glibc/musl typically do not declare
-     * fileno(), which breaks -Werror=implicit-function-declaration.
-     * Map the three standard streams via unistd.h constants instead.
+     * `fileno()`. Map the three standard streams via unistd.h constants
+     instead.
      */
 
     if (stm == stdout)
