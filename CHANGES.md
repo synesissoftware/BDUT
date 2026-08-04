@@ -5,6 +5,8 @@
 
 * **CMakeLists.txt** — export package as lowercase **bdut-config.cmake** under **lib/cmake/bdut/** (fixes Linux `find_package(BDUT)` install-smoke; matches **Pantheios**/ **b64** convention);
 * **ci.yml**, **INSTALL.md**, **README.md**, **vcpkg** — updated install-path / config-file references;
+* **CMakeLists.txt** — `CMAKE_C_EXTENSIONS` / `CMAKE_CXX_EXTENSIONS` **OFF** (ISO `-std=c17` / `-std=c++23`) so CI matches strict consumers such as **p99** and surfaces undeclared POSIX calls (e.g. `fileno()`);
+* **TargetMacros.cmake** — apply `-Werror` / `/WX` via both **C_COMPILER_ID** and **CXX_COMPILER_ID**;
 
 
 ## 0.4.1 - 1st August 2026

@@ -57,14 +57,15 @@ set(PROJECT_VERSION_MINOR ${_VERSION_MINOR})
 set(PROJECT_VERSION_PATCH ${_VERSION_PATCH})
 set(PROJECT_VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
 
-# adhere strictly to C and C++ standards plus extensions. These are actually
-# useless since we do not compile anything; they merely state our intention.
+# Strict ISO language modes (no GNU extensions). Consumers such as **p99**
+# build with C_EXTENSIONS OFF; BDUT's own tests/examples must do the same so
+# CI catches header portability defects (e.g. undeclared POSIX `fileno()`).
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
-set(CMAKE_C_EXTENSIONS ON) # GNU extensions and POSIX standard
+set(CMAKE_C_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 if(MSVC)
 
