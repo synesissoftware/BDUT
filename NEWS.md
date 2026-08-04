@@ -1,4 +1,4 @@
-# **BDUT** News <!-- omit in toc -->
+# BDUT News <!-- omit in toc -->
 
 
 | Date                | News Item                                                               |
