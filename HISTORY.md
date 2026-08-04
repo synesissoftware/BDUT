@@ -1,4 +1,4 @@
-#  **BDUT** History <!-- omit in toc -->
+# BDUT History <!-- omit in toc -->
 
 
 ## 30th August 2025 - 0.4.0
