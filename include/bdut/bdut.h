@@ -53,8 +53,8 @@
 #ifndef BDUT_DOCUMENTATION_SKIP_SECTION
 # define BDUT_VER_BDUT_H_BDUT_MAJOR     2
 # define BDUT_VER_BDUT_H_BDUT_MINOR     2
-# define BDUT_VER_BDUT_H_BDUT_REVISION  1
-# define BDUT_VER_BDUT_H_BDUT_EDIT      22
+# define BDUT_VER_BDUT_H_BDUT_REVISION  3
+# define BDUT_VER_BDUT_H_BDUT_EDIT      24
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 
 
@@ -382,9 +382,46 @@ BDUT_isatty_(
 #ifdef _WIN32
 
     return _isatty(_fileno(stm));
-#else
+#elif 0 ||\
+    (   1 &&\
+        defined(_POSIX_C_SOURCE) &&\
+        (_POSIX_C_SOURCE >= 1) &&\
+        1) ||\
+    defined(_BSD_SOURCE) ||\
+    defined(_DEFAULT_SOURCE) ||\
+    defined(_GNU_SOURCE) ||\
+    defined(_XOPEN_SOURCE) ||\
+    !defined(__STRICT_ANSI__) ||\
+    0
+
+    /* fileno() is POSIX. Prefer it when feature-test macros or a non-strict
+     * dialect indicate that POSIX declarations are visible.
+     */
 
     return isatty(fileno(stm));
+#else
+
+    /* Strict ISO C (e.g. -std=c11): glibc/musl typically do not declare
+     * fileno(), which breaks -Werror=implicit-function-declaration.
+     * Map the three standard streams via unistd.h constants instead.
+     */
+
+    if (stm == stdout)
+    {
+        return isatty(STDOUT_FILENO);
+    }
+    else if (stm == stderr)
+    {
+        return isatty(STDERR_FILENO);
+    }
+    else if (stm == stdin)
+    {
+        return isatty(STDIN_FILENO);
+    }
+    else
+    {
+        return 0;
+    }
 #endif
 }
 
@@ -460,7 +497,7 @@ BDUT_report_assertion_failure_and_abort_(
     char const* clr_pre = "";
     char const* clr_post = "";
 
-    if (BDUT_isatty_(stdout))
+    if (BDUT_isatty_(stderr))
     {
         clr_pre = "\x1B[1;31m";
         clr_post = "\033[0m";
