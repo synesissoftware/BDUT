@@ -6,12 +6,13 @@ Basename=$(basename "$ScriptPath")
 CMakeDir=${SIS_CMAKE_BUILD_DIR:-$Dir/_build}
 [[ -n "$MSYSTEM" ]] && DefaultMakeCmd=mingw32-make.exe || DefaultMakeCmd=make
 MakeCmd=${SIS_CMAKE_MAKE_COMMAND:-${SIS_CMAKE_COMMAND:-$DefaultMakeCmd}}
+ProjectName=$(cat "$Dir/.sis/project_name.txt")
 
 ListOnly=0
 RunMake=1
 UnitOnly=0
 ComponentOnly=0
-Verbosity=${XTESTS_VERBOSITY:-${TEST_VERBOSITY:-3}}
+Verbosity=${TEST_VERBOSITY:-3}
 
 
 # ##########################################################
@@ -68,7 +69,7 @@ Flags/options:
         runs only component-test programs (test.component.* / test_component*)
 
     --verbosity <verbosity>
-        specifies an explicit verbosity for the unit-test(s)
+        specifies an explicit verbosity for listing executed programs
 
 
     standard flags:
@@ -180,7 +181,8 @@ if [ $status -eq 0 ]; then
       echo "executing $f:"
     fi
 
-    if $f --verbosity=$Verbosity; then
+    # NOTE: ${ProjectName} programs do not take a verbosity flag
+    if $f; then
 
       :
     else

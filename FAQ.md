@@ -4,12 +4,17 @@ The FAQ list is under (constant) development. If you post a question on the
 Issues forum (https://github.com/synesissoftware/BDUT/issues)
 it will be used to create one.
 
-- [Q1: "How do I build BDUT?"](#q1-how-do-i-build-bdut)
-- [Q2: "Does BDUT have its own unit-tests?"](#q2-does-bdut-have-its-own-unit-tests)
-- [Q3: "Why do some programs in the repository fail when I run them?"](#q3-why-do-some-programs-in-the-repository-fail-when-i-run-them)
+
+## Table of Contents <!-- omit in toc -->
+
+- [FAQs:](#faqs)
+  - [Q1: "How do I build BDUT?"](#q1-how-do-i-build-bdut)
+  - [Q2: "Does BDUT have its own unit-tests?"](#q2-does-bdut-have-its-own-unit-tests)
+  - [Q3: "Why do some programs in the repository fail when I run them?"](#q3-why-do-some-programs-in-the-repository-fail-when-i-run-them)
 
 
-# FAQs: <!-- omit in toc -->
+# FAQs:
+
 
 ## Q1: "How do I build BDUT?"
 

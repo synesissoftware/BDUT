@@ -23,6 +23,9 @@
 * [x] ~~~**CMake** build, install, and package export (`bdut-config.cmake`)~~~ - ✅
 * [x] ~~~**CTest** integration for unit tests~~~ - ✅
 * [x] ~~~**GitHub Actions** multi-platform CI~~~ - ✅
+* [x] ~~~Modular **ci.yml** / **ci-cell.yml** with install-smoke~~~ - ✅
+* [x] ~~~**.sis/project_name.txt**~~~ - ✅
+* [x] ~~~Merge **HISTORY.md** into **CHANGES.md**~~~ - ✅
 * [x] ~~~README badges~~~ - ✅
 * [x] ~~~Reconcile README, INSTALL, and FAQ with CMake/tests reality~~~ - ✅
 * [x] ~~~**EXAMPLES.md** — index for **examples/** and **test/scratch/** (passing vs intentional failures)~~~ - ✅
