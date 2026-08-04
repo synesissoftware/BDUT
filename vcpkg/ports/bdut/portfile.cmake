@@ -17,7 +17,7 @@ vcpkg_cmake_install()
 
 vcpkg_cmake_config_fixup(
     PACKAGE_NAME BDUT
-    CONFIG_PATH "lib/cmake/BDUT"
+    CONFIG_PATH "lib/cmake/bdut"
 )
 
 file(REMOVE_RECURSE "${CURRENT_PACKAGES_DIR}/debug/include")

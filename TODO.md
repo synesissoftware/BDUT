@@ -20,7 +20,7 @@
 
 ## Packaging improvements
 
-* [x] ~~~**CMake** build, install, and package export (`BDUT-config.cmake`)~~~ - ✅
+* [x] ~~~**CMake** build, install, and package export (`bdut-config.cmake`)~~~ - ✅
 * [x] ~~~**CTest** integration for unit tests~~~ - ✅
 * [x] ~~~**GitHub Actions** multi-platform CI~~~ - ✅
 * [x] ~~~README badges~~~ - ✅

@@ -52,7 +52,7 @@ Your consumer code then uses:
 
 ### CMake installation
 
-**BDUT** provides CMake 3.20+ support: an `INTERFACE` library target, install rules, and an exported `BDUT-config.cmake` package so downstream projects can use `find_package(BDUT)`.
+**BDUT** provides CMake 3.20+ support: an `INTERFACE` library target, install rules, and an exported `bdut-config.cmake` package so downstream projects can use `find_package(BDUT)`.
 
 Quick start (from a clone of this repository):
 

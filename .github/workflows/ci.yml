@@ -158,7 +158,7 @@ jobs:
         run: |
           set -euo pipefail
           test -f "${INSTALL_PREFIX}/include/bdut/bdut.h"
-          test -f "${INSTALL_PREFIX}/lib/cmake/BDUT/BDUT-config.cmake"
+          test -f "${INSTALL_PREFIX}/lib/cmake/bdut/bdut-config.cmake"
 
       - name: Configure and run install smoke consumer
         shell: bash

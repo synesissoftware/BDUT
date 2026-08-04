@@ -1,4 +1,10 @@
-#  **BDUT** Changes
+# BDUT Changes <!-- omit in toc -->
+
+
+## 4th August 2026 - 0.4.1
+
+* **CMakeLists.txt** — export package as lowercase **bdut-config.cmake** under **lib/cmake/bdut/** (fixes Linux `find_package(BDUT)` install-smoke; matches **Pantheios**/ **b64** convention);
+* **ci.yml**, **INSTALL.md**, **README.md**, **vcpkg** — updated install-path / config-file references;
 
 
 ## 29th June 2026 - 0.4.1

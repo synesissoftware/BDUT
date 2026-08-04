@@ -5,7 +5,7 @@
 # Purpose:  Top-level CMake lists file for BDUT
 #
 # Created:  7th March 2024
-# Updated:  31st July 2026
+# Updated:  4th August 2026
 #
 # ######################################################################## #
 
@@ -232,7 +232,7 @@ install(
 
 include(CMakePackageConfigHelpers)
 
-set(EXPORT_NAME ${PROJECT_NAME_UPPER})
+set(EXPORT_NAME ${PROJECT_NAME_LOWER})
 
 configure_package_config_file(
 	${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EXPORT_NAME}-config.cmake.in
