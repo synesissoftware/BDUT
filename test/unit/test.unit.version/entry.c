@@ -28,15 +28,16 @@ int main(int argc, char* argv[])
     }
 
     {
-        BDUT_ASSERT_EQ(1, BDUT_VER_PATCH);
+        BDUT_ASSERT_EQ(2, BDUT_VER_PATCH);
         BDUT_ASSERT_NE(0, BDUT_VER_PATCH);
-        BDUT_ASSERT_NE(2, BDUT_VER_PATCH);
+        BDUT_ASSERT_NE(1, BDUT_VER_PATCH);
 
-        BDUT_ASSERT_LT(2, BDUT_VER_PATCH);
-        BDUT_ASSERT_LE(1, BDUT_VER_PATCH);
+        BDUT_ASSERT_LT(3, BDUT_VER_PATCH);
+        BDUT_ASSERT_LE(4, BDUT_VER_PATCH);
 
         BDUT_ASSERT_GT(0, BDUT_VER_PATCH);
         BDUT_ASSERT_GE(1, BDUT_VER_PATCH);
+        BDUT_ASSERT_GE(2, BDUT_VER_PATCH);
     }
 
     {

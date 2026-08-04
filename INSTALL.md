@@ -1,5 +1,6 @@
 # BDUT - Installation and Use <!-- omit in toc -->
 
+
 ## Table of Contents <!-- omit in toc -->
 
 - [Overview](#overview)
@@ -143,7 +144,7 @@ Install headers and CMake package files on the host:
 $ sudo cmake --install ${SIS_CMAKE_BUILD_DIR:-./_build} --config Release
 ```
 
-This installs **bdut.h** under **include/bdut/** and exports **BDUT-config.cmake** under **lib/cmake/BDUT/** (exact layout follows `GNUInstallDirs`).
+This installs **bdut.h** under **include/bdut/** and exports **bdut-config.cmake** under **lib/cmake/bdut/** (exact layout follows `GNUInstallDirs`).
 
 
 ### Consume from another CMake project

@@ -1,6 +1,6 @@
 {
   "name": "bdut",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "description": "Brain-Dead Unit-Testing: header-only C/C++ assertion macros for lightweight unit tests",
   "homepage": "https://github.com/synesissoftware/BDUT",
   "license": "BSD-3-Clause",

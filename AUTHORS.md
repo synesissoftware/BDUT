@@ -1,4 +1,4 @@
-# BDUT - Authors
+# BDUT - Authors <!-- omit in toc -->
 
 ## Major Contributors:
 

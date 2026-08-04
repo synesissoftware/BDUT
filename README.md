@@ -1,37 +1,37 @@
 # BDUT <!-- omit in toc -->
 
+**B**rain-**D**ead **U**nit-**T**esting, extremely lightweight, single-header unit-testing for C and C++.
+
+
 ![C](https://img.shields.io/badge/C-00599C?style=flat&logo=c&logoColor=white)
 ![C++](https://img.shields.io/badge/C%2B%2B-00599C?style=flat&logo=c%2B%2B&logoColor=white)
 [![License](https://img.shields.io/badge/License-BSD_3--Clause-blue.svg)](https://opensource.org/licenses/BSD-3-Clause)
 [![GitHub release](https://img.shields.io/github/v/release/synesissoftware/BDUT.svg)](https://github.com/synesissoftware/BDUT/releases/latest)
 [![Last Commit](https://img.shields.io/github/last-commit/synesissoftware/BDUT)](https://github.com/synesissoftware/BDUT/commits/master)
-[![CMake on multiple platforms](https://github.com/synesissoftware/BDUT/actions/workflows/cmake-multi-platform.yml/badge.svg)](https://github.com/synesissoftware/BDUT/actions/workflows/cmake-multi-platform.yml)
+[![CI](https://github.com/synesissoftware/BDUT/actions/workflows/ci.yml/badge.svg)](https://github.com/synesissoftware/BDUT/actions/workflows/ci.yml)
 
-**B**rain-**D**ead **U**nit-**T**esting, extremely lightweight, single-header unit-testing for C and C++.
+
+## Table of Contents <!-- omit in toc -->
+
+- [Introduction](#introduction)
+- [Installation](#installation)
+	- [Manual installation](#manual-installation)
+	- [CMake installation](#cmake-installation)
+- [API reference](#api-reference)
+- [Examples](#examples)
+	- [Passing example](#passing-example)
+	- [Failure output examples](#failure-output-examples)
+- [Project Information](#project-information)
+	- [Where to get help](#where-to-get-help)
+	- [Contribution guidelines](#contribution-guidelines)
+	- [Dependencies](#dependencies)
+	- [Related projects](#related-projects)
+	- [License](#license)
 
 
 ## Introduction
 
 **B**rain-**D**ead **U**nit-**T**esting, is a very simple - simplistic, in fact - small, header-only, standalone library for C and C++. Its intent is to be bundled into other projects for which it is not desired to couple to a more sophisticated library.
-
-
-## Table of Contents
-
-- [Introduction](#introduction)
-- [Table of Contents](#table-of-contents)
-- [Installation](#installation)
-  - [Manual installation](#manual-installation)
-  - [CMake installation](#cmake-installation)
-- [API reference](#api-reference)
-- [Examples](#examples)
-  - [Passing example](#passing-example)
-  - [Failure output examples](#failure-output-examples)
-- [Project Information](#project-information)
-  - [Where to get help](#where-to-get-help)
-  - [Contribution guidelines](#contribution-guidelines)
-  - [Dependencies](#dependencies)
-  - [Related projects](#related-projects)
-  - [License](#license)
 
 
 ## Installation
@@ -52,7 +52,7 @@ Your consumer code then uses:
 
 ### CMake installation
 
-**BDUT** provides CMake 3.20+ support: an `INTERFACE` library target, install rules, and an exported `BDUT-config.cmake` package so downstream projects can use `find_package(BDUT)`.
+**BDUT** provides CMake 3.20+ support: an `INTERFACE` library target, install rules, and an exported `bdut-config.cmake` package so downstream projects can use `find_package(BDUT)`.
 
 Quick start (from a clone of this repository):
 

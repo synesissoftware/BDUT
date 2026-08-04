@@ -5,7 +5,7 @@
 # Purpose:  Top-level CMake lists file for BDUT
 #
 # Created:  7th March 2024
-# Updated:  7th September 2025
+# Updated:  4th August 2026
 #
 # ######################################################################## #
 
@@ -57,16 +57,22 @@ set(PROJECT_VERSION_MINOR ${_VERSION_MINOR})
 set(PROJECT_VERSION_PATCH ${_VERSION_PATCH})
 set(PROJECT_VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT_VERSION_PATCH}")
 
-# adhere strictly to C and C++ standards plus extensions. These are actually
-# useless since we do not compile anything; they merely state our intention.
+# Strict ISO language modes (no GNU extensions). Consumers such as **p99**
+# build with C_EXTENSIONS OFF; BDUT's own tests/examples must do the same so
+# CI catches header portability defects (e.g. undeclared POSIX `fileno()`).
 set(CMAKE_C_STANDARD 17)
 set(CMAKE_C_STANDARD_REQUIRED ON)
-set(CMAKE_C_EXTENSIONS ON) # GNU extensions and POSIX standard
+set(CMAKE_C_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
-set(CMAKE_CXX_EXTENSIONS ON)
+set(CMAKE_CXX_EXTENSIONS OFF)
 
 if(MSVC)
+
+	if(MSVC_VERSION LESS 1800)
+
+		add_compile_options("/wd4996")
+	endif()
 
 	if(MSVC_VERSION LESS 1930)
 
@@ -227,7 +233,7 @@ install(
 
 include(CMakePackageConfigHelpers)
 
-set(EXPORT_NAME ${PROJECT_NAME_UPPER})
+set(EXPORT_NAME ${PROJECT_NAME_LOWER})
 
 configure_package_config_file(
 	${CMAKE_CURRENT_SOURCE_DIR}/cmake/${EXPORT_NAME}-config.cmake.in
