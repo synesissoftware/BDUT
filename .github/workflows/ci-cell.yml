@@ -34,7 +34,11 @@ jobs:
 
       - name: Install TCC (Ubuntu)
         if: runner.os == 'Linux' && inputs.c-compiler == 'tcc'
-        run: sudo apt-get update && sudo apt-get install -y tcc
+        run: |
+          set -euo pipefail
+          sudo apt-get update && sudo apt-get install -y tcc
+          command -v tcc
+          tcc -v
 
       - name: Setup MSYS2 MinGW
         if: runner.os == 'Windows' && inputs.c-compiler == 'mingw'
@@ -77,6 +81,18 @@ jobs:
               -DBUILD_EXAMPLES=${build_examples} \
               -DBUILD_TESTING=ON
           fi
+
+      - name: Verify CMake selected TinyCC
+        if: inputs.c-compiler == 'tcc'
+        shell: bash
+        run: |
+          set -euo pipefail
+          c_id=$(sed -n 's/^CMAKE_C_COMPILER_ID:INTERNAL=//p' build/CMakeCache.txt)
+          c_path=$(sed -n 's/^CMAKE_C_COMPILER:FILEPATH=//p' build/CMakeCache.txt)
+          echo "CMAKE_C_COMPILER_ID=${c_id}"
+          echo "CMAKE_C_COMPILER=${c_path}"
+          test "${c_id}" = "TinyCC"
+          case "${c_path}" in *tcc*) ;; *) echo "unexpected C compiler path: ${c_path}"; exit 1 ;; esac
 
       - name: Build
         shell: bash
