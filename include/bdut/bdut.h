@@ -52,9 +52,9 @@
 
 #ifndef BDUT_DOCUMENTATION_SKIP_SECTION
 # define BDUT_VER_BDUT_H_BDUT_MAJOR     2
-# define BDUT_VER_BDUT_H_BDUT_MINOR     2
-# define BDUT_VER_BDUT_H_BDUT_REVISION  4
-# define BDUT_VER_BDUT_H_BDUT_EDIT      25
+# define BDUT_VER_BDUT_H_BDUT_MINOR     3
+# define BDUT_VER_BDUT_H_BDUT_REVISION  0
+# define BDUT_VER_BDUT_H_BDUT_EDIT      26
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 
 
@@ -115,7 +115,15 @@
 
 #ifdef _WIN32
 
+# ifndef WIN32_LEAN_AND_MEAN
+#  define WIN32_LEAN_AND_MEAN
+# endif
 # include <io.h>
+# include <windows.h>
+
+# ifndef ENABLE_VIRTUAL_TERMINAL_PROCESSING
+#  define ENABLE_VIRTUAL_TERMINAL_PROCESSING                (0x0004)
+# endif
 #else
 
 # include <unistd.h>
@@ -425,6 +433,118 @@ BDUT_isatty_(
 #endif
 }
 
+#ifdef _WIN32
+
+/* Obtains the Windows OS build number via RtlGetVersion, or 0 on failure.
+ */
+BDUT_INLINE_
+unsigned
+BDUT_windows_build_number_(void)
+{
+    typedef LONG (WINAPI *BDUT_RtlGetVersion_fn_t_)(OSVERSIONINFOW*);
+
+    HMODULE const ntdll = GetModuleHandleW(L"ntdll.dll");
+
+    if (NULL != ntdll)
+    {
+        BDUT_RtlGetVersion_fn_t_ const RtlGetVersion = (BDUT_RtlGetVersion_fn_t_)GetProcAddress(ntdll, "RtlGetVersion");
+
+        if (NULL != RtlGetVersion)
+        {
+            OSVERSIONINFOW osvi = { 0 };
+
+            osvi.dwOSVersionInfoSize = sizeof(osvi);
+
+            if (0 == RtlGetVersion(&osvi))
+            {
+                return osvi.dwBuildNumber;
+            }
+        }
+    }
+
+    return 0;
+}
+
+BDUT_INLINE_
+int
+BDUT_try_enable_console_vt_(
+    HANDLE h
+)
+{
+    DWORD mode;
+
+    if (NULL == h ||
+        INVALID_HANDLE_VALUE == h)
+    {
+        return 0;
+    }
+
+    if (!GetConsoleMode(h, &mode))
+    {
+        return 0;
+    }
+
+    if (0 != (mode & ENABLE_VIRTUAL_TERMINAL_PROCESSING))
+    {
+        return 1;
+    }
+
+    return SetConsoleMode(h, mode | ENABLE_VIRTUAL_TERMINAL_PROCESSING) ? 1 : 0;
+}
+#endif /* _WIN32 */
+
+/* Determines whether ANSI colour sequences may safely be emitted.
+ *
+ * On Windows this inspects the OS build and, for builds that require it,
+ * attempts SetConsoleMode(... | ENABLE_VIRTUAL_TERMINAL_PROCESSING) on the
+ * standard output and error handles. On other platforms it returns
+ * non-zero.
+ */
+BDUT_INLINE_
+int
+BDUT_console_supports_ansi_(void)
+{
+#ifdef _WIN32
+
+    /* Cache: `SetConsoleMode` is a process-wide console side-effect. */
+    static int s_determined;
+    static int s_supports;
+
+    if (!s_determined)
+    {
+        unsigned const build = BDUT_windows_build_number_();
+
+        /* Windows 11 (22000+) typically accepts ANSI without opt-in. */
+        if (build >= 22000u)
+        {
+            s_supports = 1;
+        }
+        else if (build >= 16257u ||
+                 0u == build)
+        {
+            /* Windows 10 builds that support VT processing, or unknown
+             * build (best-effort): expand compatibility via SetConsoleMode.
+             */
+            int const out_ok = BDUT_try_enable_console_vt_(GetStdHandle(STD_OUTPUT_HANDLE));
+            int const err_ok = BDUT_try_enable_console_vt_(GetStdHandle(STD_ERROR_HANDLE));
+
+            s_supports = (out_ok || err_ok) ? 1 : 0;
+        }
+        else
+        {
+            s_supports = 0;
+        }
+
+        s_determined = 1;
+    }
+
+    return s_supports;
+#else
+
+    return 1;
+#endif
+}
+
 
 /** @brief Determines whether \c needle is found within \c haystack
  *
@@ -497,7 +617,8 @@ BDUT_report_assertion_failure_and_abort_(
     char const* clr_pre = "";
     char const* clr_post = "";
 
-    if (BDUT_isatty_(stderr))
+    if (BDUT_isatty_(stderr) &&
+        BDUT_console_supports_ansi_())
     {
         clr_pre = "\x1B[1;31m";
         clr_post = "\033[0m";
@@ -691,7 +812,8 @@ BDUT_report_tests_passed_(
     char const* clr_pre = "";
     char const* clr_post = "";
 
-    if (BDUT_isatty_(stdout))
+    if (BDUT_isatty_(stdout) &&
+        BDUT_console_supports_ansi_())
     {
         clr_pre = "\x1B[1;32m";
         clr_post = "\033[0m";
@@ -718,6 +840,7 @@ static
 void
 BDUT_reference_all_impl_functions_(void)
 {
+    ((void)&BDUT_console_supports_ansi_);
     ((void)&BDUT_strcontains_);
     ((void)&BDUT_report_assertion_failure_and_abort_);
     ((void)&BDUT_report_string_contains_failure_and_abort_);
