@@ -1,6 +1,13 @@
 # BDUT - CHANGES <!-- omit in toc -->
 
 
+## 0.5.0-alpha1 - 6th August 2026
+
+* Added **Doxyfile** with `BDUT_DOCUMENTATION_SKIP_SECTION` predefined so generated docs expose the public assertion API without internal helpers;
+* Added **generate_doxygen.sh** (aligned with **cstring** / **Diagnosticism**);
+* Added **doc/mainpage.md** as the Doxygen main page (replacing **README.md**, which produced noisy TOC/badge content);
+
+
 ## 0.4.2 - 4th August 2026
 
 * **bdut.h** — `BDUT_isatty_()` uses POSIX `fileno()` when feature-test macros or a non-strict dialect indicate it is available; otherwise maps `stdin`/`stdout`/`stderr` via `STDIN`/`STDOUT`/`STDERR`_FILENO so strict `-std=c11` consumers with `-Werror=implicit-function-declaration` build cleanly; colour failure output based on **stderr** TTY state;
