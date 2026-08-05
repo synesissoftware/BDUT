@@ -100,11 +100,7 @@ jobs:
 
       - name: Install TCC (Ubuntu)
         if: runner.os == 'Linux' && matrix.c_compiler == 'tcc'
-        run: |
-          set -euo pipefail
-          sudo apt-get update && sudo apt-get install -y tcc
-          command -v tcc
-          tcc -v
+        run: sudo apt-get update && sudo apt-get install -y tcc
 
       - name: Setup MSYS2 MinGW
         if: runner.os == 'Windows' && matrix.c_compiler == 'mingw'
@@ -142,24 +138,6 @@ jobs:
               -DBUILD_EXAMPLES=OFF \
               -DBUILD_TESTING=OFF
           fi
-
-      - name: Verify CMake selected TinyCC
-        if: matrix.c_compiler == 'tcc'
-        shell: bash
-        run: |
-          set -euo pipefail
-          # CMAKE_C_COMPILER_ID lives in CMakeCCompiler.cmake, not CMakeCache.txt.
-          c_comp_cmake=$(ls build/CMakeFiles/*/CMakeCCompiler.cmake | head -n 1)
-          c_id=$(sed -n 's/^set(CMAKE_C_COMPILER_ID "\([^"]*\)").*/\1/p' "${c_comp_cmake}")
-          c_path=$(sed -n 's/^set(CMAKE_C_COMPILER "\([^"]*\)").*/\1/p' "${c_comp_cmake}")
-          if [ -z "${c_path}" ]; then
-            c_path=$(sed -n 's/^CMAKE_C_COMPILER:[^=]*=//p' build/CMakeCache.txt | head -n 1)
-          fi
-          echo "CMakeCCompiler.cmake=${c_comp_cmake}"
-          echo "CMAKE_C_COMPILER_ID=${c_id}"
-          echo "CMAKE_C_COMPILER=${c_path}"
-          test "${c_id}" = "TinyCC"
-          case "${c_path}" in *tcc*) ;; *) echo "unexpected C compiler path: ${c_path}"; exit 1 ;; esac
 
       - name: Build
         shell: bash

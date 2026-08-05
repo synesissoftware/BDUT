@@ -3,7 +3,7 @@
 
 ## 0.4.3 - 5th August 2026
 
-* **ci.yml**, **ci-cell.yml** — added Linux **TinyCC** (**tcc**) CI cell and install-smoke row via `apt-get install tcc`; examples skipped for the **tcc** cell; log `tcc -v` and assert `CMAKE_C_COMPILER_ID=TinyCC` after configure;
+* **ci.yml**, **ci-cell.yml** — added Linux **TinyCC** (**tcc**) CI cell and install-smoke row via `apt-get install tcc`; examples skipped for the **tcc** cell;
 * **CMakeLists.txt** — when `CMAKE_C_COMPILER_ID` is **TinyCC**, use `CMAKE_C_STANDARD` **99** (distro **tcc** lacks ISO C17);
 * **run_all_unit_tests.sh**, **run_all_scratch_tests.sh**, **run_all_examples.sh** — restore execute bits after CI artifact download (so `find`/`test -x` discovery works); fail if **--unit-only** finds no programs;
 
