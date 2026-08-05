@@ -1,7 +1,7 @@
-# BDUT Changes <!-- omit in toc -->
+# BDUT - CHANGES <!-- omit in toc -->
 
 
-## 4th August 2026 - 0.4.2
+## 0.4.2 - 4th August 2026
 
 * **bdut.h** — `BDUT_isatty_()` uses POSIX `fileno()` when feature-test macros or a non-strict dialect indicate it is available; otherwise maps `stdin`/`stdout`/`stderr` via `STDIN`/`STDOUT`/`STDERR`_FILENO so strict `-std=c11` consumers with `-Werror=implicit-function-declaration` build cleanly; colour failure output based on **stderr** TTY state;
 * **CMakeLists.txt** — export package as lowercase **bdut-config.cmake** under **lib/cmake/bdut/** (fixes Linux `find_package(BDUT)` install-smoke; matches **Pantheios**/ **b64** convention);

@@ -1,4 +1,4 @@
-# Contributing to BDUT <!-- omit in toc -->
+# BDUT - Contributing <!-- omit in toc -->
 
 Thank you for your interest in **BDUT**. This document covers how to report issues, propose changes, and validate them locally.
 
