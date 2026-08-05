@@ -114,6 +114,9 @@ if [ $status -eq 0 ]; then
     echo "Running all scratch (and performance) test programs"
   fi
 
+  # GitHub Actions artifacts restore files as non-executable (mode 644).
+  find $CMakeDir -type f '(' -name 'test_scratch*' -o -name 'test.scratch.*' -o -name 'test_performance*' -o -name 'test.performance.*' ')' -exec chmod +x {} +
+
   for f in $(find $CMakeDir -type f '(' -name 'test_scratch*' -o -name 'test.scratch.*' -o -name 'test_performance*' -o -name 'test.performance.*' ')' -exec test -x {} \; -print)
   do
 
