@@ -148,8 +148,14 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-          c_id=$(sed -n 's/^CMAKE_C_COMPILER_ID:INTERNAL=//p' build/CMakeCache.txt)
-          c_path=$(sed -n 's/^CMAKE_C_COMPILER:FILEPATH=//p' build/CMakeCache.txt)
+          # CMAKE_C_COMPILER_ID lives in CMakeCCompiler.cmake, not CMakeCache.txt.
+          c_comp_cmake=$(ls build/CMakeFiles/*/CMakeCCompiler.cmake | head -n 1)
+          c_id=$(sed -n 's/^set(CMAKE_C_COMPILER_ID "\([^"]*\)").*/\1/p' "${c_comp_cmake}")
+          c_path=$(sed -n 's/^set(CMAKE_C_COMPILER "\([^"]*\)").*/\1/p' "${c_comp_cmake}")
+          if [ -z "${c_path}" ]; then
+            c_path=$(sed -n 's/^CMAKE_C_COMPILER:[^=]*=//p' build/CMakeCache.txt | head -n 1)
+          fi
+          echo "CMakeCCompiler.cmake=${c_comp_cmake}"
           echo "CMAKE_C_COMPILER_ID=${c_id}"
           echo "CMAKE_C_COMPILER=${c_path}"
           test "${c_id}" = "TinyCC"
