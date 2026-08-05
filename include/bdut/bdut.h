@@ -54,7 +54,7 @@
 # define BDUT_VER_BDUT_H_BDUT_MAJOR     2
 # define BDUT_VER_BDUT_H_BDUT_MINOR     3
 # define BDUT_VER_BDUT_H_BDUT_REVISION  0
-# define BDUT_VER_BDUT_H_BDUT_EDIT      26
+# define BDUT_VER_BDUT_H_BDUT_EDIT      27
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 
 
@@ -443,16 +443,32 @@ BDUT_windows_build_number_(void)
 {
     typedef LONG (WINAPI *BDUT_RtlGetVersion_fn_t_)(OSVERSIONINFOW*);
 
+# if defined(__cplusplus) && \
+     __cplusplus >= 201402L
+
+    using std::memcpy;
+# endif
+
     HMODULE const ntdll = GetModuleHandleW(L"ntdll.dll");
 
     if (NULL != ntdll)
     {
-        BDUT_RtlGetVersion_fn_t_ const RtlGetVersion = (BDUT_RtlGetVersion_fn_t_)GetProcAddress(ntdll, "RtlGetVersion");
+        /* Avoid -Wcast-function-type (MinGW -Werror): FARPROC is not a
+         * compatible function-pointer type for a direct cast.
+         */
+        FARPROC const proc = GetProcAddress(ntdll, "RtlGetVersion");
+        BDUT_RtlGetVersion_fn_t_ RtlGetVersion = NULL;
+
+        if (NULL != proc)
+        {
+            memcpy(&RtlGetVersion, &proc, sizeof(RtlGetVersion));
+        }
 
         if (NULL != RtlGetVersion)
         {
-            OSVERSIONINFOW osvi = { 0 };
+            OSVERSIONINFOW osvi;
 
+            ZeroMemory(&osvi, sizeof(osvi));
             osvi.dwOSVersionInfoSize = sizeof(osvi);
 
             if (0 == RtlGetVersion(&osvi))

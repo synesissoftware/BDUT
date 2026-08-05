@@ -4,6 +4,7 @@
 ## 0.5.0-alpha1 - 6th August 2026
 
 * **bdut.h** — Windows colour-console support now probes the OS build number and, where needed, enables virtual terminal processing via `SetConsoleMode` so ANSI colours are not emitted on incompatible consoles;
+* **bdut.h** — MinGW/`-Werror` fixes for `GetProcAddress` (`-Wcast-function-type`) and `OSVERSIONINFOW` zero-init (`-Wmissing-field-initializers`);
 * Added **Doxyfile** with `BDUT_DOCUMENTATION_SKIP_SECTION` predefined so generated docs expose the public assertion API without internal helpers;
 * Added **generate_doxygen.sh** (aligned with **cstring** / **Diagnosticism**);
 * Added **doc/mainpage.md** as the Doxygen main page (replacing **README.md**, which produced noisy TOC/badge content);
