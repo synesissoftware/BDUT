@@ -1,7 +1,7 @@
 # BDUT Changes <!-- omit in toc -->
 
 
-## 0.4.3 - 5th August 2026
+## 0.4.3 - 6th August 2026
 
 * **ci.yml**, **ci-cell.yml** — added Linux **TinyCC** (**tcc**) CI cell and install-smoke row via `apt-get install tcc`; examples skipped for the **tcc** cell;
 * **CMakeLists.txt** — when `CMAKE_C_COMPILER_ID` is **TinyCC**, use `CMAKE_C_STANDARD` **99** (distro **tcc** lacks ISO C17);
