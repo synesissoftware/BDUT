@@ -13,5 +13,5 @@
 *.sln linguist-detectable=false
 *.vcxproj linguist-detectable=false
 *.vimrc linguist-detectable=false
-CMakeLists.txt linguist-language=CMake
+CMakeLists.txt linguist-detectable=false
 makefile linguist-detectable=false

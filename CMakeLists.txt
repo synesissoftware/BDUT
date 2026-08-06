@@ -5,7 +5,7 @@
 # Purpose:  Top-level CMake lists file for BDUT
 #
 # Created:  7th March 2024
-# Updated:  4th August 2026
+# Updated:  5th August 2026
 #
 # ######################################################################## #
 
@@ -66,6 +66,13 @@ set(CMAKE_C_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD 23)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
+
+# Distro TinyCC (e.g. Ubuntu `tcc` 0.9.27) does not implement ISO C17; keep
+# a portable C99 dialect so the Linux TCC CI cell can exercise the C path.
+if(CMAKE_C_COMPILER_ID STREQUAL "TinyCC")
+
+	set(CMAKE_C_STANDARD 99)
+endif()
 
 if(MSVC)
 

@@ -162,8 +162,16 @@ if [ $status -eq 0 ]; then
     find_name_expr=( \( -name 'test_unit*' -o -name 'test.unit.*' -o -name 'test_component*' -o -name 'test.component.*' \) )
   fi
 
+  # GitHub Actions artifacts restore files as non-executable (mode 644); restore
+  # +x so discovery via `test -x` still works after download-artifact.
+  find "$CMakeDir" -type f "${find_name_expr[@]}" -exec chmod +x {} +
+
+  found=0
+
   for f in $(find "$CMakeDir" -type f "${find_name_expr[@]}" -exec test -x {} \; -print | sort)
   do
+
+    found=1
 
     if [ $ListOnly -ne 0 ]; then
 
@@ -192,6 +200,13 @@ if [ $status -eq 0 ]; then
       break 1
     fi
   done
+
+  if [ $found -eq 0 ] && [ $UnitOnly -ne 0 ]; then
+
+    >&2 echo "$ScriptPath: no unit-test programs found under $CMakeDir"
+
+    exit 1
+  fi
 fi
 
 exit $status
