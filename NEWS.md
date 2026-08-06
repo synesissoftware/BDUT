@@ -1,9 +1,10 @@
-# BDUT News <!-- omit in toc -->
+# BDUT - News <!-- omit in toc -->
 
 
 | Date                | News Item                                                               |
 | ------------------- | ----------------------------------------------------------------------- |
-| 5th August 2026     | Release of [**BDUT** 0.4.3](https://github.com/synesissoftware/BDUT/releases/tag/0.4.3)  |
+| 7th August 2026     | Release of [**BDUT** 0.5.0-alpha1](https://github.com/synesissoftware/BDUT/releases/tag/0.5.0-alpha1) |
+| 6th August 2026     | Release of [**BDUT** 0.4.3](https://github.com/synesissoftware/BDUT/releases/tag/0.4.3)  |
 | 4th August 2026     | Release of [**BDUT** 0.4.2](https://github.com/synesissoftware/BDUT/releases/tag/0.4.2)  |
 | 1st August 2026     | Release of [**BDUT** 0.4.1](https://github.com/synesissoftware/BDUT/releases/tag/0.4.1)  |
 | 6th September 2025  | Release of [**BDUT** 0.4.0](https://github.com/synesissoftware/BDUT/releases/tag/0.4.0)  |

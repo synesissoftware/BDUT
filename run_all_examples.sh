@@ -123,13 +123,14 @@ if [ $status -eq 0 ]; then
     echo "Running all example programs"
   fi
 
-  # GitHub Actions artifacts restore files as non-executable (mode 644).
+  # GitHub Actions artifacts restore files as non-executable (mode 644);
+  # restore +x only on named example binaries (not CMake Makefiles / .cmake).
   if [ -d "$CMakeDir/examples" ]; then
 
-    find $CMakeDir/examples -type f -exec chmod +x {} +
+    find $CMakeDir/examples -type f -name 'example*' -exec chmod +x {} +
   fi
 
-  for f in $(find $CMakeDir/examples -type f -exec test -x {} \; -print)
+  for f in $(find $CMakeDir/examples -type f -name 'example*' -exec test -x {} \; -print)
   do
 
     if [ $ListOnly -ne 0 ]; then

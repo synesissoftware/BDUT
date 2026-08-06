@@ -1,14 +1,23 @@
-# BDUT Changes <!-- omit in toc -->
+# BDUT - CHANGES <!-- omit in toc -->
+
+
+## 0.5.0-alpha1 - 6th August 2026
+
+* **bdut.h** — Windows colour-console support now probes the OS build number and, where needed, enables virtual terminal processing via `SetConsoleMode` so ANSI colours are not emitted on incompatible consoles;
+* **bdut.h** — MinGW/`-Werror` fixes for `GetProcAddress` (`-Wcast-function-type`) and `OSVERSIONINFOW` zero-init (`-Wmissing-field-initializers`);
+* Added **Doxyfile** with `BDUT_DOCUMENTATION_SKIP_SECTION` predefined so generated docs expose the public assertion API without internal helpers;
+* Added **generate_doxygen.sh** (aligned with **cstring** / **Diagnosticism**);
+* Added **doc/mainpage.md** as the Doxygen main page (replacing **README.md**, which produced noisy TOC/badge content);
 
 
 ## 0.4.3 - 6th August 2026
 
 * **ci.yml**, **ci-cell.yml** — added Linux **TinyCC** (**tcc**) CI cell and install-smoke row via `apt-get install tcc`; examples skipped for the **tcc** cell;
 * **CMakeLists.txt** — when `CMAKE_C_COMPILER_ID` is **TinyCC**, use `CMAKE_C_STANDARD` **99** (distro **tcc** lacks ISO C17);
-* **run_all_unit_tests.sh**, **run_all_scratch_tests.sh**, **run_all_examples.sh** — restore execute bits after CI artifact download (so `find`/`test -x` discovery works); fail if **--unit-only** finds no programs;
+* **run_all_unit_tests.sh**, **run_all_scratch_tests.sh**, **run_all_examples.sh** — restore execute bits after CI artifact download (so `find`/`test -x` discovery works); examples restore/discover only `example*` binaries (not CMake build artefacts); fail if **--unit-only** finds no programs;
 
 
-## 0.4.2 4th August 2026
+## 0.4.2 - 4th August 2026
 
 * **bdut.h** — `BDUT_isatty_()` uses POSIX `fileno()` when feature-test macros or a non-strict dialect indicate it is available; otherwise maps `stdin`/`stdout`/`stderr` via `STDIN`/`STDOUT`/`STDERR`_FILENO so strict `-std=c11` consumers with `-Werror=implicit-function-declaration` build cleanly; colour failure output based on **stderr** TTY state;
 * **CMakeLists.txt** — export package as lowercase **bdut-config.cmake** under **lib/cmake/bdut/** (fixes Linux `find_package(BDUT)` install-smoke; matches **Pantheios**/ **b64** convention);

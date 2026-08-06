@@ -1,0 +1,67 @@
+# Doxyfile for BDUT (C/C++ API)
+
+PROJECT_NAME           = "BDUT"
+PROJECT_BRIEF          = "Brain-Dead Unit-Testing: extremely lightweight, single-header unit-testing for C and C++"
+PROJECT_NUMBER         = 0.5.0-alpha1
+
+# Prefer SIS_CMAKE_BUILD_DIR-aligned output (same convention as cstring / Diagnosticism).
+# ./dox/ remains gitignored for legacy/local runs that override OUTPUT_DIRECTORY.
+OUTPUT_DIRECTORY       = _build/doxygen
+CREATE_SUBDIRS         = NO
+
+OPTIMIZE_OUTPUT_FOR_C  = YES
+OUTPUT_LANGUAGE        = English
+TAB_SIZE               = 4
+FULL_PATH_NAMES        = NO
+STRIP_FROM_PATH        = .
+STRIP_FROM_INC_PATH    = include
+TIMESTAMP              = NO
+
+INPUT                  = include/bdut \
+                         doc
+FILE_PATTERNS          = *.h \
+                         *.md
+RECURSIVE              = NO
+
+USE_MDFILE_AS_MAINPAGE = doc/mainpage.md
+
+EXAMPLE_PATH           = examples
+EXAMPLE_RECURSIVE      = YES
+
+EXTRACT_ALL            = YES
+EXTRACT_PRIVATE        = NO
+EXTRACT_STATIC         = NO
+HIDE_UNDOC_MEMBERS     = NO
+HIDE_UNDOC_CLASSES     = NO
+
+GENERATE_HTML          = YES
+GENERATE_LATEX         = NO
+HTML_OUTPUT            = html
+
+GENERATE_TREEVIEW      = YES
+DISABLE_INDEX          = NO
+SEARCHENGINE           = YES
+SOURCE_BROWSER         = YES
+REFERENCED_BY_RELATION = YES
+REFERENCES_RELATION    = YES
+VERBATIM_HEADERS       = YES
+
+MARKDOWN_SUPPORT       = YES
+JAVADOC_AUTOBRIEF      = YES
+QUIET                  = YES
+
+WARN_IF_UNDOCUMENTED   = YES
+WARN_NO_PARAMDOC       = YES
+WARN_IF_DOC_ERROR      = YES
+
+ENABLE_PREPROCESSING   = YES
+MACRO_EXPANSION        = YES
+EXPAND_ONLY_PREDEF     = YES
+SKIP_FUNCTION_MACROS   = YES
+# Hide implementation / internal macros and functions from the generated docs.
+PREDEFINED             = BDUT_DOCUMENTATION_SKIP_SECTION
+
+HAVE_DOT               = NO
+
+
+# ########################### end of file ########################### #
