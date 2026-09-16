@@ -1,4 +1,4 @@
-# BDUT - CHANGES <!-- omit in toc -->
+# BDUT - Changes <!-- omit in toc -->
 
 
 ## 0.5.0-alpha1 7 6th August 2026
