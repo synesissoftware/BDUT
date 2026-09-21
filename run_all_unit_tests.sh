@@ -12,7 +12,7 @@ ListOnly=0
 RunMake=1
 UnitOnly=0
 ComponentOnly=0
-Verbosity=${TEST_VERBOSITY:-3}
+Verbosity=${XTESTS_VERBOSITY:-${TEST_VERBOSITY:-3}}
 
 
 # ##########################################################
