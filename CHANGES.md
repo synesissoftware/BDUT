@@ -10,7 +10,12 @@
 * Restored historical **.gitignore** patterns as a sorted union with **misc-dev-scripts** gold section layout;
 
 
-## 0.5.0-alpha1 7 6th August 2026
+## 0.5.0 - 6th August 2026
+
+0.5.0
+
+
+## 0.5.0-alpha1 - 6th August 2026
 
 * **bdut.h** — Windows colour-console support now probes the OS build number and, where needed, enables virtual terminal processing via `SetConsoleMode` so ANSI colours are not emitted on incompatible consoles;
 * **bdut.h** — MinGW/`-Werror` fixes for `GetProcAddress` (`-Wcast-function-type`) and `OSVERSIONINFOW` zero-init (`-Wmissing-field-initializers`);
