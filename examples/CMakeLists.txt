@@ -30,6 +30,14 @@ endif()
 
 foreach(d c cpp)
 
+	# The Linux TinyCC CI cell exercises the C examples only.
+	if(("${d}" STREQUAL "cpp") AND (CMAKE_C_COMPILER_ID STREQUAL "TinyCC"))
+
+		message(STATUS "skipping C++ examples: C compiler is TinyCC")
+
+		continue()
+	endif()
+
 	if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/${d}")
 
 		add_subdirectory(${d})

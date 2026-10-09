@@ -1,0 +1,8 @@
+# Example programs that are allowed to fail: BDUT is a unit-testing library,
+# so some of its examples demonstrate assertion failures.
+# run_all_examples.{sh,cmd} still executes each of them, but reports a
+# non-zero exit as anticipated rather than failing the run.
+# List program names or stems (example_1-c and example_1-c.exe are
+# equivalent).
+example_1-c
+example_1-cpp

@@ -35,6 +35,7 @@
 * [x] ~~~Remove stale **projects/core** references from example **CMakeLists.txt**; link examples/tests via **BDUT::BDUT**~~~ - ✅
 * [x] ~~~Consumer **FetchContent** snippet in INSTALL~~~ - ✅
 * [x] ~~~Optional **vcpkg** port~~~ - ✅ (overlay port in **vcpkg/ports/bdut/**)
+* [x] ~~~Move the allowed-to-fail lists (**ci_examples_allowed_to_fail.txt**, **ci_scratch_tests_allowed_to_fail.txt**) from **.github/** to **.sis/**~~~ - ✅;
 
 
 <!-- ########################### end of file ########################### -->
