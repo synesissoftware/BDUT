@@ -65,16 +65,13 @@ jobs:
               -DBUILD_EXAMPLES=ON \
               -DBUILD_TESTING=ON
           else
-            # TinyCC: exercise tests only; skip examples (incl. C++).
-            build_examples=ON
-            if [ "${{ inputs.c-compiler }}" = "tcc" ]; then
-              build_examples=OFF
-            fi
+            # TinyCC: C examples only; examples/CMakeLists.txt skips the
+            # C++ examples when the C compiler is TinyCC.
             cmake -B build -S . \
               -DCMAKE_BUILD_TYPE="${{ inputs.build-type }}" \
               -DCMAKE_C_COMPILER="${{ inputs.c-compiler }}" \
               -DCMAKE_CXX_COMPILER="${{ inputs.cpp-compiler }}" \
-              -DBUILD_EXAMPLES=${build_examples} \
+              -DBUILD_EXAMPLES=ON \
               -DBUILD_TESTING=ON
           fi
 
@@ -103,7 +100,6 @@ jobs:
   run-examples:
     name: Examples (${{ inputs.cell-id }})
     needs: build
-    if: inputs.c-compiler != 'tcc'
     runs-on: ${{ inputs.os }}
 
     steps:
