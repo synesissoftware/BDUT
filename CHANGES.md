@@ -5,7 +5,7 @@
 
 * Adopted **misc-dev-scripts** SisClr **cmake-helpers** gold tip: **run_all_component_tests.sh**, **run_all_examples.sh**, **run_all_performance_tests.sh**, **run_all_scratch_tests.sh**, and **run_all_unit_tests.sh** re-synced (unit/component forward `--verbosity`; examples/scratch/performance do not); native `cmd.exe` **.cmd** counterparts;
 * **test/scratch/versions** — scratch version reporter target renamed from `versions` to `test.scratch.versions` (Phase 4c), so that **run_all_scratch_tests.sh** discovers it;
-* Added **.github/ci_examples_allowed_to_fail.txt** and **.github/ci_scratch_tests_allowed_to_fail.txt**, honoured by **run_all_examples.{sh,cmd}** and **run_all_scratch_tests.{sh,cmd}**: listed programs (the intentional assertion-failure demonstrations) are still executed, but a non-zero exit is reported as anticipated and no longer fails the run;
+* Added **.sis/ci_examples_allowed_to_fail.txt** and **.sis/ci_scratch_tests_allowed_to_fail.txt**, honoured by **run_all_examples.{sh,cmd}** and **run_all_scratch_tests.{sh,cmd}**: listed programs (the intentional assertion-failure demonstrations) are still executed, but a non-zero exit is reported as anticipated and no longer fails the run;
 * Applied **misc-dev-scripts** **0.6.0** editor/Git/`.sis` drop-in templates on **boilerplate**;
 * Restored historical **.gitignore** patterns as a sorted union with **misc-dev-scripts** gold section layout;
 

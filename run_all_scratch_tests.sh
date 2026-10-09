@@ -27,7 +27,7 @@ CMakeDir=${SIS_CMAKE_BUILD_DIR:-$Dir/_build}
 ProjectNameFile="$Dir/.sis/project_name.txt"
 ProjectName=$(tr -d '[:space:]' < "$ProjectNameFile")
 ScriptPath=$0
-AllowedToFailFile="$Dir/.github/ci_scratch_tests_allowed_to_fail.txt"
+AllowedToFailFile="$Dir/.sis/ci_scratch_tests_allowed_to_fail.txt"
 
 AlwaysUseColours=${SIS_CMAKE_ALWAYS_USE_COLOURS:-${SIS_ALWAYS_USE_COLOURS:-0}}
 ListOnly=0
@@ -132,8 +132,8 @@ sis_program_stem() {
 }
 
 # Succeeds if the program is named (by name or stem, case-insensitively) in
-# the optional .github/ci_scratch_tests_allowed_to_fail.txt file; blank
-# lines and lines beginning with '#' are ignored.
+# the optional .sis/ci_scratch_tests_allowed_to_fail.txt file; blank lines
+# and lines beginning with '#' are ignored.
 sis_is_allowed_to_fail() {
 
   local name line
@@ -206,7 +206,7 @@ Flags/options:
 
     files:
 
-    .github/ci_scratch_tests_allowed_to_fail.txt
+    .sis/ci_scratch_tests_allowed_to_fail.txt
         optional list of scratch-test programs (one name per line; blank
         lines and lines beginning with '#' are ignored) that are allowed to
         fail; such a program is still executed, but a non-zero exit is
@@ -320,7 +320,7 @@ if [ $status -eq 0 ]; then
 
       if sis_is_allowed_to_fail "$f"; then
 
-        echo "${SisClr_Yellow}${SisClr_Bold}anticipated failure${SisClr_None}: ${fClr} exited with status ${fStatus}; it is listed in .github/ci_scratch_tests_allowed_to_fail.txt"
+        echo "${SisClr_Yellow}${SisClr_Bold}anticipated failure${SisClr_None}: ${fClr} exited with status ${fStatus}; it is listed in .sis/ci_scratch_tests_allowed_to_fail.txt"
 
         continue
       fi
