@@ -1,0 +1,9 @@
+# Scratch-test programs that are allowed to fail: BDUT is a unit-testing
+# library, so some of its scratch programs demonstrate assertion failures.
+# run_all_scratch_tests.{sh,cmd} still executes each of them, but reports a
+# non-zero exit as anticipated rather than failing the run.
+# List program names or stems (test.scratch.BDUT_ASSERT_LE and
+# test.scratch.BDUT_ASSERT_LE.exe are equivalent).
+test.scratch.BDUT_ASSERT_LE
+test.scratch.BDUT_ASSERT_STRING_CONTAINS
+test.scratch.BDUT_ASSERT_TRUE
