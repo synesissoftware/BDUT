@@ -82,17 +82,17 @@
 * .gitattributes;
 
 
-## 0.4.0 (alpha 3) - 30th August 2025
+## 0.4.0-alpha3 - 30th August 2025
 
 * GitHub Actions;
 
 
-## 0.4.0 (alpha 2) - 30th August 2025
+## 0.4.0-alpha2 - 30th August 2025
 
 * CTest compatibility;
 
 
-## 0.4.0 (alpha 1) - 30th August 2025
+## 0.4.0-alpha1 - 30th August 2025
 
 * added `BDUT_TESTS_PASSED()`;
 
