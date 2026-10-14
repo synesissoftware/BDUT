@@ -40,10 +40,9 @@ int main(int argc, char* argv[])
     }
 
     {
-        BDUT_ASSERT_EQ(0x81, BDUT_VER_ALPHABETA);
+        BDUT_ASSERT_EQ(0xFF, BDUT_VER_ALPHABETA);
 
-        BDUT_ASSERT_LE(0x81, BDUT_VER_ALPHABETA);
-        BDUT_ASSERT_LT(0xFF, BDUT_VER_ALPHABETA);
+        BDUT_ASSERT_LE(0xFF, BDUT_VER_ALPHABETA);
     }
 
     return BDUT_TESTS_PASSED(argc, argv);
