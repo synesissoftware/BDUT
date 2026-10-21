@@ -29,6 +29,10 @@ int main(int argc, char* argv[])
     BDUT_ASSERT_STRING_CONTAINS("abc", "abcdef");
     BDUT_ASSERT_STRING_CONTAINS("abcdef", "abcdef");
     BDUT_ASSERT_STRING_CONTAINS_MSG("abc", "abcdef", message);
+    BDUT_ASSERT_STRING_EQUAL("abc", "abc");
+    BDUT_ASSERT_STRING_EQUAL_MSG("abc", "abc", message);
+    BDUT_ASSERT_STRING_EQUAL_N("abc", "abd", 2);
+    BDUT_ASSERT_STRING_EQUAL_N_MSG("abc", "abd", 2, message);
 
     return BDUT_TESTS_PASSED(argc, argv);
 }

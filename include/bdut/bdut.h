@@ -52,9 +52,9 @@
 
 #ifndef BDUT_DOCUMENTATION_SKIP_SECTION
 # define BDUT_VER_BDUT_H_BDUT_MAJOR     2
-# define BDUT_VER_BDUT_H_BDUT_MINOR     3
-# define BDUT_VER_BDUT_H_BDUT_REVISION  4
-# define BDUT_VER_BDUT_H_BDUT_EDIT      38
+# define BDUT_VER_BDUT_H_BDUT_MINOR     4
+# define BDUT_VER_BDUT_H_BDUT_REVISION  0
+# define BDUT_VER_BDUT_H_BDUT_EDIT      39
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 
 
@@ -236,6 +236,52 @@
     do { \
         if (!BDUT_strcontains_((haystack), (needle))) { \
             BDUT_report_string_contains_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, (needle), (haystack), (message)); \
+        } \
+    } while (0)
+
+/** @def BDUT_ASSERT_STRING_EQUAL(expected, actual)
+ *
+ * @brief Asserts that \c actual equals \c expected, compared with
+ *   `strcmp()`
+ *
+ * @param expected The expected string
+ * @param actual The actual string
+ *
+ * @note A NULL pointer is compared as an empty string, as with
+ *   \c BDUT_ASSERT_STRING_CONTAINS(). Each operand is evaluated once.
+ */
+
+/** @def BDUT_ASSERT_STRING_EQUAL_N(expected, actual, n)
+ *
+ * @brief Asserts that the first \c n characters of \c actual equal those of
+ *   \c expected, compared with `strncmp()`
+ *
+ * @param expected The expected string
+ * @param actual The actual string
+ * @param n The number of characters to compare
+ *
+ * @note A NULL pointer is compared as an empty string. A count of 0 passes,
+ *   because `strncmp()` treats a zero length as equal. Each operand is
+ *   evaluated once.
+ */
+
+#define BDUT_ASSERT_STRING_EQUAL(expected, actual)          BDUT_ASSERT_STRING_EQUAL_MSG((expected), (actual), NULL)
+#define BDUT_ASSERT_STRING_EQUAL_MSG(expected, actual, message) \
+    do { \
+        char const* bdut_expected_ = (expected); \
+        char const* bdut_actual_ = (actual); \
+        if (!BDUT_streq_(bdut_expected_, bdut_actual_)) { \
+            BDUT_report_string_equal_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, bdut_expected_, bdut_actual_, 0, 0u, (message)); \
+        } \
+    } while (0)
+#define BDUT_ASSERT_STRING_EQUAL_N(expected, actual, n)     BDUT_ASSERT_STRING_EQUAL_N_MSG((expected), (actual), (n), NULL)
+#define BDUT_ASSERT_STRING_EQUAL_N_MSG(expected, actual, n, message) \
+    do { \
+        char const* bdut_expected_ = (expected); \
+        char const* bdut_actual_ = (actual); \
+        size_t bdut_n_ = (n); \
+        if (!BDUT_strneq_(bdut_expected_, bdut_actual_, bdut_n_)) { \
+            BDUT_report_string_equal_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, bdut_expected_, bdut_actual_, 1, bdut_n_, (message)); \
         } \
     } while (0)
 
@@ -712,6 +758,63 @@ BDUT_strcontains_(
     }
 
     return NULL != strstr(haystack, needle);
+}
+
+/** @brief Compares \c expected and \c actual with `strcmp()`. A NULL
+ *   pointer is an empty string.
+ */
+BDUT_INLINE_
+int
+BDUT_streq_(
+    char const* expected
+,   char const* actual
+)
+{
+# if defined(__cplusplus) &&\
+     __cplusplus >= 201402L
+
+    using std::strcmp;
+# endif
+
+    if (NULL == expected)
+    {
+        expected = "";
+    }
+    if (NULL == actual)
+    {
+        actual = "";
+    }
+
+    return 0 == strcmp(expected, actual);
+}
+
+/** @brief Compares the first \c n characters with `strncmp()`. A NULL
+ *   pointer is an empty string.
+ */
+BDUT_INLINE_
+int
+BDUT_strneq_(
+    char const* expected
+,   char const* actual
+,   size_t      n
+)
+{
+# if defined(__cplusplus) &&\
+     __cplusplus >= 201402L
+
+    using std::strncmp;
+# endif
+
+    if (NULL == expected)
+    {
+        expected = "";
+    }
+    if (NULL == actual)
+    {
+        actual = "";
+    }
+
+    return 0 == strncmp(expected, actual, n);
 }
 
 #ifdef __cplusplus
@@ -1223,6 +1326,128 @@ BDUT_report_string_contains_failure_and_abort_(
     }
 }
 
+/** @brief Reports a failed string-equality assertion and terminates.
+ *
+ * @param file The source file
+ * @param line The source line
+ * @param function The source function. May be NULL if the compiler is not
+ *  recognised to support function identification
+ * @param expected The expected string. NULL is reported as empty
+ * @param actual The actual string. NULL is reported as empty
+ * @param with_count Non-zero when the comparison was limited to \c n
+ *  characters
+ * @param n The character count used by `strncmp()`
+ * @param detail Optional message. NULL or empty leaves the text unchanged
+ */
+BDUT_NORETURN_
+BDUT_INLINE_
+void
+BDUT_report_string_equal_failure_and_abort_(
+    char const*     file
+,   int             line
+,   char const*     function
+,   char const*     expected
+,   char const*     actual
+,   int             with_count
+,   size_t          n
+,   char const*     detail
+)
+{
+# if defined(__cplusplus) &&\
+     __cplusplus >= 201402L
+
+    using std::size_t;
+    using std::snprintf;
+    using std::strlen;
+# endif
+
+    char        message[1000];
+    size_t      expected_length;
+    size_t      actual_length;
+    int         expected_width;
+    int         actual_width;
+    char const* expected_ellipsis;
+    char const* actual_ellipsis;
+    int const   sample_max = 200;
+
+    if (NULL == expected)
+    {
+        expected = "";
+    }
+    if (NULL == actual)
+    {
+        actual = "";
+    }
+
+    expected_length = strlen(expected);
+    actual_length = strlen(actual);
+
+    if (expected_length > BDUT_STATIC_CAST_(size_t, sample_max))
+    {
+        expected_width = sample_max;
+        expected_ellipsis = "...";
+    }
+    else
+    {
+        expected_width = BDUT_STATIC_CAST_(int, expected_length);
+        expected_ellipsis = "";
+    }
+
+    if (actual_length > BDUT_STATIC_CAST_(size_t, sample_max))
+    {
+        actual_width = sample_max;
+        actual_ellipsis = "...";
+    }
+    else
+    {
+        actual_width = BDUT_STATIC_CAST_(int, actual_length);
+        actual_ellipsis = "";
+    }
+
+    if (with_count)
+    {
+        int const r = snprintf(
+            message
+        ,   sizeof message
+        ,   "actual string '%.*s%s' not equal-to expected string '%.*s%s' in the first %lu characters"
+        ,   actual_width
+        ,   actual
+        ,   actual_ellipsis
+        ,   expected_width
+        ,   expected
+        ,   expected_ellipsis
+        ,   BDUT_STATIC_CAST_(unsigned long, n)
+        );
+
+        ((void)&r);
+    }
+    else
+    {
+        int const r = snprintf(
+            message
+        ,   sizeof message
+        ,   "actual string '%.*s%s' not equal-to expected string '%.*s%s'"
+        ,   actual_width
+        ,   actual
+        ,   actual_ellipsis
+        ,   expected_width
+        ,   expected
+        ,   expected_ellipsis
+        );
+
+        ((void)&r);
+    }
+
+    BDUT_report_assertion_failure_and_abort_(
+        file
+    ,   line
+    ,   function
+    ,   ""
+    ,   message
+    ,   detail
+    );
+}
+
 BDUT_INLINE_
 int
 BDUT_report_tests_passed_(
@@ -1277,6 +1502,8 @@ BDUT_reference_all_impl_functions_(void)
 {
     ((void)&BDUT_console_supports_ansi_);
     ((void)&BDUT_strcontains_);
+    ((void)&BDUT_streq_);
+    ((void)&BDUT_strneq_);
 # if BDUT_HAS_GENERIC_
 
     ((void)&BDUT_fmt_sint_);
@@ -1288,6 +1515,7 @@ BDUT_reference_all_impl_functions_(void)
     ((void)&BDUT_report_compare_failure_and_abort_);
     ((void)&BDUT_report_assertion_failure_and_abort_);
     ((void)&BDUT_report_string_contains_failure_and_abort_);
+    ((void)&BDUT_report_string_equal_failure_and_abort_);
     ((void)&BDUT_report_tests_passed_);
 }
 # endif

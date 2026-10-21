@@ -3,7 +3,7 @@
 
 | Date                | News Item                                       | Details |
 | ------------------- | ----------------------------------------------- | ------- |
-| 22nd October 2026   | Release of [**BDUT** 0.6.0-beta1](https://github.com/synesissoftware/BDUT/releases/tag/0.6.0-beta1) | compare failures show expected and actual |
+| 22nd October 2026   | Release of [**BDUT** 0.6.0-beta1](https://github.com/synesissoftware/BDUT/releases/tag/0.6.0-beta1) | `STRING_EQUAL`; compare failures show expected and actual |
 | 21st October 2026   | Release of [**BDUT** 0.6.0-alpha1](https://github.com/synesissoftware/BDUT/releases/tag/0.6.0-alpha1) | one C and one C++ example per assertion |
 | 14th October 2026   | Release of [**BDUT** 0.5.1](https://github.com/synesissoftware/BDUT/releases/tag/0.5.1) | `BDUT_VER_RELSTATUS`; scratch versions |
 | 9th October 2026    | Release of [**BDUT** 0.5.1-beta1](https://github.com/synesissoftware/BDUT/releases/tag/0.5.1-beta1) | allowed-to-fail lists; Windows `.cmd` CI |
