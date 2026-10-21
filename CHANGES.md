@@ -1,6 +1,12 @@
 # BDUT - Changes <!-- omit in toc -->
 
 
+## 0.6.0-beta1 - 22nd October 2026
+
+* **bdut.h** — C11 and C++ comparison failures append the rendered expected and actual values; C99, including **TinyCC**, keeps the message-only report;
+* Each example shows a passing literal, a passing `actual` variable, then one intentional failure on an `actual` variable;
+
+
 ## 0.6.0-alpha1 - 21st October 2026
 
 * Replaced **examples/c/example_1** and **examples/cpp/example_1** with one C program and one C++ program for each public assertion macro;
@@ -97,17 +103,17 @@
 * .gitattributes;
 
 
-## 0.4.0 (alpha 3) - 30th August 2025
+## 0.4.0-alpha3 - 30th August 2025
 
 * GitHub Actions;
 
 
-## 0.4.0 (alpha 2) - 30th August 2025
+## 0.4.0-alpha2 - 30th August 2025
 
 * CTest compatibility;
 
 
-## 0.4.0 (alpha 1) - 30th August 2025
+## 0.4.0-alpha1 - 30th August 2025
 
 * added `BDUT_TESTS_PASSED()`;
 
