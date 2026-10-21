@@ -54,7 +54,7 @@
 # define BDUT_VER_BDUT_H_BDUT_MAJOR     2
 # define BDUT_VER_BDUT_H_BDUT_MINOR     3
 # define BDUT_VER_BDUT_H_BDUT_REVISION  3
-# define BDUT_VER_BDUT_H_BDUT_EDIT      35
+# define BDUT_VER_BDUT_H_BDUT_EDIT      36
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 
 
@@ -834,6 +834,11 @@ BDUT_fmt_value_(
 }
 #else /* ? __cplusplus */
 
+/* C90 has no `long long`. These formatters exist only for the C11
+ * `_Generic` value printer.
+ */
+# if BDUT_HAS_GENERIC_
+
 BDUT_INLINE_
 void
 BDUT_fmt_sint_(
@@ -888,6 +893,8 @@ BDUT_fmt_unk_(
 {
     snprintf(buf, n, "?");
 }
+
+# endif /* BDUT_HAS_GENERIC_ */
 #endif /* !__cplusplus */
 
 BDUT_NORETURN_
@@ -962,6 +969,9 @@ BDUT_report_assertion_failure_and_abort_(
     using std::fprintf;
 # endif
 
+    char const* clr_pre = "";
+    char const* clr_post = "";
+
 #if  1 &&\
      !defined(__cplusplus) &&\
      defined(__clang__) &&\
@@ -969,9 +979,6 @@ BDUT_report_assertion_failure_and_abort_(
 
     ((void)&BDUT_reference_all_impl_functions_);
 # endif
-
-    char const* clr_pre = "";
-    char const* clr_post = "";
 
     if (BDUT_isatty_(stderr) &&
         BDUT_console_supports_ansi_())
@@ -1118,21 +1125,23 @@ BDUT_report_string_contains_failure_and_abort_(
             }
         }
 
-        int const r = snprintf(
-            message
-        ,   cch_message
-        ,   fmt
-        ,   width_haystack
-        ,   haystack
-        ,   width_e_haystack
-        ,   ellipsis
-        ,   width_needle
-        ,   needle
-        ,   width_e_needle
-        ,   ellipsis
-        );
+        {
+            int const r = snprintf(
+                message
+            ,   cch_message
+            ,   fmt
+            ,   width_haystack
+            ,   haystack
+            ,   width_e_haystack
+            ,   ellipsis
+            ,   width_needle
+            ,   needle
+            ,   width_e_needle
+            ,   ellipsis
+            );
 
-        ((void)&r);
+            ((void)&r);
+        }
 
         BDUT_report_assertion_failure_and_abort_(
             file
@@ -1161,12 +1170,12 @@ BDUT_report_tests_passed_(
     using std::fprintf;
 # endif
 
+    char const* clr_pre = "";
+    char const* clr_post = "";
+
     ((void)&file);
     ((void)&line);
     ((void)&function);
-
-    char const* clr_pre = "";
-    char const* clr_post = "";
 
     if (BDUT_isatty_(stdout) &&
         BDUT_console_supports_ansi_())
@@ -1198,11 +1207,14 @@ BDUT_reference_all_impl_functions_(void)
 {
     ((void)&BDUT_console_supports_ansi_);
     ((void)&BDUT_strcontains_);
+# if BDUT_HAS_GENERIC_
+
     ((void)&BDUT_fmt_sint_);
     ((void)&BDUT_fmt_uint_);
     ((void)&BDUT_fmt_dbl_);
     ((void)&BDUT_fmt_ptr_);
     ((void)&BDUT_fmt_unk_);
+# endif /* BDUT_HAS_GENERIC_ */
     ((void)&BDUT_report_compare_failure_and_abort_);
     ((void)&BDUT_report_assertion_failure_and_abort_);
     ((void)&BDUT_report_string_contains_failure_and_abort_);

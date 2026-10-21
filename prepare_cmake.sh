@@ -46,6 +46,8 @@ VerboseMakefile=0
 # --no-shwild). The common body below must stay aligned with
 # misc-dev-scripts/shell-scripts/cmake-helpers/prepare_cmake.sh.
 
+CStandard=
+
 
 # ##########################################################
 # colours
@@ -143,6 +145,21 @@ while [[ $# -gt 0 ]]; do
 
       BuildSharedLibs=1
       ;;
+    --c-standard)
+
+      shift
+      CStandard=$1
+      case $CStandard in
+        90|99|11|17|23)
+          ;;
+        *)
+
+          >&2 echo "${ScriptPathClr}: invalid C standard '${SisClr_Red}${SisClr_Bold}$CStandard${SisClr_None}'; expected 90, 99, 11, 17, or 23"
+
+          exit 1
+          ;;
+      esac
+      ;;
     --cmake-verbose-makefile|-v)
 
       VerboseMakefile=1
@@ -190,6 +207,9 @@ Flags/options:
 
     --build-shared-libs
         builds ${ProjectName} as a shared library (BUILD_SHARED_LIBS=ON)
+
+    --c-standard {90|99|11|17|23}
+        sets CMAKE_C_STANDARD; when omitted, CMakeLists.txt defaults apply
 
     -v
     --cmake-verbose-makefile
@@ -250,6 +270,7 @@ echo "Executing CMake for ${ProjectNameClr} (in ${CMakeDirClr})"
 if [ $BuildSharedLibs -eq 0 ]; then CMakeBuildSharedLibsFlag="OFF" ; else CMakeBuildSharedLibsFlag="ON" ; fi
 if [ $ExamplesDisabled -eq 0 ]; then CMakeBuildExamplesFlag="ON" ; else CMakeBuildExamplesFlag="OFF" ; fi
 if [ $MSVC_MT -eq 0 ]; then CMakeMsvcMtFlag="OFF" ; else CMakeMsvcMtFlag="ON" ; fi
+if [ -z "$CStandard" ]; then CMakeCStandardVariable="" ; else CMakeCStandardVariable="-DCMAKE_C_STANDARD=$CStandard" ; fi
 if [ $TestingDisabled -eq 0 ]; then CMakeBuildTestingFlag="ON" ; else CMakeBuildTestingFlag="OFF" ; fi
 if [ $VerboseMakefile -eq 0 ]; then CMakeVerboseMakefileFlag="OFF" ; else CMakeVerboseMakefileFlag="ON" ; fi
 
@@ -276,6 +297,7 @@ cmake \
   -DCMAKE_BUILD_TYPE=$Configuration \
   -DCMAKE_VERBOSE_MAKEFILE:BOOL=$CMakeVerboseMakefileFlag \
   -DMSVC_USE_MT:BOOL=$CMakeMsvcMtFlag \
+  $CMakeCStandardVariable \
   "${CMakeGeneratorArgs[@]}" \
   -B "$CMakeDir" \
   -S "$Dir" \
