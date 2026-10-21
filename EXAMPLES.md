@@ -33,6 +33,7 @@ The **examples/** tree and most **test/scratch/** programs are in the second gro
 | **test.unit.assert_true_false** | [test/unit/test.unit.assert_true_false/entry.c](./test/unit/test.unit.assert_true_false/entry.c) | `BDUT_ASSERT_TRUE`, `BDUT_ASSERT_FALSE`, and their `_MSG` forms |
 | **test.unit.compare** | [test/unit/test.unit.compare/entry.c](./test/unit/test.unit.compare/entry.c) | `BDUT_ASSERT_EQ`, `BDUT_ASSERT_NE`, `BDUT_ASSERT_GE`, `BDUT_ASSERT_GT`, `BDUT_ASSERT_LE`, `BDUT_ASSERT_LT`, and their `_MSG` forms |
 | **test.unit.string_contains** | [test/unit/test.unit.string_contains/entry.c](./test/unit/test.unit.string_contains/entry.c) | `BDUT_ASSERT_STRING_CONTAINS` and `BDUT_ASSERT_STRING_CONTAINS_MSG` |
+| **test.unit.string_equal** | [test/unit/test.unit.string_equal/entry.c](./test/unit/test.unit.string_equal/entry.c) | `BDUT_ASSERT_STRING_EQUAL`, `BDUT_ASSERT_STRING_EQUAL_N`, and their `_MSG` forms |
 | **test.scratch.all_pass** | [test/scratch/test.scratch.all_pass/main.c](./test/scratch/test.scratch.all_pass/main.c) | Combined macro smoke test (manual) |
 
 All **test.unit.*** programs are registered with **CTest** and run in CI.
@@ -58,6 +59,8 @@ Each public assertion has one C program and one C++ program. Each program shows 
 | **example.c.BDUT_ASSERT_LT** | [examples/c/example.c.BDUT_ASSERT_LT/main.c](./examples/c/example.c.BDUT_ASSERT_LT/main.c) | `BDUT_ASSERT_LT` / `BDUT_ASSERT_LT_MSG` |
 | **example.c.BDUT_ASSERT_NE** | [examples/c/example.c.BDUT_ASSERT_NE/main.c](./examples/c/example.c.BDUT_ASSERT_NE/main.c) | `BDUT_ASSERT_NE` / `BDUT_ASSERT_NE_MSG` |
 | **example.c.BDUT_ASSERT_STRING_CONTAINS** | [examples/c/example.c.BDUT_ASSERT_STRING_CONTAINS/main.c](./examples/c/example.c.BDUT_ASSERT_STRING_CONTAINS/main.c) | `BDUT_ASSERT_STRING_CONTAINS` / `BDUT_ASSERT_STRING_CONTAINS_MSG` |
+| **example.c.BDUT_ASSERT_STRING_EQUAL** | [examples/c/example.c.BDUT_ASSERT_STRING_EQUAL/main.c](./examples/c/example.c.BDUT_ASSERT_STRING_EQUAL/main.c) | `BDUT_ASSERT_STRING_EQUAL` / `BDUT_ASSERT_STRING_EQUAL_MSG` |
+| **example.c.BDUT_ASSERT_STRING_EQUAL_N** | [examples/c/example.c.BDUT_ASSERT_STRING_EQUAL_N/main.c](./examples/c/example.c.BDUT_ASSERT_STRING_EQUAL_N/main.c) | `BDUT_ASSERT_STRING_EQUAL_N` / `BDUT_ASSERT_STRING_EQUAL_N_MSG` |
 | **example.c.BDUT_ASSERT_TRUE** | [examples/c/example.c.BDUT_ASSERT_TRUE/main.c](./examples/c/example.c.BDUT_ASSERT_TRUE/main.c) | `BDUT_ASSERT_TRUE` / `BDUT_ASSERT_TRUE_MSG` |
 | **example.cpp.BDUT_ASSERT_EQ** | [examples/cpp/example.cpp.BDUT_ASSERT_EQ/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_EQ/main.cpp) | `BDUT_ASSERT_EQ` / `BDUT_ASSERT_EQ_MSG` |
 | **example.cpp.BDUT_ASSERT_FALSE** | [examples/cpp/example.cpp.BDUT_ASSERT_FALSE/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_FALSE/main.cpp) | `BDUT_ASSERT_FALSE` / `BDUT_ASSERT_FALSE_MSG` |
@@ -67,6 +70,8 @@ Each public assertion has one C program and one C++ program. Each program shows 
 | **example.cpp.BDUT_ASSERT_LT** | [examples/cpp/example.cpp.BDUT_ASSERT_LT/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_LT/main.cpp) | `BDUT_ASSERT_LT` / `BDUT_ASSERT_LT_MSG` |
 | **example.cpp.BDUT_ASSERT_NE** | [examples/cpp/example.cpp.BDUT_ASSERT_NE/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_NE/main.cpp) | `BDUT_ASSERT_NE` / `BDUT_ASSERT_NE_MSG` |
 | **example.cpp.BDUT_ASSERT_STRING_CONTAINS** | [examples/cpp/example.cpp.BDUT_ASSERT_STRING_CONTAINS/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_STRING_CONTAINS/main.cpp) | `BDUT_ASSERT_STRING_CONTAINS` / `BDUT_ASSERT_STRING_CONTAINS_MSG` |
+| **example.cpp.BDUT_ASSERT_STRING_EQUAL** | [examples/cpp/example.cpp.BDUT_ASSERT_STRING_EQUAL/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_STRING_EQUAL/main.cpp) | `BDUT_ASSERT_STRING_EQUAL` / `BDUT_ASSERT_STRING_EQUAL_MSG` |
+| **example.cpp.BDUT_ASSERT_STRING_EQUAL_N** | [examples/cpp/example.cpp.BDUT_ASSERT_STRING_EQUAL_N/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_STRING_EQUAL_N/main.cpp) | `BDUT_ASSERT_STRING_EQUAL_N` / `BDUT_ASSERT_STRING_EQUAL_N_MSG` |
 | **example.cpp.BDUT_ASSERT_TRUE** | [examples/cpp/example.cpp.BDUT_ASSERT_TRUE/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_TRUE/main.cpp) | `BDUT_ASSERT_TRUE` / `BDUT_ASSERT_TRUE_MSG` |
 
 ### test/scratch/

@@ -103,9 +103,13 @@ Write tests as sequential assertions in `main()`. When all pass, return `BDUT_TE
 | `BDUT_ASSERT_LT_MSG(expected, actual, message)` | Same, then appends `message` |
 | `BDUT_ASSERT_STRING_CONTAINS(needle, haystack)` | Asserts `needle` is a substring of `haystack` |
 | `BDUT_ASSERT_STRING_CONTAINS_MSG(needle, haystack, message)` | Same, then appends `message` |
+| `BDUT_ASSERT_STRING_EQUAL(expected, actual)` | Asserts `strcmp(expected, actual) == 0` |
+| `BDUT_ASSERT_STRING_EQUAL_MSG(expected, actual, message)` | Same, then appends `message` |
+| `BDUT_ASSERT_STRING_EQUAL_N(expected, actual, n)` | Asserts `strncmp(expected, actual, n) == 0` |
+| `BDUT_ASSERT_STRING_EQUAL_N_MSG(expected, actual, n, message)` | Same, then appends `message` |
 | `BDUT_TESTS_PASSED(argc, argv)` | Call after all assertions pass; prints success and returns 0 |
 
-On failure, **BDUT** prints file, line, optional function name, and a message to **stderr**, then calls `exit(1)`. Each `_MSG` macro takes a `char const* message` and appends it after the standard text. NULL or `""` leaves that text unchanged.
+On failure, **BDUT** prints file, line, optional function name, and a message to **stderr**, then calls `exit(1)`. Each `_MSG` macro takes a `char const* message` and appends it after the standard text. NULL or `""` leaves that text unchanged. String comparisons treat a NULL pointer as an empty string. `BDUT_ASSERT_STRING_EQUAL_N` with a count of 0 passes.
 
 Version macros (`BDUT_VER_MAJOR`, `BDUT_VER_MINOR`, `BDUT_VER_PATCH`, `BDUT_VER`, etc.) are defined in **include/bdut/bdut.h**.
 
@@ -136,6 +140,7 @@ int main(int argc, char* argv[])
   BDUT_ASSERT_GE(123, 123);
 
   BDUT_ASSERT_STRING_CONTAINS("abc", "abcdef");
+  BDUT_ASSERT_STRING_EQUAL("abc", "abc");
 
   return BDUT_TESTS_PASSED(argc, argv);
 }
