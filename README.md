@@ -149,10 +149,14 @@ The **examples/** programs under this repository are deliberately written to fai
 
 int main(int argc, char* argv[])
 {
+    int const actual1 = 1;
+    int const actual2 = 2;
+
     BDUT_ASSERT_EQ(1, 1);
+    BDUT_ASSERT_EQ(1, actual1);
 
     /* this one will fail */
-    BDUT_ASSERT_EQ(1, 2);
+    BDUT_ASSERT_EQ(1, actual2);
 
     return BDUT_TESTS_PASSED(argc, argv);
 }
@@ -161,7 +165,7 @@ int main(int argc, char* argv[])
 The output of this will be along the lines of:
 
 ```bash
-~/open-source/BDUT/examples/c/example.c.BDUT_ASSERT_EQ/main.c:9:main: assertion failed: actual value of `2` not equal-to expected value `1`
+~/open-source/BDUT/examples/c/example.c.BDUT_ASSERT_EQ/main.c:13:main: assertion failed: actual value of `actual2` not equal-to expected value `1` (expected 1, actual 2)
 ```
 
 Similarly, **examples/cpp/example.cpp.BDUT_ASSERT_STRING_CONTAINS** demonstrates string containment failure:
@@ -173,11 +177,14 @@ Similarly, **examples/cpp/example.cpp.BDUT_ASSERT_STRING_CONTAINS** demonstrates
 
 int main(int argc, char* argv[])
 {
+    char const* const actual_abc = "abc";
+    char const* const actual_abd = "abd";
+
     BDUT_ASSERT_STRING_CONTAINS("", "abcdefghijklmnopqrstuvwxyz");
-    BDUT_ASSERT_STRING_CONTAINS("abc", "abcdefghijklmnopqrstuvwxyz");
+    BDUT_ASSERT_STRING_CONTAINS(actual_abc, "abcdefghijklmnopqrstuvwxyz");
 
     /* this one will fail */
-    BDUT_ASSERT_STRING_CONTAINS("abd", "abcdefghijklmnopqrstuvwxyz");
+    BDUT_ASSERT_STRING_CONTAINS(actual_abd, "abcdefghijklmnopqrstuvwxyz");
 
     return BDUT_TESTS_PASSED(argc, argv);
 }
@@ -186,7 +193,7 @@ int main(int argc, char* argv[])
 The output of this will be along the lines of:
 
 ```bash
-~/open-source/BDUT/examples/cpp/example.cpp.BDUT_ASSERT_STRING_CONTAINS/main.cpp:10:main: assertion failed: actual string 'abcdefghijklmnopqrstuvwxyz' does not contain search string 'abd'
+~/open-source/BDUT/examples/cpp/example.cpp.BDUT_ASSERT_STRING_CONTAINS/main.cpp:13:main: assertion failed: actual string 'abcdefghijklmnopqrstuvwxyz' does not contain search string 'abd'
 ```
 
 

@@ -3,11 +3,14 @@
 
 int main(int argc, char* argv[])
 {
+    int const actual1 = 1;
+    int const actual2 = 2;
+
     BDUT_ASSERT_GE(1, 1);
-    BDUT_ASSERT_GE(1, 2);
+    BDUT_ASSERT_GE(1, actual2);
 
     /* this one will fail */
-    BDUT_ASSERT_GE(2, 1);
+    BDUT_ASSERT_GE(2, actual1);
 
     return BDUT_TESTS_PASSED(argc, argv);
 }

@@ -4,7 +4,7 @@
  * Purpose: Brain-Dead Unit-Testing
  *
  * Created: 18th July 2020
- * Updated: 21st October 2026
+ * Updated: 22nd October 2026
  *
  * Home:    http://github.com/synesissoftware/BDUT
  *
@@ -53,8 +53,8 @@
 #ifndef BDUT_DOCUMENTATION_SKIP_SECTION
 # define BDUT_VER_BDUT_H_BDUT_MAJOR     2
 # define BDUT_VER_BDUT_H_BDUT_MINOR     3
-# define BDUT_VER_BDUT_H_BDUT_REVISION  2
-# define BDUT_VER_BDUT_H_BDUT_EDIT      31
+# define BDUT_VER_BDUT_H_BDUT_REVISION  3
+# define BDUT_VER_BDUT_H_BDUT_EDIT      35
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 
 
@@ -81,7 +81,7 @@
 #define BDUT_VER_MAJOR                                      0
 #define BDUT_VER_MINOR                                      6
 #define BDUT_VER_PATCH                                      0
-#define BDUT_VER_RELSTATUS                                  0x41
+#define BDUT_VER_RELSTATUS                                  0x81
 
 #define BDUT_VER \
     (0\
@@ -101,7 +101,7 @@
  * includes
  */
 
-#if defined(__cplusplus) && \
+#if defined(__cplusplus) &&\
     __cplusplus >= 201402L
 
 # include <cstddef>
@@ -147,8 +147,8 @@
  * @brief Asserts that the expression is falsey
  */
 
-#define BDUT_ASSERT_TRUE(expr)                              BDUT_ASSERT_(expr, #expr " was not true")
-#define BDUT_ASSERT_FALSE(expr)                             BDUT_ASSERT_(!(expr), #expr " was not false")
+#define BDUT_ASSERT_TRUE(expr)                              BDUT_ASSERT_(expr, "`" #expr "` was not true")
+#define BDUT_ASSERT_FALSE(expr)                             BDUT_ASSERT_(!(expr), "`" #expr "` was not false")
 
 /** @def BDUT_ASSERT_EQ(expected, actual)
  *
@@ -280,7 +280,77 @@
         } \
     } while (0)
 
-# define BDUT_CHECK_COMPARE_(expected, actual, op, msg)     BDUT_ASSERT_((expected) op (actual), msg)
+/* C11 `_Generic` (and C++ overloads) print values after a failed compare.
+ * The operands are evaluated again on that path. C99, including TinyCC,
+ * keeps the message-only report.
+ */
+# if !defined(__cplusplus) &&\
+     defined(__STDC_VERSION__) &&\
+     __STDC_VERSION__ >= 201112L
+
+#  define BDUT_HAS_GENERIC_                                 1
+# else
+
+#  define BDUT_HAS_GENERIC_                                 0
+# endif
+
+# if defined(__cplusplus)
+
+#  define BDUT_CHECK_COMPARE_(expected, actual, op, msg)                    \
+                                                                            \
+    do {                                                                    \
+        if (!((expected) op (actual))) {                                    \
+            char bdut_ebuf_[64];                                            \
+            char bdut_abuf_[64];                                            \
+            BDUT_fmt_value_(bdut_ebuf_, sizeof bdut_ebuf_, (expected));     \
+            BDUT_fmt_value_(bdut_abuf_, sizeof bdut_abuf_, (actual));       \
+            BDUT_report_compare_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, (msg), bdut_ebuf_, bdut_abuf_); \
+        }                                                                   \
+    } while (0)
+# elif BDUT_HAS_GENERIC_
+
+/* Associations are function designators. Clang type-checks every arm, so
+ * the operand is converted only in the selected call, not inside an arm.
+ */
+#  define BDUT_FMT_VALUE_(buf, buflen, expr)                                \
+                                                                            \
+    _Generic((expr)                                                         \
+        , char:                   BDUT_fmt_sint_                            \
+        , signed char:            BDUT_fmt_sint_                            \
+        , short:                  BDUT_fmt_sint_                            \
+        , int:                    BDUT_fmt_sint_                            \
+        , long:                   BDUT_fmt_sint_                            \
+        , long long:              BDUT_fmt_sint_                            \
+        , _Bool:                  BDUT_fmt_sint_                            \
+        , unsigned char:          BDUT_fmt_uint_                            \
+        , unsigned short:         BDUT_fmt_uint_                            \
+        , unsigned int:           BDUT_fmt_uint_                            \
+        , unsigned long:          BDUT_fmt_uint_                            \
+        , unsigned long long:     BDUT_fmt_uint_                            \
+        , float:                  BDUT_fmt_dbl_                             \
+        , double:                 BDUT_fmt_dbl_                             \
+        , long double:            BDUT_fmt_dbl_                             \
+        , char*:                  BDUT_fmt_ptr_                             \
+        , char const*:            BDUT_fmt_ptr_                             \
+        , void*:                  BDUT_fmt_ptr_                             \
+        , void const*:            BDUT_fmt_ptr_                             \
+        , default:                BDUT_fmt_unk_                             \
+    )((buf), (buflen), (expr))
+
+#  define BDUT_CHECK_COMPARE_(expected, actual, op, msg)                    \
+    do {                                                                    \
+        if (!((expected) op (actual))) {                                    \
+            char bdut_ebuf_[64];                                            \
+            char bdut_abuf_[64];                                            \
+            BDUT_FMT_VALUE_(bdut_ebuf_, sizeof bdut_ebuf_, (expected));     \
+            BDUT_FMT_VALUE_(bdut_abuf_, sizeof bdut_abuf_, (actual));       \
+            BDUT_report_compare_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, (msg), bdut_ebuf_, bdut_abuf_); \
+        }                                                                   \
+    } while (0)
+# else
+
+#  define BDUT_CHECK_COMPARE_(expected, actual, op, msg)    BDUT_ASSERT_((expected) op (actual), msg)
+# endif
 
 
 
@@ -311,7 +381,7 @@
 #endif /* compiler */
 
 
-# if defined(__cplusplus) && \
+# if defined(__cplusplus) &&\
      __cplusplus >= 201703L
 
 #  include <string>
@@ -333,10 +403,10 @@
 #  define BDUT_STATIC_CAST_(t, v)                           static_cast<t>(v)
 # else
 
-#  if 1 && \
-      defined(__STDC_VERSION__) && \
+#  if 1 &&\
+      defined(__STDC_VERSION__) &&\
       __STDC_VERSION__ >= 199901L &&\
-      !defined(__clang__) && \
+      !defined(__clang__) &&\
       1
 
 #   define BDUT_INLINE_                                     static inline
@@ -347,7 +417,7 @@
 #  define BDUT_STATIC_CAST_(t, v)                           ((t)(v))
 # endif
 
-# if defined(__cplusplus) && \
+# if defined(__cplusplus) &&\
      __cplusplus >= 201402L
 
 #  define BDUT_NORETURN_                                    [[noreturn]]
@@ -357,7 +427,7 @@
 # elif defined(__GNUC__) || defined(__clang__)
 
 #  define BDUT_NORETURN_                                    __attribute__((noreturn))
-# elif defined(__STDC_VERSION__) && \
+# elif defined(__STDC_VERSION__) &&\
        __STDC_VERSION__ >= 201112L
 
 #  define BDUT_NORETURN_                                    _Noreturn
@@ -374,9 +444,9 @@
 
 #ifndef BDUT_DOCUMENTATION_SKIP_SECTION
 
-# if 1 && \
-     !defined(__cplusplus) && \
-     defined(__clang__) && \
+# if 1 &&\
+     !defined(__cplusplus) &&\
+     defined(__clang__) &&\
      1
 
 static
@@ -446,7 +516,7 @@ BDUT_windows_build_number_(void)
 {
     typedef LONG (WINAPI *BDUT_RtlGetVersion_fn_t_)(OSVERSIONINFOW*);
 
-# if defined(__cplusplus) && \
+# if defined(__cplusplus) &&\
      __cplusplus >= 201402L
 
     using std::memcpy;
@@ -459,8 +529,8 @@ BDUT_windows_build_number_(void)
         /* Avoid -Wcast-function-type (MinGW -Werror): FARPROC is not a
          * compatible function-pointer type for a direct cast.
          */
-        FARPROC const proc = GetProcAddress(ntdll, "RtlGetVersion");
-        BDUT_RtlGetVersion_fn_t_ RtlGetVersion = NULL;
+        FARPROC const               proc            =   GetProcAddress(ntdll, "RtlGetVersion");
+        BDUT_RtlGetVersion_fn_t_    RtlGetVersion   =   NULL;
 
         if (NULL != proc)
         {
@@ -580,7 +650,7 @@ BDUT_strcontains_(
 ,   char const* needle
 )
 {
-# if defined(__cplusplus) && \
+# if defined(__cplusplus) &&\
      __cplusplus >= 201402L
 
     using std::strstr;
@@ -596,6 +666,273 @@ BDUT_strcontains_(
     }
 
     return NULL != strstr(haystack, needle);
+}
+
+#ifdef __cplusplus
+
+/* User-defined conversion ranks below the arithmetic overloads, so a type
+ * with no dedicated formatter still compares and prints "?".
+ */
+struct BDUT_fmt_fallback_
+{
+    template <typename T>
+    BDUT_fmt_fallback_(T const&)
+    {}
+};
+
+BDUT_INLINE_
+void
+BDUT_fmt_value_(
+    char*                       buf
+,   size_t                      n
+,   BDUT_fmt_fallback_ const&
+)
+{
+# if __cplusplus >= 201402L
+
+    using std::snprintf;
+# endif
+
+    snprintf(buf, n, "?");
+}
+
+BDUT_INLINE_
+void
+BDUT_fmt_value_(
+    char*                       buf
+,   size_t                      n
+,   bool                        v
+)
+{
+# if __cplusplus >= 201402L
+
+    using std::snprintf;
+# endif
+
+    snprintf(buf, n, "%s", v ? "true" : "false");
+}
+
+BDUT_INLINE_
+void
+BDUT_fmt_value_(
+    char*                       buf
+,   size_t                      n
+,   long long                   v
+)
+{
+# if __cplusplus >= 201402L
+
+    using std::snprintf;
+# endif
+
+    snprintf(buf, n, "%lld", v);
+}
+
+BDUT_INLINE_
+void
+BDUT_fmt_value_(
+    char*                       buf
+,   size_t                      n
+,   unsigned long long          v
+)
+{
+# if __cplusplus >= 201402L
+
+    using std::snprintf;
+# endif
+
+    snprintf(buf, n, "%llu", v);
+}
+
+BDUT_INLINE_
+void
+BDUT_fmt_value_(
+    char*                       buf
+,   size_t                      n
+,   double                      v
+)
+{
+# if __cplusplus >= 201402L
+
+    using std::snprintf;
+# endif
+
+    snprintf(buf, n, "%g", v);
+}
+
+/* Exact arithmetic overloads. A literal `1` otherwise converts equally well
+ * to bool, long long, unsigned long long, and double.
+ */
+# define BDUT_DEFINE_FMT_SINT_(t) \
+    BDUT_INLINE_ \
+    void \
+    BDUT_fmt_value_( \
+        char*                       buf \
+    ,   size_t                      n \
+    ,   t                           v \
+    ) \
+    { \
+        BDUT_fmt_value_(buf, n, BDUT_STATIC_CAST_(long long, v)); \
+    }
+
+# define BDUT_DEFINE_FMT_UINT_(t) \
+    BDUT_INLINE_ \
+    void \
+    BDUT_fmt_value_( \
+        char*                       buf \
+    ,   size_t                      n \
+    ,   t                           v \
+    ) \
+    { \
+        BDUT_fmt_value_(buf, n, BDUT_STATIC_CAST_(unsigned long long, v)); \
+    }
+
+BDUT_DEFINE_FMT_SINT_(char)
+BDUT_DEFINE_FMT_SINT_(signed char)
+BDUT_DEFINE_FMT_UINT_(unsigned char)
+BDUT_DEFINE_FMT_SINT_(short)
+BDUT_DEFINE_FMT_UINT_(unsigned short)
+BDUT_DEFINE_FMT_SINT_(int)
+BDUT_DEFINE_FMT_UINT_(unsigned int)
+BDUT_DEFINE_FMT_SINT_(long)
+BDUT_DEFINE_FMT_UINT_(unsigned long)
+
+# undef BDUT_DEFINE_FMT_SINT_
+# undef BDUT_DEFINE_FMT_UINT_
+
+# define BDUT_DEFINE_FMT_DBL_(t) \
+    BDUT_INLINE_ \
+    void \
+    BDUT_fmt_value_( \
+        char*                       buf \
+    ,   size_t                      n \
+    ,   t                           v \
+    ) \
+    { \
+        BDUT_fmt_value_(buf, n, BDUT_STATIC_CAST_(double, v)); \
+    }
+
+BDUT_DEFINE_FMT_DBL_(float)
+BDUT_DEFINE_FMT_DBL_(long double)
+
+# undef BDUT_DEFINE_FMT_DBL_
+
+BDUT_INLINE_
+void
+BDUT_fmt_value_(
+    char*                       buf
+,   size_t                      n
+,   void const*                 v
+)
+{
+# if __cplusplus >= 201402L
+
+    using std::snprintf;
+# endif
+
+    snprintf(buf, n, "%p", const_cast<void*>(v));
+}
+#else /* ? __cplusplus */
+
+BDUT_INLINE_
+void
+BDUT_fmt_sint_(
+    char*                       buf
+,   size_t                      n
+,   long long                   v
+)
+{
+    snprintf(buf, n, "%lld", v);
+}
+
+BDUT_INLINE_
+void
+BDUT_fmt_uint_(
+    char*                       buf
+,   size_t                      n
+,   unsigned long long          v
+)
+{
+    snprintf(buf, n, "%llu", v);
+}
+
+BDUT_INLINE_
+void
+BDUT_fmt_dbl_(
+    char*                       buf
+,   size_t                      n
+,   double                      v
+)
+{
+    snprintf(buf, n, "%g", v);
+}
+
+BDUT_INLINE_
+void
+BDUT_fmt_ptr_(
+    char*                       buf
+,   size_t                      n
+,   void const*                 v
+)
+{
+    snprintf(buf, n, "%p", BDUT_STATIC_CAST_(void*, v));
+}
+
+BDUT_INLINE_
+void
+BDUT_fmt_unk_(
+    char*                       buf
+,   size_t                      n
+,   ...
+)
+{
+    snprintf(buf, n, "?");
+}
+#endif /* !__cplusplus */
+
+BDUT_NORETURN_
+BDUT_INLINE_
+void
+BDUT_report_assertion_failure_and_abort_(
+    char const*     file
+,   int             line
+,   char const*     function
+,   char const*     expr
+,   char const*     message
+);
+
+/** @brief TBC
+ *
+ * @param file The source file
+ * @param line The source line
+ * @param function The source function. May be NULL if the compiler is not
+ *  recognised to support function identification
+ * @param message The comparison message
+ * @param expected The rendered expected value
+ * @param actual The rendered actual value
+ */
+BDUT_NORETURN_
+BDUT_INLINE_
+void
+BDUT_report_compare_failure_and_abort_(
+    char const*     file
+,   int             line
+,   char const*     function
+,   char const*     message
+,   char const*     expected
+,   char const*     actual
+)
+{
+# if defined(__cplusplus) &&\
+     __cplusplus >= 201402L
+
+    using std::snprintf;
+# endif
+
+    char composed[512];
+
+    snprintf(composed, sizeof composed, "%s (expected %s, actual %s)", message, expected, actual);
+    BDUT_report_assertion_failure_and_abort_(file, line, function, "", composed);
 }
 
 /** @brief TBC
@@ -618,16 +955,16 @@ BDUT_report_assertion_failure_and_abort_(
 ,   char const*     message
 )
 {
-# if defined(__cplusplus) && \
+# if defined(__cplusplus) &&\
     __cplusplus >= 201402L
 
     using std::exit;
     using std::fprintf;
 # endif
 
-#if  1 && \
-     !defined(__cplusplus) && \
-     defined(__clang__) && \
+#if  1 &&\
+     !defined(__cplusplus) &&\
+     defined(__clang__) &&\
      1
 
     ((void)&BDUT_reference_all_impl_functions_);
@@ -695,7 +1032,7 @@ BDUT_report_string_contains_failure_and_abort_(
 ,   char const*     haystack
 )
 {
-# if defined(__cplusplus) && \
+# if defined(__cplusplus) &&\
      __cplusplus >= 201402L
 
     using std::size_t;
@@ -817,7 +1154,7 @@ BDUT_report_tests_passed_(
 ,   char*           argv[]
 )
 {
-# if defined(__cplusplus) && \
+# if defined(__cplusplus) &&\
     __cplusplus >= 201402L
 
     using std::exit;
@@ -850,9 +1187,9 @@ BDUT_report_tests_passed_(
     return 0;
 }
 
-# if 1 && \
-     !defined(__cplusplus) && \
-     defined(__clang__) && \
+# if 1 &&\
+     !defined(__cplusplus) &&\
+     defined(__clang__) &&\
      1
 
 static
@@ -861,6 +1198,12 @@ BDUT_reference_all_impl_functions_(void)
 {
     ((void)&BDUT_console_supports_ansi_);
     ((void)&BDUT_strcontains_);
+    ((void)&BDUT_fmt_sint_);
+    ((void)&BDUT_fmt_uint_);
+    ((void)&BDUT_fmt_dbl_);
+    ((void)&BDUT_fmt_ptr_);
+    ((void)&BDUT_fmt_unk_);
+    ((void)&BDUT_report_compare_failure_and_abort_);
     ((void)&BDUT_report_assertion_failure_and_abort_);
     ((void)&BDUT_report_string_contains_failure_and_abort_);
     ((void)&BDUT_report_tests_passed_);
