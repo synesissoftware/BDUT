@@ -143,47 +143,50 @@ my_tests: ALL TESTS PASSED
 The **examples/** programs under this repository are deliberately written to fail, in order to illustrate assertion output. For example:
 
 ```C
-/* examples/c/example_1/main.c */
+/* examples/c/example.c.BDUT_ASSERT_EQ/main.c */
 
 #include <bdut/bdut.h>
 
 int main(int argc, char* argv[])
 {
-  BDUT_ASSERT_EQ(1, 2);
+    BDUT_ASSERT_EQ(1, 1);
 
-  return BDUT_TESTS_PASSED(argc, argv);
+    /* this one will fail */
+    BDUT_ASSERT_EQ(1, 2);
+
+    return BDUT_TESTS_PASSED(argc, argv);
 }
 ```
 
 The output of this will be along the lines of:
 
 ```bash
-~/open-source/BDUT/examples/c/example_1/main.c:7:main: assertion failed: actual value of `2` not equal-to expected value `1`
+~/open-source/BDUT/examples/c/example.c.BDUT_ASSERT_EQ/main.c:9:main: assertion failed: actual value of `2` not equal-to expected value `1`
 ```
 
-Similarly, the C++ example **examples/cpp/example_1** demonstrates string containment failure:
+Similarly, **examples/cpp/example.cpp.BDUT_ASSERT_STRING_CONTAINS** demonstrates string containment failure:
 
 ```C++
-/* examples/cpp/example_1/main.cpp */
+/* examples/cpp/example.cpp.BDUT_ASSERT_STRING_CONTAINS/main.cpp */
 
 #include <bdut/bdut.h>
 
 int main(int argc, char* argv[])
 {
-  BDUT_ASSERT_STRING_CONTAINS("", "abcdefghijklmnopqrstuvwxyz");
-  BDUT_ASSERT_STRING_CONTAINS("abc", "abcdefghijklmnopqrstuvwxyz");
+    BDUT_ASSERT_STRING_CONTAINS("", "abcdefghijklmnopqrstuvwxyz");
+    BDUT_ASSERT_STRING_CONTAINS("abc", "abcdefghijklmnopqrstuvwxyz");
 
-  /* this one will fail */
-  BDUT_ASSERT_STRING_CONTAINS("abd", "abcdefghijklmnopqrstuvwxyz");
+    /* this one will fail */
+    BDUT_ASSERT_STRING_CONTAINS("abd", "abcdefghijklmnopqrstuvwxyz");
 
-  return BDUT_TESTS_PASSED(argc, argv);
+    return BDUT_TESTS_PASSED(argc, argv);
 }
 ```
 
 The output of this will be along the lines of:
 
 ```bash
-~/open-source/BDUT/examples/cpp/example_1/main.cpp:15:main: assertion failed: actual string 'abcdefghijklmnopqrstuvwxyz' does not contain search string 'abd'
+~/open-source/BDUT/examples/cpp/example.cpp.BDUT_ASSERT_STRING_CONTAINS/main.cpp:10:main: assertion failed: actual string 'abcdefghijklmnopqrstuvwxyz' does not contain search string 'abd'
 ```
 
 

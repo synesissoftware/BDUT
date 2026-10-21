@@ -1,2 +1,10 @@
 # SIS:AUTO_GENERATED: Remove this line if you edit the file, otherwise it will be overwritten
-add_subdirectory(example_1)
+add_subdirectory(example.c.BDUT_ASSERT_EQ)
+add_subdirectory(example.c.BDUT_ASSERT_FALSE)
+add_subdirectory(example.c.BDUT_ASSERT_GE)
+add_subdirectory(example.c.BDUT_ASSERT_GT)
+add_subdirectory(example.c.BDUT_ASSERT_LE)
+add_subdirectory(example.c.BDUT_ASSERT_LT)
+add_subdirectory(example.c.BDUT_ASSERT_NE)
+add_subdirectory(example.c.BDUT_ASSERT_STRING_CONTAINS)
+add_subdirectory(example.c.BDUT_ASSERT_TRUE)

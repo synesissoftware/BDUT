@@ -46,10 +46,28 @@ These programs contain at least one assertion that fails, to show file, line, fu
 
 ### examples/
 
+Each public assertion has one C program and one C++ program. Each program shows the assertion succeeding, then one call that fails.
+
 | Program | Source | Demonstrates |
 |---------|--------|--------------|
-| **example_1-c** | [examples/c/example_1/main.c](./examples/c/example_1/main.c) | `BDUT_ASSERT_EQ` failure (C) |
-| **example_1-cpp** | [examples/cpp/example_1/main.cpp](./examples/cpp/example_1/main.cpp) | `BDUT_ASSERT_STRING_CONTAINS` failure (C++) |
+| **example.c.BDUT_ASSERT_EQ** | [examples/c/example.c.BDUT_ASSERT_EQ/main.c](./examples/c/example.c.BDUT_ASSERT_EQ/main.c) | `BDUT_ASSERT_EQ` |
+| **example.c.BDUT_ASSERT_FALSE** | [examples/c/example.c.BDUT_ASSERT_FALSE/main.c](./examples/c/example.c.BDUT_ASSERT_FALSE/main.c) | `BDUT_ASSERT_FALSE` |
+| **example.c.BDUT_ASSERT_GE** | [examples/c/example.c.BDUT_ASSERT_GE/main.c](./examples/c/example.c.BDUT_ASSERT_GE/main.c) | `BDUT_ASSERT_GE` |
+| **example.c.BDUT_ASSERT_GT** | [examples/c/example.c.BDUT_ASSERT_GT/main.c](./examples/c/example.c.BDUT_ASSERT_GT/main.c) | `BDUT_ASSERT_GT` |
+| **example.c.BDUT_ASSERT_LE** | [examples/c/example.c.BDUT_ASSERT_LE/main.c](./examples/c/example.c.BDUT_ASSERT_LE/main.c) | `BDUT_ASSERT_LE` |
+| **example.c.BDUT_ASSERT_LT** | [examples/c/example.c.BDUT_ASSERT_LT/main.c](./examples/c/example.c.BDUT_ASSERT_LT/main.c) | `BDUT_ASSERT_LT` |
+| **example.c.BDUT_ASSERT_NE** | [examples/c/example.c.BDUT_ASSERT_NE/main.c](./examples/c/example.c.BDUT_ASSERT_NE/main.c) | `BDUT_ASSERT_NE` |
+| **example.c.BDUT_ASSERT_STRING_CONTAINS** | [examples/c/example.c.BDUT_ASSERT_STRING_CONTAINS/main.c](./examples/c/example.c.BDUT_ASSERT_STRING_CONTAINS/main.c) | `BDUT_ASSERT_STRING_CONTAINS` |
+| **example.c.BDUT_ASSERT_TRUE** | [examples/c/example.c.BDUT_ASSERT_TRUE/main.c](./examples/c/example.c.BDUT_ASSERT_TRUE/main.c) | `BDUT_ASSERT_TRUE` |
+| **example.cpp.BDUT_ASSERT_EQ** | [examples/cpp/example.cpp.BDUT_ASSERT_EQ/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_EQ/main.cpp) | `BDUT_ASSERT_EQ` |
+| **example.cpp.BDUT_ASSERT_FALSE** | [examples/cpp/example.cpp.BDUT_ASSERT_FALSE/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_FALSE/main.cpp) | `BDUT_ASSERT_FALSE` |
+| **example.cpp.BDUT_ASSERT_GE** | [examples/cpp/example.cpp.BDUT_ASSERT_GE/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_GE/main.cpp) | `BDUT_ASSERT_GE` |
+| **example.cpp.BDUT_ASSERT_GT** | [examples/cpp/example.cpp.BDUT_ASSERT_GT/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_GT/main.cpp) | `BDUT_ASSERT_GT` |
+| **example.cpp.BDUT_ASSERT_LE** | [examples/cpp/example.cpp.BDUT_ASSERT_LE/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_LE/main.cpp) | `BDUT_ASSERT_LE` |
+| **example.cpp.BDUT_ASSERT_LT** | [examples/cpp/example.cpp.BDUT_ASSERT_LT/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_LT/main.cpp) | `BDUT_ASSERT_LT` |
+| **example.cpp.BDUT_ASSERT_NE** | [examples/cpp/example.cpp.BDUT_ASSERT_NE/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_NE/main.cpp) | `BDUT_ASSERT_NE` |
+| **example.cpp.BDUT_ASSERT_STRING_CONTAINS** | [examples/cpp/example.cpp.BDUT_ASSERT_STRING_CONTAINS/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_STRING_CONTAINS/main.cpp) | `BDUT_ASSERT_STRING_CONTAINS` |
+| **example.cpp.BDUT_ASSERT_TRUE** | [examples/cpp/example.cpp.BDUT_ASSERT_TRUE/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_TRUE/main.cpp) | `BDUT_ASSERT_TRUE` |
 
 ### test/scratch/
 
@@ -86,7 +104,7 @@ Run a single executable directly, e.g.:
 
 ```bash
 ./_build/test/scratch/test.scratch.all_pass/test.scratch.all_pass
-./_build/examples/c/example_1/example_1-c    # exits non-zero
+./_build/examples/c/example.c.BDUT_ASSERT_EQ/example.c.BDUT_ASSERT_EQ    # exits non-zero
 ```
 
 
