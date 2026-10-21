@@ -1,6 +1,13 @@
 # BDUT - Changes <!-- omit in toc -->
 
 
+## 0.6.0-alpha1 - 21st October 2026
+
+* Replaced **examples/c/example_1** and **examples/cpp/example_1** with one C program and one C++ program for each public assertion macro;
+* Each example shows a passing call, then one intentional failure, and is listed in **.sis/ci_examples_allowed_to_fail.txt**;
+* **README.md** and **EXAMPLES.md** index the new programs;
+
+
 ## 0.5.1 - 14th October 2026
 
 * Synced tip **cmake-helpers** runners;
