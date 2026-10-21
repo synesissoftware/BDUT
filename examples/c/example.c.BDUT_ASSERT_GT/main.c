@@ -8,9 +8,10 @@ int main(int argc, char* argv[])
 
     BDUT_ASSERT_GT(1, 2);
     BDUT_ASSERT_GT(1, actual2);
+    BDUT_ASSERT_GT_MSG(1, actual2, "match");
 
     /* this one will fail */
-    BDUT_ASSERT_GT(1, actual1);
+    BDUT_ASSERT_GT_MSG(1, actual1, "intentional failure");
 
     return BDUT_TESTS_PASSED(argc, argv);
 }
