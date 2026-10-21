@@ -1,15 +1,12 @@
-
 #include <bdut/bdut.h>
 
 
 int main(int argc, char* argv[])
 {
-    BDUT_ASSERT_STRING_CONTAINS("", "abcdefghijklmnopqrstuvwxyz");
-    BDUT_ASSERT_STRING_CONTAINS("abc", "abcdefghijklmnopqrstuvwxyz");
+    BDUT_ASSERT_EQ(1, 1);
 
     /* this one will fail */
-    BDUT_ASSERT_STRING_CONTAINS("abd", "abcdefghijklmnopqrstuvwxyz");
-
+    BDUT_ASSERT_EQ(1, 2);
 
     return BDUT_TESTS_PASSED(argc, argv);
 }

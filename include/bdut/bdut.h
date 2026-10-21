@@ -4,7 +4,7 @@
  * Purpose: Brain-Dead Unit-Testing
  *
  * Created: 18th July 2020
- * Updated: 9th October 2026
+ * Updated: 21st October 2026
  *
  * Home:    http://github.com/synesissoftware/BDUT
  *
@@ -53,8 +53,8 @@
 #ifndef BDUT_DOCUMENTATION_SKIP_SECTION
 # define BDUT_VER_BDUT_H_BDUT_MAJOR     2
 # define BDUT_VER_BDUT_H_BDUT_MINOR     3
-# define BDUT_VER_BDUT_H_BDUT_REVISION  0
-# define BDUT_VER_BDUT_H_BDUT_EDIT      29
+# define BDUT_VER_BDUT_H_BDUT_REVISION  2
+# define BDUT_VER_BDUT_H_BDUT_EDIT      31
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 
 
@@ -79,19 +79,20 @@
  */
 
 #define BDUT_VER_MAJOR                                      0
-#define BDUT_VER_MINOR                                      5
-#define BDUT_VER_PATCH                                      1
-#define BDUT_VER_ALPHABETA                                  0x81
+#define BDUT_VER_MINOR                                      6
+#define BDUT_VER_PATCH                                      0
+#define BDUT_VER_RELSTATUS                                  0x41
 
 #define BDUT_VER \
     (0\
         |   (   BDUT_VER_MAJOR      << 24   ) \
         |   (   BDUT_VER_MINOR      << 16   ) \
         |   (   BDUT_VER_PATCH      <<  8   ) \
-        |   (   BDUT_VER_ALPHABETA  <<  0   ) \
+        |   (   BDUT_VER_RELSTATUS  <<  0   ) \
     )
 
 #ifndef BDUT_DOCUMENTATION_SKIP_SECTION
+# define BDUT_VER_ALPHABETA                                 BDUT_VER_RELSTATUS
 # define BDUT_VER_REVISION                                  BDUT_VER_PATCH
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 

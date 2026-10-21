@@ -1,6 +1,21 @@
 # BDUT - Changes <!-- omit in toc -->
 
 
+## 0.6.0-alpha1 - 21st October 2026
+
+* Replaced **examples/c/example_1** and **examples/cpp/example_1** with one C program and one C++ program for each public assertion macro;
+* Each example shows a passing call, then one intentional failure, and is listed in **.sis/ci_examples_allowed_to_fail.txt**;
+* **README.md** and **EXAMPLES.md** index the new programs;
+
+
+## 0.5.1 - 14th October 2026
+
+* Synced tip **cmake-helpers** runners;
+* Migrated `BDUT_VER_ALPHABETA` to `BDUT_VER_RELSTATUS` (alias retained) and promoted to release status `0xFF`;
+* Phase **4c** polish: `PROGRAM_NAME` **test.scratch.versions**;
+* CI execute-bit restore exclusions aligned with tip form;
+
+
 ## 0.5.1-beta1 - 9th October 2026
 
 * Adopted **misc-dev-scripts** SisClr **cmake-helpers** gold tip: **run_all_component_tests.sh**, **run_all_examples.sh**, **run_all_performance_tests.sh**, **run_all_scratch_tests.sh**, and **run_all_unit_tests.sh** re-synced (unit/component forward `--verbosity`; examples/scratch/performance do not); native `cmd.exe` **.cmd** counterparts;

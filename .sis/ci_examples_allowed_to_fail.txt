@@ -1,8 +1,24 @@
 # Example programs that are allowed to fail: BDUT is a unit-testing library,
-# so some of its examples demonstrate assertion failures.
+# so its examples demonstrate assertion failures.
 # run_all_examples.{sh,cmd} still executes each of them, but reports a
 # non-zero exit as anticipated rather than failing the run.
-# List program names or stems (example_1-c and example_1-c.exe are
-# equivalent).
-example_1-c
-example_1-cpp
+# List program names or stems (example.c.BDUT_ASSERT_EQ and
+# example.c.BDUT_ASSERT_EQ.exe are equivalent).
+example.c.BDUT_ASSERT_EQ
+example.c.BDUT_ASSERT_FALSE
+example.c.BDUT_ASSERT_GE
+example.c.BDUT_ASSERT_GT
+example.c.BDUT_ASSERT_LE
+example.c.BDUT_ASSERT_LT
+example.c.BDUT_ASSERT_NE
+example.c.BDUT_ASSERT_STRING_CONTAINS
+example.c.BDUT_ASSERT_TRUE
+example.cpp.BDUT_ASSERT_EQ
+example.cpp.BDUT_ASSERT_FALSE
+example.cpp.BDUT_ASSERT_GE
+example.cpp.BDUT_ASSERT_GT
+example.cpp.BDUT_ASSERT_LE
+example.cpp.BDUT_ASSERT_LT
+example.cpp.BDUT_ASSERT_NE
+example.cpp.BDUT_ASSERT_STRING_CONTAINS
+example.cpp.BDUT_ASSERT_TRUE
