@@ -15,18 +15,18 @@
 
 - [Introduction](#introduction)
 - [Installation](#installation)
-	- [Manual installation](#manual-installation)
-	- [CMake installation](#cmake-installation)
+  - [Manual installation](#manual-installation)
+  - [CMake installation](#cmake-installation)
 - [API reference](#api-reference)
 - [Examples](#examples)
-	- [Passing example](#passing-example)
-	- [Failure output examples](#failure-output-examples)
+  - [Passing example](#passing-example)
+  - [Failure output examples](#failure-output-examples)
 - [Project Information](#project-information)
-	- [Where to get help](#where-to-get-help)
-	- [Contribution guidelines](#contribution-guidelines)
-	- [Dependencies](#dependencies)
-	- [Related projects](#related-projects)
-	- [License](#license)
+  - [Where to get help](#where-to-get-help)
+  - [Contribution guidelines](#contribution-guidelines)
+  - [Dependencies](#dependencies)
+  - [Related projects](#related-projects)
+  - [License](#license)
 
 
 ## Introduction
