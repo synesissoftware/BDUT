@@ -39,6 +39,8 @@ On failure, **BDUT** prints diagnostics to **stderr** and calls `exit(1)`.
 | \ref BDUT_ASSERT_GT | Asserts `actual > expected` |
 | \ref BDUT_ASSERT_LE | Asserts `actual <= expected` |
 | \ref BDUT_ASSERT_LT | Asserts `actual < expected` |
+| \ref BDUT_ASSERT_PTR_EQ | Asserts `actual` and `expected` are the same address |
+| \ref BDUT_ASSERT_PTR_NE | Asserts `actual` and `expected` are different addresses |
 | \ref BDUT_ASSERT_STRING_CONTAINS | Asserts `needle` is found in `haystack` |
 | \ref BDUT_ASSERT_STRING_EQUAL | Asserts `actual` equals `expected` (`strcmp`) |
 | \ref BDUT_ASSERT_STRING_EQUAL_N | Asserts the first `n` characters are equal (`strncmp`) |

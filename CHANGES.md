@@ -7,6 +7,7 @@
 * **bdut.h** — comparison operands are evaluated once when `decltype` or `__typeof__` is available; otherwise a formatting failure path evaluates them again;
 * **bdut.h** — each assertion has a `_MSG` form that appends a `char const*` after the standard failure text;
 * **bdut.h** — `BDUT_ASSERT_STRING_EQUAL` and `BDUT_ASSERT_STRING_EQUAL_N` compare with `strcmp()` and `strncmp()`; NULL is an empty string, as with `BDUT_ASSERT_STRING_CONTAINS`;
+* **bdut.h** — `BDUT_ASSERT_PTR_EQ` and `BDUT_ASSERT_PTR_NE` compare object addresses, including NULL;
 * Each example shows a passing literal, a passing `actual` variable, a passing `_MSG` call, then one intentional `_MSG` failure on an `actual` variable;
 * Unit tests call each `_MSG` form, including an empty string and NULL;
 * Scratch demos call the `_MSG` form, including the intentional failures;

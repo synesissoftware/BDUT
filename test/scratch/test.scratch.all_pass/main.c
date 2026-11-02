@@ -5,6 +5,8 @@
 int main(int argc, char* argv[])
 {
     char const* const message = "ok";
+    int object1 = 1;
+    int object2 = 2;
 
     BDUT_ASSERT_EQ(123, 123);
     BDUT_ASSERT_EQ_MSG(123, 123, message);
@@ -24,6 +26,11 @@ int main(int argc, char* argv[])
     BDUT_ASSERT_GE_MSG(123, 124, message);
     BDUT_ASSERT_GT(123, 124);
     BDUT_ASSERT_GT_MSG(123, 124, message);
+
+    BDUT_ASSERT_PTR_EQ(&object1, &object1);
+    BDUT_ASSERT_PTR_EQ_MSG(&object1, &object1, message);
+    BDUT_ASSERT_PTR_NE(&object1, &object2);
+    BDUT_ASSERT_PTR_NE_MSG(&object1, &object2, message);
 
     BDUT_ASSERT_STRING_CONTAINS("", "abcdef");
     BDUT_ASSERT_STRING_CONTAINS("abc", "abcdef");

@@ -11,6 +11,8 @@ example.c.BDUT_ASSERT_GT
 example.c.BDUT_ASSERT_LE
 example.c.BDUT_ASSERT_LT
 example.c.BDUT_ASSERT_NE
+example.c.BDUT_ASSERT_PTR_EQ
+example.c.BDUT_ASSERT_PTR_NE
 example.c.BDUT_ASSERT_STRING_CONTAINS
 example.c.BDUT_ASSERT_STRING_EQUAL
 example.c.BDUT_ASSERT_STRING_EQUAL_N
@@ -22,6 +24,8 @@ example.cpp.BDUT_ASSERT_GT
 example.cpp.BDUT_ASSERT_LE
 example.cpp.BDUT_ASSERT_LT
 example.cpp.BDUT_ASSERT_NE
+example.cpp.BDUT_ASSERT_PTR_EQ
+example.cpp.BDUT_ASSERT_PTR_NE
 example.cpp.BDUT_ASSERT_STRING_CONTAINS
 example.cpp.BDUT_ASSERT_STRING_EQUAL
 example.cpp.BDUT_ASSERT_STRING_EQUAL_N

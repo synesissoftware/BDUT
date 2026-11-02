@@ -54,7 +54,7 @@
 # define BDUT_VER_BDUT_H_BDUT_MAJOR     2
 # define BDUT_VER_BDUT_H_BDUT_MINOR     4
 # define BDUT_VER_BDUT_H_BDUT_REVISION  0
-# define BDUT_VER_BDUT_H_BDUT_EDIT      39
+# define BDUT_VER_BDUT_H_BDUT_EDIT      40
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 
 
@@ -217,6 +217,33 @@
 #define BDUT_ASSERT_LE_MSG(expected, actual, message)       BDUT_CHECK_COMPARE_((expected), (actual), >=, "actual value of `" #actual "` not less-than-or-equal-to expected value `" #expected "`", (message))
 #define BDUT_ASSERT_LT(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), >, "actual value of `" #actual "` not less-than expected value `" #expected "`", NULL)
 #define BDUT_ASSERT_LT_MSG(expected, actual, message)       BDUT_CHECK_COMPARE_((expected), (actual), >, "actual value of `" #actual "` not less-than expected value `" #expected "`", (message))
+
+/** @def BDUT_ASSERT_PTR_EQ(expected, actual)
+ *
+ * @brief Asserts that \c actual and \c expected designate the same address
+ *
+ * @param expected The expected address
+ * @param actual The actual address
+ *
+ * @note Both operands are object pointers, converted to `void const*` and
+ *   compared by address. NULL is a null pointer.
+ */
+
+/** @def BDUT_ASSERT_PTR_NE(expected, actual)
+ *
+ * @brief Asserts that \c actual and \c expected designate different
+ *   addresses
+ *
+ * @param expected The expected address
+ * @param actual The actual address
+ *
+ * @note Same conversion rules as \c BDUT_ASSERT_PTR_EQ().
+ */
+
+#define BDUT_ASSERT_PTR_EQ(expected, actual)                BDUT_CHECK_COMPARE_((void const*)(expected), (void const*)(actual), ==, "actual pointer `" #actual "` not equal-to expected pointer `" #expected "`", NULL)
+#define BDUT_ASSERT_PTR_EQ_MSG(expected, actual, message)   BDUT_CHECK_COMPARE_((void const*)(expected), (void const*)(actual), ==, "actual pointer `" #actual "` not equal-to expected pointer `" #expected "`", (message))
+#define BDUT_ASSERT_PTR_NE(expected, actual)                BDUT_CHECK_COMPARE_((void const*)(expected), (void const*)(actual), !=, "actual pointer `" #actual "` not unequal-to expected pointer `" #expected "`", NULL)
+#define BDUT_ASSERT_PTR_NE_MSG(expected, actual, message)   BDUT_CHECK_COMPARE_((void const*)(expected), (void const*)(actual), !=, "actual pointer `" #actual "` not unequal-to expected pointer `" #expected "`", (message))
 
 /** @def BDUT_ASSERT_STRING_CONTAINS(needle, haystack)
  *
