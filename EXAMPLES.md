@@ -32,6 +32,7 @@ The **examples/** tree and most **test/scratch/** programs are in the second gro
 | **test.unit.version** | [test/unit/test.unit.version/entry.c](./test/unit/test.unit.version/entry.c) | Version macros (`BDUT_VER_*`) |
 | **test.unit.assert_true_false** | [test/unit/test.unit.assert_true_false/entry.c](./test/unit/test.unit.assert_true_false/entry.c) | `BDUT_ASSERT_TRUE`, `BDUT_ASSERT_FALSE`, and their `_MSG` forms |
 | **test.unit.compare** | [test/unit/test.unit.compare/entry.c](./test/unit/test.unit.compare/entry.c) | `BDUT_ASSERT_EQ`, `BDUT_ASSERT_NE`, `BDUT_ASSERT_GE`, `BDUT_ASSERT_GT`, `BDUT_ASSERT_LE`, `BDUT_ASSERT_LT`, and their `_MSG` forms |
+| **test.unit.fp_eq** | [test/unit/test.unit.fp_eq/entry.c](./test/unit/test.unit.fp_eq/entry.c) | `BDUT_ASSERT_FP_EQ`, `BDUT_ASSERT_FP_EQ_MARGIN`, `BDUT_ASSERT_FP_EQ_MULTIPLIER`, `BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER`, and their `_MSG` forms |
 | **test.unit.pointer** | [test/unit/test.unit.pointer/entry.c](./test/unit/test.unit.pointer/entry.c) | `BDUT_ASSERT_PTR_EQ`, `BDUT_ASSERT_PTR_NE`, and their `_MSG` forms |
 | **test.unit.string_contains** | [test/unit/test.unit.string_contains/entry.c](./test/unit/test.unit.string_contains/entry.c) | `BDUT_ASSERT_STRING_CONTAINS` and `BDUT_ASSERT_STRING_CONTAINS_MSG` |
 | **test.unit.string_equal** | [test/unit/test.unit.string_equal/entry.c](./test/unit/test.unit.string_equal/entry.c) | `BDUT_ASSERT_STRING_EQUAL`, `BDUT_ASSERT_STRING_EQUAL_N`, and their `_MSG` forms |
@@ -54,6 +55,10 @@ Each public assertion has one C program and one C++ program. Each program shows 
 |---------|--------|--------------|
 | **example.c.BDUT_ASSERT_EQ** | [examples/c/example.c.BDUT_ASSERT_EQ/main.c](./examples/c/example.c.BDUT_ASSERT_EQ/main.c) | `BDUT_ASSERT_EQ` / `BDUT_ASSERT_EQ_MSG` |
 | **example.c.BDUT_ASSERT_FALSE** | [examples/c/example.c.BDUT_ASSERT_FALSE/main.c](./examples/c/example.c.BDUT_ASSERT_FALSE/main.c) | `BDUT_ASSERT_FALSE` / `BDUT_ASSERT_FALSE_MSG` |
+| **example.c.BDUT_ASSERT_FP_EQ** | [examples/c/example.c.BDUT_ASSERT_FP_EQ/main.c](./examples/c/example.c.BDUT_ASSERT_FP_EQ/main.c) | `BDUT_ASSERT_FP_EQ` / `BDUT_ASSERT_FP_EQ_MSG` |
+| **example.c.BDUT_ASSERT_FP_EQ_MARGIN** | [examples/c/example.c.BDUT_ASSERT_FP_EQ_MARGIN/main.c](./examples/c/example.c.BDUT_ASSERT_FP_EQ_MARGIN/main.c) | `BDUT_ASSERT_FP_EQ_MARGIN` / `BDUT_ASSERT_FP_EQ_MARGIN_MSG` |
+| **example.c.BDUT_ASSERT_FP_EQ_MULTIPLIER** | [examples/c/example.c.BDUT_ASSERT_FP_EQ_MULTIPLIER/main.c](./examples/c/example.c.BDUT_ASSERT_FP_EQ_MULTIPLIER/main.c) | `BDUT_ASSERT_FP_EQ_MULTIPLIER` / `BDUT_ASSERT_FP_EQ_MULTIPLIER_MSG` |
+| **example.c.BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER** | [examples/c/example.c.BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER/main.c](./examples/c/example.c.BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER/main.c) | `BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER` / `_MSG` |
 | **example.c.BDUT_ASSERT_GE** | [examples/c/example.c.BDUT_ASSERT_GE/main.c](./examples/c/example.c.BDUT_ASSERT_GE/main.c) | `BDUT_ASSERT_GE` / `BDUT_ASSERT_GE_MSG` |
 | **example.c.BDUT_ASSERT_GT** | [examples/c/example.c.BDUT_ASSERT_GT/main.c](./examples/c/example.c.BDUT_ASSERT_GT/main.c) | `BDUT_ASSERT_GT` / `BDUT_ASSERT_GT_MSG` |
 | **example.c.BDUT_ASSERT_LE** | [examples/c/example.c.BDUT_ASSERT_LE/main.c](./examples/c/example.c.BDUT_ASSERT_LE/main.c) | `BDUT_ASSERT_LE` / `BDUT_ASSERT_LE_MSG` |
@@ -67,6 +72,10 @@ Each public assertion has one C program and one C++ program. Each program shows 
 | **example.c.BDUT_ASSERT_TRUE** | [examples/c/example.c.BDUT_ASSERT_TRUE/main.c](./examples/c/example.c.BDUT_ASSERT_TRUE/main.c) | `BDUT_ASSERT_TRUE` / `BDUT_ASSERT_TRUE_MSG` |
 | **example.cpp.BDUT_ASSERT_EQ** | [examples/cpp/example.cpp.BDUT_ASSERT_EQ/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_EQ/main.cpp) | `BDUT_ASSERT_EQ` / `BDUT_ASSERT_EQ_MSG` |
 | **example.cpp.BDUT_ASSERT_FALSE** | [examples/cpp/example.cpp.BDUT_ASSERT_FALSE/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_FALSE/main.cpp) | `BDUT_ASSERT_FALSE` / `BDUT_ASSERT_FALSE_MSG` |
+| **example.cpp.BDUT_ASSERT_FP_EQ** | [examples/cpp/example.cpp.BDUT_ASSERT_FP_EQ/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_FP_EQ/main.cpp) | `BDUT_ASSERT_FP_EQ` / `BDUT_ASSERT_FP_EQ_MSG` |
+| **example.cpp.BDUT_ASSERT_FP_EQ_MARGIN** | [examples/cpp/example.cpp.BDUT_ASSERT_FP_EQ_MARGIN/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_FP_EQ_MARGIN/main.cpp) | `BDUT_ASSERT_FP_EQ_MARGIN` / `BDUT_ASSERT_FP_EQ_MARGIN_MSG` |
+| **example.cpp.BDUT_ASSERT_FP_EQ_MULTIPLIER** | [examples/cpp/example.cpp.BDUT_ASSERT_FP_EQ_MULTIPLIER/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_FP_EQ_MULTIPLIER/main.cpp) | `BDUT_ASSERT_FP_EQ_MULTIPLIER` / `BDUT_ASSERT_FP_EQ_MULTIPLIER_MSG` |
+| **example.cpp.BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER** | [examples/cpp/example.cpp.BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER/main.cpp) | `BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER` / `_MSG` |
 | **example.cpp.BDUT_ASSERT_GE** | [examples/cpp/example.cpp.BDUT_ASSERT_GE/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_GE/main.cpp) | `BDUT_ASSERT_GE` / `BDUT_ASSERT_GE_MSG` |
 | **example.cpp.BDUT_ASSERT_GT** | [examples/cpp/example.cpp.BDUT_ASSERT_GT/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_GT/main.cpp) | `BDUT_ASSERT_GT` / `BDUT_ASSERT_GT_MSG` |
 | **example.cpp.BDUT_ASSERT_LE** | [examples/cpp/example.cpp.BDUT_ASSERT_LE/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_LE/main.cpp) | `BDUT_ASSERT_LE` / `BDUT_ASSERT_LE_MSG` |

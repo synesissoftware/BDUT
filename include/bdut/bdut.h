@@ -4,7 +4,7 @@
  * Purpose: Brain-Dead Unit-Testing
  *
  * Created: 18th July 2020
- * Updated: 22nd October 2026
+ * Updated: 3rd November 2026
  *
  * Home:    http://github.com/synesissoftware/BDUT
  *
@@ -54,7 +54,7 @@
 # define BDUT_VER_BDUT_H_BDUT_MAJOR     2
 # define BDUT_VER_BDUT_H_BDUT_MINOR     4
 # define BDUT_VER_BDUT_H_BDUT_REVISION  0
-# define BDUT_VER_BDUT_H_BDUT_EDIT      40
+# define BDUT_VER_BDUT_H_BDUT_EDIT      41
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 
 
@@ -244,6 +244,120 @@
 #define BDUT_ASSERT_PTR_EQ_MSG(expected, actual, message)   BDUT_CHECK_COMPARE_((void const*)(expected), (void const*)(actual), ==, "actual pointer `" #actual "` not equal-to expected pointer `" #expected "`", (message))
 #define BDUT_ASSERT_PTR_NE(expected, actual)                BDUT_CHECK_COMPARE_((void const*)(expected), (void const*)(actual), !=, "actual pointer `" #actual "` not unequal-to expected pointer `" #expected "`", NULL)
 #define BDUT_ASSERT_PTR_NE_MSG(expected, actual, message)   BDUT_CHECK_COMPARE_((void const*)(expected), (void const*)(actual), !=, "actual pointer `" #actual "` not unequal-to expected pointer `" #expected "`", (message))
+
+#ifndef BDUT_FP_DEFAULT_MARGIN
+/** Default absolute margin for \c BDUT_ASSERT_FP_EQ(). Overridable before
+ *   include. Matches **test_help-rs** `DEFAULT_MARGIN`.
+ */
+# define BDUT_FP_DEFAULT_MARGIN                             0.0001
+#endif
+#ifndef BDUT_FP_DEFAULT_MULTIPLIER
+/** Default relative multiplier for \c BDUT_ASSERT_FP_EQ(). Overridable
+ *   before include. Matches **test_help-rs** `DEFAULT_MULTIPLIER`.
+ */
+# define BDUT_FP_DEFAULT_MULTIPLIER                         0.000001
+#endif
+
+/** @def BDUT_ASSERT_FP_EQ(expected, actual)
+ *
+ * @brief Asserts that \c actual is approximately equal to \c expected
+ *
+ * Uses a relative multiplier of \c BDUT_FP_DEFAULT_MULTIPLIER, except
+ * when either operand is zero, in which case it uses an absolute margin
+ * of \c BDUT_FP_DEFAULT_MARGIN. Exact equality passes first. A negative
+ * factor fails. NaN fails. Operands are evaluated once and compared as
+ * `double`.
+ *
+ * @param expected The expected value
+ * @param actual The actual value
+ */
+
+/** @def BDUT_ASSERT_FP_EQ_MARGIN(expected, actual, margin_factor)
+ *
+ * @brief Asserts approximate equality within an absolute \c margin_factor
+ *
+ * Accepts \c actual in
+ * `[expected - margin_factor, expected + margin_factor]`. Exact equality
+ * passes first. A negative or zero factor leaves only exact equality.
+ *
+ * @param expected The expected value
+ * @param actual The actual value
+ * @param margin_factor The absolute margin (non-negative)
+ */
+
+/** @def BDUT_ASSERT_FP_EQ_MULTIPLIER(expected, actual, multiplier_factor)
+ *
+ * @brief Asserts approximate equality within a relative
+ *   \c multiplier_factor
+ *
+ * Accepts \c actual in
+ * `[expected * (1 - multiplier_factor), expected * (1 + multiplier_factor)]`.
+ * Exact equality passes first. A zero expected value with a nonzero
+ * actual fails. A negative or zero factor leaves only exact equality.
+ *
+ * @param expected The expected value
+ * @param actual The actual value
+ * @param multiplier_factor The relative multiplier (non-negative)
+ */
+
+/** @def BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER(expected, actual, multiplier_factor, zero_margin_factor)
+ *
+ * @brief Asserts approximate equality with a multiplier, or a margin
+ *   when either operand is zero
+ *
+ * Same rule as \c BDUT_ASSERT_FP_EQ(), with both factors supplied.
+ *
+ * @param expected The expected value
+ * @param actual The actual value
+ * @param multiplier_factor The relative multiplier when neither is zero
+ * @param zero_margin_factor The absolute margin when either is zero
+ */
+
+#define BDUT_ASSERT_FP_EQ(expected, actual)                 BDUT_ASSERT_FP_EQ_MSG((expected), (actual), NULL)
+#define BDUT_ASSERT_FP_EQ_MSG(expected, actual, message)    BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER_MSG((expected), (actual), BDUT_FP_DEFAULT_MULTIPLIER, BDUT_FP_DEFAULT_MARGIN, (message))
+
+#define BDUT_ASSERT_FP_EQ_MARGIN(expected, actual, margin_factor) \
+                                                            BDUT_ASSERT_FP_EQ_MARGIN_MSG((expected), (actual), (margin_factor), NULL)
+#define BDUT_ASSERT_FP_EQ_MARGIN_MSG(expected, actual, margin_factor, message)  \
+                                                            \
+    do {                                                    \
+        double bdut_expected_ = (double)(expected);         \
+        double bdut_actual_ = (double)(actual);             \
+        double bdut_margin_ = (double)(margin_factor);      \
+        if (!BDUT_fp_eq_margin_(bdut_expected_, bdut_actual_, bdut_margin_)) { \
+            BDUT_report_fp_eq_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, #expected, #actual, bdut_expected_, bdut_actual_, 0, bdut_margin_, (message)); \
+        }                                                   \
+    } while (0)
+
+#define BDUT_ASSERT_FP_EQ_MULTIPLIER(expected, actual, multiplier_factor) \
+                                                            BDUT_ASSERT_FP_EQ_MULTIPLIER_MSG((expected), (actual), (multiplier_factor), NULL)
+#define BDUT_ASSERT_FP_EQ_MULTIPLIER_MSG(expected, actual, multiplier_factor, message)  \
+                                                            \
+    do {                                                    \
+        double bdut_expected_ = (double)(expected);         \
+        double bdut_actual_ = (double)(actual);             \
+        double bdut_multiplier_ = (double)(multiplier_factor); \
+        if (!BDUT_fp_eq_multiplier_(bdut_expected_, bdut_actual_, bdut_multiplier_)) { \
+            BDUT_report_fp_eq_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, #expected, #actual, bdut_expected_, bdut_actual_, 1, bdut_multiplier_, (message)); \
+        }                                                   \
+    } while (0)
+
+#define BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER(expected, actual, multiplier_factor, zero_margin_factor) \
+                                                            BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER_MSG((expected), (actual), (multiplier_factor), (zero_margin_factor), NULL)
+#define BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER_MSG(expected, actual, multiplier_factor, zero_margin_factor, message) \
+    do {                                                    \
+        double bdut_expected_ = (double)(expected);         \
+        double bdut_actual_ = (double)(actual);             \
+        double bdut_multiplier_ = (double)(multiplier_factor); \
+        double bdut_margin_ = (double)(zero_margin_factor); \
+        if (!BDUT_fp_eq_zero_margin_or_multiplier_(bdut_expected_, bdut_actual_, bdut_multiplier_, bdut_margin_)) { \
+            if (0.0 == bdut_expected_ || 0.0 == bdut_actual_) { \
+                BDUT_report_fp_eq_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, #expected, #actual, bdut_expected_, bdut_actual_, 0, bdut_margin_, (message)); \
+            } else {                                        \
+                BDUT_report_fp_eq_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, #expected, #actual, bdut_expected_, bdut_actual_, 1, bdut_multiplier_, (message)); \
+            }                                               \
+        }                                                   \
+    } while (0)
 
 /** @def BDUT_ASSERT_STRING_CONTAINS(needle, haystack)
  *
@@ -842,6 +956,104 @@ BDUT_strneq_(
     }
 
     return 0 == strncmp(expected, actual, n);
+}
+
+/** @brief Absolute margin approximate equality. A negative factor fails.
+ *   Exact equality passes first. Does not call `libm`.
+ */
+BDUT_INLINE_
+int
+BDUT_fp_eq_margin_(
+    double expected
+,   double actual
+,   double margin_factor
+)
+{
+    if (expected == actual)
+    {
+        return 1;
+    }
+
+    if (margin_factor <= 0.0)
+    {
+        return 0;
+    }
+    else
+    {
+        double const expected_lo = expected - margin_factor;
+        double const expected_hi = expected + margin_factor;
+
+        return expected_lo <= actual && actual <= expected_hi;
+    }
+}
+
+/** @brief Relative multiplier approximate equality. A negative factor
+ *   fails. Exact equality passes first. Does not call `libm`.
+ */
+BDUT_INLINE_
+int
+BDUT_fp_eq_multiplier_(
+    double expected
+,   double actual
+,   double multiplier_factor
+)
+{
+    if (expected == actual)
+    {
+        return 1;
+    }
+
+    if (multiplier_factor <= 0.0)
+    {
+        return 0;
+    }
+    else
+    {
+        double const expected_lo = expected * (1.0 - multiplier_factor);
+        double const expected_hi = expected * (1.0 + multiplier_factor);
+        double lo;
+        double hi;
+
+        if (expected_lo <= expected_hi)
+        {
+            lo = expected_lo;
+            hi = expected_hi;
+        }
+        else
+        {
+            lo = expected_hi;
+            hi = expected_lo;
+        }
+
+        return lo <= actual && actual <= hi;
+    }
+}
+
+/** @brief Multiplier when neither operand is zero; otherwise margin.
+ */
+BDUT_INLINE_
+int
+BDUT_fp_eq_zero_margin_or_multiplier_(
+    double expected
+,   double actual
+,   double multiplier_factor
+,   double zero_margin_factor
+)
+{
+    if (expected == actual)
+    {
+        return 1;
+    }
+
+    if (0.0 == expected ||
+        0.0 == actual)
+    {
+        return BDUT_fp_eq_margin_(expected, actual, zero_margin_factor);
+    }
+    else
+    {
+        return BDUT_fp_eq_multiplier_(expected, actual, multiplier_factor);
+    }
 }
 
 #ifdef __cplusplus
@@ -1475,6 +1687,70 @@ BDUT_report_string_equal_failure_and_abort_(
     );
 }
 
+/** @brief Reports a failed floating-point approximate equality and
+ *   terminates.
+ *
+ * @param file The source file
+ * @param line The source line
+ * @param function The source function. May be NULL if the compiler is not
+ *  recognised to support function identification
+ * @param expected_expr The expected expression text
+ * @param actual_expr The actual expression text
+ * @param expected The expected value
+ * @param actual The actual value
+ * @param by_multiplier Non-zero when a multiplier was applied; zero when a
+ *  margin was applied
+ * @param factor The margin or multiplier that was applied
+ * @param detail Optional message. NULL or empty leaves the text unchanged
+ */
+BDUT_NORETURN_
+BDUT_INLINE_
+void
+BDUT_report_fp_eq_failure_and_abort_(
+    char const*     file
+,   int             line
+,   char const*     function
+,   char const*     expected_expr
+,   char const*     actual_expr
+,   double          expected
+,   double          actual
+,   int             by_multiplier
+,   double          factor
+,   char const*     detail
+)
+{
+# if defined(__cplusplus) &&\
+     __cplusplus >= 201402L
+
+    using std::snprintf;
+# endif
+
+    char        message[1000];
+    char const* kind = by_multiplier ? "multiplier" : "margin";
+    int const   r = snprintf(
+        message
+    ,   sizeof message
+    ,   "actual value of `%s` not within %s %g of expected value `%s` (expected %g, actual %g)"
+    ,   actual_expr
+    ,   kind
+    ,   factor
+    ,   expected_expr
+    ,   expected
+    ,   actual
+    );
+
+    ((void)&r);
+
+    BDUT_report_assertion_failure_and_abort_(
+        file
+    ,   line
+    ,   function
+    ,   ""
+    ,   message
+    ,   detail
+    );
+}
+
 BDUT_INLINE_
 int
 BDUT_report_tests_passed_(
@@ -1528,9 +1804,13 @@ void
 BDUT_reference_all_impl_functions_(void)
 {
     ((void)&BDUT_console_supports_ansi_);
+    ((void)&BDUT_fp_eq_margin_);
+    ((void)&BDUT_fp_eq_multiplier_);
+    ((void)&BDUT_fp_eq_zero_margin_or_multiplier_);
     ((void)&BDUT_strcontains_);
     ((void)&BDUT_streq_);
     ((void)&BDUT_strneq_);
+
 # if BDUT_HAS_GENERIC_
 
     ((void)&BDUT_fmt_sint_);
@@ -1539,10 +1819,12 @@ BDUT_reference_all_impl_functions_(void)
     ((void)&BDUT_fmt_ptr_);
     ((void)&BDUT_fmt_unk_);
 # endif /* BDUT_HAS_GENERIC_ */
+
     ((void)&BDUT_report_compare_failure_and_abort_);
     ((void)&BDUT_report_assertion_failure_and_abort_);
     ((void)&BDUT_report_string_contains_failure_and_abort_);
     ((void)&BDUT_report_string_equal_failure_and_abort_);
+    ((void)&BDUT_report_fp_eq_failure_and_abort_);
     ((void)&BDUT_report_tests_passed_);
 }
 # endif

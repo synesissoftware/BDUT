@@ -105,6 +105,14 @@ Write tests as sequential assertions in `main()`. When all pass, return `BDUT_TE
 | `BDUT_ASSERT_PTR_EQ_MSG(expected, actual, message)` | Same, then appends `message` |
 | `BDUT_ASSERT_PTR_NE(expected, actual)` | Asserts `actual` and `expected` are different addresses |
 | `BDUT_ASSERT_PTR_NE_MSG(expected, actual, message)` | Same, then appends `message` |
+| `BDUT_ASSERT_FP_EQ(expected, actual)` | Asserts approximate equality (stock margin/multiplier) |
+| `BDUT_ASSERT_FP_EQ_MSG(expected, actual, message)` | Same, then appends `message` |
+| `BDUT_ASSERT_FP_EQ_MARGIN(expected, actual, margin_factor)` | Asserts absolute-margin approximate equality |
+| `BDUT_ASSERT_FP_EQ_MARGIN_MSG(expected, actual, margin_factor, message)` | Same, then appends `message` |
+| `BDUT_ASSERT_FP_EQ_MULTIPLIER(expected, actual, multiplier_factor)` | Asserts relative-multiplier approximate equality |
+| `BDUT_ASSERT_FP_EQ_MULTIPLIER_MSG(expected, actual, multiplier_factor, message)` | Same, then appends `message` |
+| `BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER(expected, actual, multiplier_factor, zero_margin_factor)` | Multiplier, or margin when either is zero |
+| `BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER_MSG(expected, actual, multiplier_factor, zero_margin_factor, message)` | Same, then appends `message` |
 | `BDUT_ASSERT_STRING_CONTAINS(needle, haystack)` | Asserts `needle` is a substring of `haystack` |
 | `BDUT_ASSERT_STRING_CONTAINS_MSG(needle, haystack, message)` | Same, then appends `message` |
 | `BDUT_ASSERT_STRING_EQUAL(expected, actual)` | Asserts `strcmp(expected, actual) == 0` |
@@ -113,7 +121,7 @@ Write tests as sequential assertions in `main()`. When all pass, return `BDUT_TE
 | `BDUT_ASSERT_STRING_EQUAL_N_MSG(expected, actual, n, message)` | Same, then appends `message` |
 | `BDUT_TESTS_PASSED(argc, argv)` | Call after all assertions pass; prints success and returns 0 |
 
-On failure, **BDUT** prints file, line, optional function name, and a message to **stderr**, then calls `exit(1)`. Each `_MSG` macro takes a `char const* message` and appends it after the standard text. NULL or `""` leaves that text unchanged. String comparisons treat a NULL pointer as an empty string. `BDUT_ASSERT_STRING_EQUAL_N` with a count of 0 passes. `BDUT_ASSERT_PTR_EQ` and `BDUT_ASSERT_PTR_NE` compare object addresses, including NULL.
+On failure, **BDUT** prints file, line, optional function name, and a message to **stderr**, then calls `exit(1)`. Each `_MSG` macro takes a `char const* message` and appends it after the standard text. NULL or `""` leaves that text unchanged. String comparisons treat a NULL pointer as an empty string. `BDUT_ASSERT_STRING_EQUAL_N` with a count of 0 passes. `BDUT_ASSERT_PTR_EQ` and `BDUT_ASSERT_PTR_NE` compare object addresses, including NULL. Floating-point approximate equality uses an absolute **margin** or a relative **multiplier** (from **test_help-rs**); `BDUT_ASSERT_FP_EQ` uses a multiplier of `BDUT_FP_DEFAULT_MULTIPLIER` (0.000001), or a margin of `BDUT_FP_DEFAULT_MARGIN` (0.0001) when either operand is zero.
 
 Version macros (`BDUT_VER_MAJOR`, `BDUT_VER_MINOR`, `BDUT_VER_PATCH`, `BDUT_VER`, etc.) are defined in **include/bdut/bdut.h**.
 

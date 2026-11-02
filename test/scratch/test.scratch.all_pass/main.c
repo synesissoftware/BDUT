@@ -32,6 +32,11 @@ int main(int argc, char* argv[])
     BDUT_ASSERT_PTR_NE(&object1, &object2);
     BDUT_ASSERT_PTR_NE_MSG(&object1, &object2, message);
 
+    BDUT_ASSERT_FP_EQ(3.0, 3.0);
+    BDUT_ASSERT_FP_EQ_MSG(0.3, 0.1 + 0.2, message);
+    BDUT_ASSERT_FP_EQ_MARGIN(3.0, 3.0001, 0.0001);
+    BDUT_ASSERT_FP_EQ_MULTIPLIER(123456.0, 123456.01, 0.0001);
+
     BDUT_ASSERT_STRING_CONTAINS("", "abcdef");
     BDUT_ASSERT_STRING_CONTAINS("abc", "abcdef");
     BDUT_ASSERT_STRING_CONTAINS("abcdef", "abcdef");

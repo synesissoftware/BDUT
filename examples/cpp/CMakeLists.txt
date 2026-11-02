@@ -1,6 +1,10 @@
 # SIS:AUTO_GENERATED: Remove this line if you edit the file, otherwise it will be overwritten
 add_subdirectory(example.cpp.BDUT_ASSERT_EQ)
 add_subdirectory(example.cpp.BDUT_ASSERT_FALSE)
+add_subdirectory(example.cpp.BDUT_ASSERT_FP_EQ)
+add_subdirectory(example.cpp.BDUT_ASSERT_FP_EQ_MARGIN)
+add_subdirectory(example.cpp.BDUT_ASSERT_FP_EQ_MULTIPLIER)
+add_subdirectory(example.cpp.BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER)
 add_subdirectory(example.cpp.BDUT_ASSERT_GE)
 add_subdirectory(example.cpp.BDUT_ASSERT_GT)
 add_subdirectory(example.cpp.BDUT_ASSERT_LE)
