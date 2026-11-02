@@ -5,7 +5,7 @@
 # Purpose:  Top-level CMake lists file for BDUT
 #
 # Created:  7th March 2024
-# Updated:  5th August 2026
+# Updated:  21st October 2026
 #
 # ######################################################################## #
 
@@ -60,7 +60,12 @@ set(PROJECT_VERSION "${PROJECT_VERSION_MAJOR}.${PROJECT_VERSION_MINOR}.${PROJECT
 # Strict ISO language modes (no GNU extensions). Consumers such as **p99**
 # build with C_EXTENSIONS OFF; BDUT's own tests/examples must do the same so
 # CI catches header portability defects (e.g. undeclared POSIX `fileno()`).
-set(CMAKE_C_STANDARD 17)
+# Default C standard is overridable via -DCMAKE_C_STANDARD (prepare_cmake.sh
+# --c-standard). TinyCC and older MSVC below still force a portable dialect.
+if(NOT DEFINED CMAKE_C_STANDARD)
+
+	set(CMAKE_C_STANDARD 17)
+endif()
 set(CMAKE_C_STANDARD_REQUIRED ON)
 set(CMAKE_C_EXTENSIONS OFF)
 set(CMAKE_CXX_STANDARD 23)

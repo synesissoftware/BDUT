@@ -3,14 +3,18 @@
 
 int main(int argc, char* argv[])
 {
+    int const actual1 = 1;
+    int const actual2 = 2;
+
     BDUT_ASSERT_EQ(1, 1);
+    BDUT_ASSERT_EQ(1, actual1);
+    BDUT_ASSERT_EQ_MSG(1, actual1, "match");
 
     /* this one will fail */
-    BDUT_ASSERT_EQ(1, 2);
+    BDUT_ASSERT_EQ_MSG(1, actual2, "intentional failure");
 
     return BDUT_TESTS_PASSED(argc, argv);
 }
 
 
 /* ///////////////////////////// end of file //////////////////////////// */
-

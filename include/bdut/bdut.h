@@ -4,7 +4,7 @@
  * Purpose: Brain-Dead Unit-Testing
  *
  * Created: 18th July 2020
- * Updated: 21st October 2026
+ * Updated: 3rd November 2026
  *
  * Home:    http://github.com/synesissoftware/BDUT
  *
@@ -52,9 +52,9 @@
 
 #ifndef BDUT_DOCUMENTATION_SKIP_SECTION
 # define BDUT_VER_BDUT_H_BDUT_MAJOR     2
-# define BDUT_VER_BDUT_H_BDUT_MINOR     3
-# define BDUT_VER_BDUT_H_BDUT_REVISION  2
-# define BDUT_VER_BDUT_H_BDUT_EDIT      31
+# define BDUT_VER_BDUT_H_BDUT_MINOR     4
+# define BDUT_VER_BDUT_H_BDUT_REVISION  0
+# define BDUT_VER_BDUT_H_BDUT_EDIT      41
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 
 
@@ -81,7 +81,7 @@
 #define BDUT_VER_MAJOR                                      0
 #define BDUT_VER_MINOR                                      6
 #define BDUT_VER_PATCH                                      0
-#define BDUT_VER_RELSTATUS                                  0x41
+#define BDUT_VER_RELSTATUS                                  0x81
 
 #define BDUT_VER \
     (0\
@@ -101,7 +101,7 @@
  * includes
  */
 
-#if defined(__cplusplus) && \
+#if defined(__cplusplus) &&\
     __cplusplus >= 201402L
 
 # include <cstddef>
@@ -147,8 +147,14 @@
  * @brief Asserts that the expression is falsey
  */
 
-#define BDUT_ASSERT_TRUE(expr)                              BDUT_ASSERT_(expr, #expr " was not true")
-#define BDUT_ASSERT_FALSE(expr)                             BDUT_ASSERT_(!(expr), #expr " was not false")
+/* `_MSG` macros append `message` (`char const*`) after the standard text.
+ * NULL or an empty string leaves that text unchanged.
+ */
+
+#define BDUT_ASSERT_TRUE(expr)                              BDUT_ASSERT_(expr, "`" #expr "` was not true")
+#define BDUT_ASSERT_TRUE_MSG(expr, message)                 BDUT_ASSERT_EX_(expr, "`" #expr "` was not true", (message))
+#define BDUT_ASSERT_FALSE(expr)                             BDUT_ASSERT_(!(expr), "`" #expr "` was not false")
+#define BDUT_ASSERT_FALSE_MSG(expr, message)                BDUT_ASSERT_EX_(!(expr), "`" #expr "` was not false", (message))
 
 /** @def BDUT_ASSERT_EQ(expected, actual)
  *
@@ -166,8 +172,10 @@
  * @param actual The actual value
  */
 
-#define BDUT_ASSERT_EQ(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), ==, "actual value of `" #actual "` not equal-to expected value `" #expected "`")
-#define BDUT_ASSERT_NE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), !=, "actual value of `" #actual "` not unequal-to expected value `" #expected "`")
+#define BDUT_ASSERT_EQ(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), ==, "actual value of `" #actual "` not equal-to expected value `" #expected "`", NULL)
+#define BDUT_ASSERT_EQ_MSG(expected, actual, message)       BDUT_CHECK_COMPARE_((expected), (actual), ==, "actual value of `" #actual "` not equal-to expected value `" #expected "`", (message))
+#define BDUT_ASSERT_NE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), !=, "actual value of `" #actual "` not unequal-to expected value `" #expected "`", NULL)
+#define BDUT_ASSERT_NE_MSG(expected, actual, message)       BDUT_CHECK_COMPARE_((expected), (actual), !=, "actual value of `" #actual "` not unequal-to expected value `" #expected "`", (message))
 
 /** @def BDUT_ASSERT_GE(expected, actual)
  *
@@ -201,10 +209,155 @@
  * @param actual The actual value
  */
 
-#define BDUT_ASSERT_GE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), <=, "actual value of `" #actual "` not greater-than-or-equal-to expected value `" #expected "`")
-#define BDUT_ASSERT_GT(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), <, "actual value of `" #actual "` not greater-than expected value `" #expected "`")
-#define BDUT_ASSERT_LE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), >=, "actual value of `" #actual "` not less-than-or-equal-to expected value `" #expected "`")
-#define BDUT_ASSERT_LT(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), >, "actual value of `" #actual "` not less-than expected value `" #expected "`")
+#define BDUT_ASSERT_GE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), <=, "actual value of `" #actual "` not greater-than-or-equal-to expected value `" #expected "`", NULL)
+#define BDUT_ASSERT_GE_MSG(expected, actual, message)       BDUT_CHECK_COMPARE_((expected), (actual), <=, "actual value of `" #actual "` not greater-than-or-equal-to expected value `" #expected "`", (message))
+#define BDUT_ASSERT_GT(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), <, "actual value of `" #actual "` not greater-than expected value `" #expected "`", NULL)
+#define BDUT_ASSERT_GT_MSG(expected, actual, message)       BDUT_CHECK_COMPARE_((expected), (actual), <, "actual value of `" #actual "` not greater-than expected value `" #expected "`", (message))
+#define BDUT_ASSERT_LE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), >=, "actual value of `" #actual "` not less-than-or-equal-to expected value `" #expected "`", NULL)
+#define BDUT_ASSERT_LE_MSG(expected, actual, message)       BDUT_CHECK_COMPARE_((expected), (actual), >=, "actual value of `" #actual "` not less-than-or-equal-to expected value `" #expected "`", (message))
+#define BDUT_ASSERT_LT(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), >, "actual value of `" #actual "` not less-than expected value `" #expected "`", NULL)
+#define BDUT_ASSERT_LT_MSG(expected, actual, message)       BDUT_CHECK_COMPARE_((expected), (actual), >, "actual value of `" #actual "` not less-than expected value `" #expected "`", (message))
+
+/** @def BDUT_ASSERT_PTR_EQ(expected, actual)
+ *
+ * @brief Asserts that \c actual and \c expected designate the same address
+ *
+ * @param expected The expected address
+ * @param actual The actual address
+ *
+ * @note Both operands are object pointers, converted to `void const*` and
+ *   compared by address. NULL is a null pointer.
+ */
+
+/** @def BDUT_ASSERT_PTR_NE(expected, actual)
+ *
+ * @brief Asserts that \c actual and \c expected designate different
+ *   addresses
+ *
+ * @param expected The expected address
+ * @param actual The actual address
+ *
+ * @note Same conversion rules as \c BDUT_ASSERT_PTR_EQ().
+ */
+
+#define BDUT_ASSERT_PTR_EQ(expected, actual)                BDUT_CHECK_COMPARE_((void const*)(expected), (void const*)(actual), ==, "actual pointer `" #actual "` not equal-to expected pointer `" #expected "`", NULL)
+#define BDUT_ASSERT_PTR_EQ_MSG(expected, actual, message)   BDUT_CHECK_COMPARE_((void const*)(expected), (void const*)(actual), ==, "actual pointer `" #actual "` not equal-to expected pointer `" #expected "`", (message))
+#define BDUT_ASSERT_PTR_NE(expected, actual)                BDUT_CHECK_COMPARE_((void const*)(expected), (void const*)(actual), !=, "actual pointer `" #actual "` not unequal-to expected pointer `" #expected "`", NULL)
+#define BDUT_ASSERT_PTR_NE_MSG(expected, actual, message)   BDUT_CHECK_COMPARE_((void const*)(expected), (void const*)(actual), !=, "actual pointer `" #actual "` not unequal-to expected pointer `" #expected "`", (message))
+
+#ifndef BDUT_FP_DEFAULT_MARGIN
+/** Default absolute margin for \c BDUT_ASSERT_FP_EQ(). Overridable before
+ *   include. Matches **test_help-rs** `DEFAULT_MARGIN`.
+ */
+# define BDUT_FP_DEFAULT_MARGIN                             0.0001
+#endif
+#ifndef BDUT_FP_DEFAULT_MULTIPLIER
+/** Default relative multiplier for \c BDUT_ASSERT_FP_EQ(). Overridable
+ *   before include. Matches **test_help-rs** `DEFAULT_MULTIPLIER`.
+ */
+# define BDUT_FP_DEFAULT_MULTIPLIER                         0.000001
+#endif
+
+/** @def BDUT_ASSERT_FP_EQ(expected, actual)
+ *
+ * @brief Asserts that \c actual is approximately equal to \c expected
+ *
+ * Uses a relative multiplier of \c BDUT_FP_DEFAULT_MULTIPLIER, except
+ * when either operand is zero, in which case it uses an absolute margin
+ * of \c BDUT_FP_DEFAULT_MARGIN. Exact equality passes first. A negative
+ * factor fails. NaN fails. Operands are evaluated once and compared as
+ * `double`.
+ *
+ * @param expected The expected value
+ * @param actual The actual value
+ */
+
+/** @def BDUT_ASSERT_FP_EQ_MARGIN(expected, actual, margin_factor)
+ *
+ * @brief Asserts approximate equality within an absolute \c margin_factor
+ *
+ * Accepts \c actual in
+ * `[expected - margin_factor, expected + margin_factor]`. Exact equality
+ * passes first. A negative or zero factor leaves only exact equality.
+ *
+ * @param expected The expected value
+ * @param actual The actual value
+ * @param margin_factor The absolute margin (non-negative)
+ */
+
+/** @def BDUT_ASSERT_FP_EQ_MULTIPLIER(expected, actual, multiplier_factor)
+ *
+ * @brief Asserts approximate equality within a relative
+ *   \c multiplier_factor
+ *
+ * Accepts \c actual in
+ * `[expected * (1 - multiplier_factor), expected * (1 + multiplier_factor)]`.
+ * Exact equality passes first. A zero expected value with a nonzero
+ * actual fails. A negative or zero factor leaves only exact equality.
+ *
+ * @param expected The expected value
+ * @param actual The actual value
+ * @param multiplier_factor The relative multiplier (non-negative)
+ */
+
+/** @def BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER(expected, actual, multiplier_factor, zero_margin_factor)
+ *
+ * @brief Asserts approximate equality with a multiplier, or a margin
+ *   when either operand is zero
+ *
+ * Same rule as \c BDUT_ASSERT_FP_EQ(), with both factors supplied.
+ *
+ * @param expected The expected value
+ * @param actual The actual value
+ * @param multiplier_factor The relative multiplier when neither is zero
+ * @param zero_margin_factor The absolute margin when either is zero
+ */
+
+#define BDUT_ASSERT_FP_EQ(expected, actual)                 BDUT_ASSERT_FP_EQ_MSG((expected), (actual), NULL)
+#define BDUT_ASSERT_FP_EQ_MSG(expected, actual, message)    BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER_MSG((expected), (actual), BDUT_FP_DEFAULT_MULTIPLIER, BDUT_FP_DEFAULT_MARGIN, (message))
+
+#define BDUT_ASSERT_FP_EQ_MARGIN(expected, actual, margin_factor) \
+                                                            BDUT_ASSERT_FP_EQ_MARGIN_MSG((expected), (actual), (margin_factor), NULL)
+#define BDUT_ASSERT_FP_EQ_MARGIN_MSG(expected, actual, margin_factor, message)  \
+                                                            \
+    do {                                                    \
+        double bdut_expected_ = (double)(expected);         \
+        double bdut_actual_ = (double)(actual);             \
+        double bdut_margin_ = (double)(margin_factor);      \
+        if (!BDUT_fp_eq_margin_(bdut_expected_, bdut_actual_, bdut_margin_)) { \
+            BDUT_report_fp_eq_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, #expected, #actual, bdut_expected_, bdut_actual_, 0, bdut_margin_, (message)); \
+        }                                                   \
+    } while (0)
+
+#define BDUT_ASSERT_FP_EQ_MULTIPLIER(expected, actual, multiplier_factor) \
+                                                            BDUT_ASSERT_FP_EQ_MULTIPLIER_MSG((expected), (actual), (multiplier_factor), NULL)
+#define BDUT_ASSERT_FP_EQ_MULTIPLIER_MSG(expected, actual, multiplier_factor, message)  \
+                                                            \
+    do {                                                    \
+        double bdut_expected_ = (double)(expected);         \
+        double bdut_actual_ = (double)(actual);             \
+        double bdut_multiplier_ = (double)(multiplier_factor); \
+        if (!BDUT_fp_eq_multiplier_(bdut_expected_, bdut_actual_, bdut_multiplier_)) { \
+            BDUT_report_fp_eq_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, #expected, #actual, bdut_expected_, bdut_actual_, 1, bdut_multiplier_, (message)); \
+        }                                                   \
+    } while (0)
+
+#define BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER(expected, actual, multiplier_factor, zero_margin_factor) \
+                                                            BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER_MSG((expected), (actual), (multiplier_factor), (zero_margin_factor), NULL)
+#define BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER_MSG(expected, actual, multiplier_factor, zero_margin_factor, message) \
+    do {                                                    \
+        double bdut_expected_ = (double)(expected);         \
+        double bdut_actual_ = (double)(actual);             \
+        double bdut_multiplier_ = (double)(multiplier_factor); \
+        double bdut_margin_ = (double)(zero_margin_factor); \
+        if (!BDUT_fp_eq_zero_margin_or_multiplier_(bdut_expected_, bdut_actual_, bdut_multiplier_, bdut_margin_)) { \
+            if (0.0 == bdut_expected_ || 0.0 == bdut_actual_) { \
+                BDUT_report_fp_eq_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, #expected, #actual, bdut_expected_, bdut_actual_, 0, bdut_margin_, (message)); \
+            } else {                                        \
+                BDUT_report_fp_eq_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, #expected, #actual, bdut_expected_, bdut_actual_, 1, bdut_multiplier_, (message)); \
+            }                                               \
+        }                                                   \
+    } while (0)
 
 /** @def BDUT_ASSERT_STRING_CONTAINS(needle, haystack)
  *
@@ -219,10 +372,57 @@
  *   assertions
  */
 
-#define BDUT_ASSERT_STRING_CONTAINS(needle, haystack) \
+#define BDUT_ASSERT_STRING_CONTAINS(needle, haystack)       BDUT_ASSERT_STRING_CONTAINS_MSG((needle), (haystack), NULL)
+#define BDUT_ASSERT_STRING_CONTAINS_MSG(needle, haystack, message) \
     do { \
         if (!BDUT_strcontains_((haystack), (needle))) { \
-            BDUT_report_string_contains_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, (needle), (haystack)); \
+            BDUT_report_string_contains_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, (needle), (haystack), (message)); \
+        } \
+    } while (0)
+
+/** @def BDUT_ASSERT_STRING_EQUAL(expected, actual)
+ *
+ * @brief Asserts that \c actual equals \c expected, compared with
+ *   `strcmp()`
+ *
+ * @param expected The expected string
+ * @param actual The actual string
+ *
+ * @note A NULL pointer is compared as an empty string, as with
+ *   \c BDUT_ASSERT_STRING_CONTAINS(). Each operand is evaluated once.
+ */
+
+/** @def BDUT_ASSERT_STRING_EQUAL_N(expected, actual, n)
+ *
+ * @brief Asserts that the first \c n characters of \c actual equal those of
+ *   \c expected, compared with `strncmp()`
+ *
+ * @param expected The expected string
+ * @param actual The actual string
+ * @param n The number of characters to compare
+ *
+ * @note A NULL pointer is compared as an empty string. A count of 0 passes,
+ *   because `strncmp()` treats a zero length as equal. Each operand is
+ *   evaluated once.
+ */
+
+#define BDUT_ASSERT_STRING_EQUAL(expected, actual)          BDUT_ASSERT_STRING_EQUAL_MSG((expected), (actual), NULL)
+#define BDUT_ASSERT_STRING_EQUAL_MSG(expected, actual, message) \
+    do { \
+        char const* bdut_expected_ = (expected); \
+        char const* bdut_actual_ = (actual); \
+        if (!BDUT_streq_(bdut_expected_, bdut_actual_)) { \
+            BDUT_report_string_equal_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, bdut_expected_, bdut_actual_, 0, 0u, (message)); \
+        } \
+    } while (0)
+#define BDUT_ASSERT_STRING_EQUAL_N(expected, actual, n)     BDUT_ASSERT_STRING_EQUAL_N_MSG((expected), (actual), (n), NULL)
+#define BDUT_ASSERT_STRING_EQUAL_N_MSG(expected, actual, n, message) \
+    do { \
+        char const* bdut_expected_ = (expected); \
+        char const* bdut_actual_ = (actual); \
+        size_t bdut_n_ = (n); \
+        if (!BDUT_strneq_(bdut_expected_, bdut_actual_, bdut_n_)) { \
+            BDUT_report_string_equal_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, bdut_expected_, bdut_actual_, 1, bdut_n_, (message)); \
         } \
     } while (0)
 
@@ -273,14 +473,117 @@
  */
 
 
-# define BDUT_ASSERT_(expr, msg) \
-    do { \
-        if (!(expr)) { \
-            BDUT_report_assertion_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, #expr, msg); \
-        } \
+# define BDUT_ASSERT_(expr, msg)                            BDUT_ASSERT_EX_((expr), msg, NULL)
+
+# define BDUT_ASSERT_EX_(expr, msg, detail)                                 \
+    do {                                                                    \
+        if (!(expr)) {                                                      \
+            BDUT_report_assertion_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, #expr, msg, (detail)); \
+        }                                                                   \
     } while (0)
 
-# define BDUT_CHECK_COMPARE_(expected, actual, op, msg)     BDUT_ASSERT_((expected) op (actual), msg)
+/* C11 `_Generic` (and C++ overloads) print values after a failed compare.
+ * Where `decltype` or `__typeof__` exists, each operand is evaluated once
+ * and that stored value is printed. Otherwise the failure path evaluates
+ * the operands again. C99, including TinyCC, keeps the message-only report.
+ */
+# if defined(__cplusplus) &&\
+     __cplusplus >= 201103L
+
+#  define BDUT_TYPEOF_(expr)                                decltype(expr)
+# elif !defined(__cplusplus) &&\
+       defined(__STDC_VERSION__) &&\
+       __STDC_VERSION__ >= 202311L
+
+#  define BDUT_TYPEOF_(expr)                                typeof(expr)
+# elif defined(__GNUC__) || defined(__clang__)
+
+#  define BDUT_TYPEOF_(expr)                                __extension__ __typeof__(expr)
+# endif
+
+# if !defined(__cplusplus) &&\
+     defined(__STDC_VERSION__) &&\
+     __STDC_VERSION__ >= 201112L
+
+#  define BDUT_HAS_GENERIC_                                 1
+# else
+
+#  define BDUT_HAS_GENERIC_                                 0
+# endif
+
+# if defined(__cplusplus)
+
+#  define BDUT_FMT_COMPARE_VALUE_(buf, buflen, val)         BDUT_fmt_value_((buf), (buflen), (val))
+# elif BDUT_HAS_GENERIC_
+
+/* Associations are function designators. Clang type-checks every arm, so
+ * the operand is converted only in the selected call, not inside an arm.
+ */
+#  define BDUT_FMT_VALUE_(buf, buflen, expr)                                \
+                                                                            \
+    _Generic((expr)                                                         \
+        , char:                   BDUT_fmt_sint_                            \
+        , signed char:            BDUT_fmt_sint_                            \
+        , short:                  BDUT_fmt_sint_                            \
+        , int:                    BDUT_fmt_sint_                            \
+        , long:                   BDUT_fmt_sint_                            \
+        , long long:              BDUT_fmt_sint_                            \
+        , _Bool:                  BDUT_fmt_sint_                            \
+        , unsigned char:          BDUT_fmt_uint_                            \
+        , unsigned short:         BDUT_fmt_uint_                            \
+        , unsigned int:           BDUT_fmt_uint_                            \
+        , unsigned long:          BDUT_fmt_uint_                            \
+        , unsigned long long:     BDUT_fmt_uint_                            \
+        , float:                  BDUT_fmt_dbl_                             \
+        , double:                 BDUT_fmt_dbl_                             \
+        , long double:            BDUT_fmt_dbl_                             \
+        , char*:                  BDUT_fmt_ptr_                             \
+        , char const*:            BDUT_fmt_ptr_                             \
+        , void*:                  BDUT_fmt_ptr_                             \
+        , void const*:            BDUT_fmt_ptr_                             \
+        , default:                BDUT_fmt_unk_                             \
+    )((buf), (buflen), (expr))
+
+#  define BDUT_FMT_COMPARE_VALUE_(buf, buflen, val)         BDUT_FMT_VALUE_((buf), (buflen), (val))
+# endif /* C++ / C11 */
+
+# if defined(__cplusplus) || BDUT_HAS_GENERIC_
+
+#  if defined(BDUT_TYPEOF_)
+
+#   define BDUT_CHECK_COMPARE_(expected, actual, op, msg, detail)           \
+                                                                            \
+    do {                                                                    \
+        BDUT_TYPEOF_(expected) bdut_expected_ = expected;                   \
+        BDUT_TYPEOF_(actual) bdut_actual_ = actual;                         \
+                                                                            \
+        if (!(bdut_expected_ op bdut_actual_)) {                            \
+            char bdut_ebuf_[64];                                            \
+            char bdut_abuf_[64];                                            \
+            BDUT_FMT_COMPARE_VALUE_(bdut_ebuf_, sizeof bdut_ebuf_, bdut_expected_); \
+            BDUT_FMT_COMPARE_VALUE_(bdut_abuf_, sizeof bdut_abuf_, bdut_actual_); \
+            BDUT_report_compare_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, (msg), bdut_ebuf_, bdut_abuf_, (detail)); \
+        }                                                                   \
+    } while (0)
+#  else /* ? BDUT_TYPEOF_ */
+
+#   define BDUT_CHECK_COMPARE_(expected, actual, op, msg, detail)           \
+                                                                            \
+    do {                                                                    \
+        if (!((expected) op (actual))) {                                    \
+            char bdut_ebuf_[64];                                            \
+            char bdut_abuf_[64];                                            \
+            BDUT_FMT_COMPARE_VALUE_(bdut_ebuf_, sizeof bdut_ebuf_, (expected)); \
+            BDUT_FMT_COMPARE_VALUE_(bdut_abuf_, sizeof bdut_abuf_, (actual)); \
+            BDUT_report_compare_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, (msg), bdut_ebuf_, bdut_abuf_, (detail)); \
+        }                                                                   \
+    } while (0)
+#  endif /* !BDUT_TYPEOF_ */
+# else
+
+#  define BDUT_CHECK_COMPARE_(expected, actual, op, msg, detail) \
+    BDUT_ASSERT_EX_((expected) op (actual), msg, detail)
+# endif /* formatting compare */
 
 
 
@@ -311,7 +614,7 @@
 #endif /* compiler */
 
 
-# if defined(__cplusplus) && \
+# if defined(__cplusplus) &&\
      __cplusplus >= 201703L
 
 #  include <string>
@@ -333,10 +636,10 @@
 #  define BDUT_STATIC_CAST_(t, v)                           static_cast<t>(v)
 # else
 
-#  if 1 && \
-      defined(__STDC_VERSION__) && \
+#  if 1 &&\
+      defined(__STDC_VERSION__) &&\
       __STDC_VERSION__ >= 199901L &&\
-      !defined(__clang__) && \
+      !defined(__clang__) &&\
       1
 
 #   define BDUT_INLINE_                                     static inline
@@ -347,7 +650,7 @@
 #  define BDUT_STATIC_CAST_(t, v)                           ((t)(v))
 # endif
 
-# if defined(__cplusplus) && \
+# if defined(__cplusplus) &&\
      __cplusplus >= 201402L
 
 #  define BDUT_NORETURN_                                    [[noreturn]]
@@ -357,7 +660,7 @@
 # elif defined(__GNUC__) || defined(__clang__)
 
 #  define BDUT_NORETURN_                                    __attribute__((noreturn))
-# elif defined(__STDC_VERSION__) && \
+# elif defined(__STDC_VERSION__) &&\
        __STDC_VERSION__ >= 201112L
 
 #  define BDUT_NORETURN_                                    _Noreturn
@@ -374,9 +677,9 @@
 
 #ifndef BDUT_DOCUMENTATION_SKIP_SECTION
 
-# if 1 && \
-     !defined(__cplusplus) && \
-     defined(__clang__) && \
+# if 1 &&\
+     !defined(__cplusplus) &&\
+     defined(__clang__) &&\
      1
 
 static
@@ -446,7 +749,7 @@ BDUT_windows_build_number_(void)
 {
     typedef LONG (WINAPI *BDUT_RtlGetVersion_fn_t_)(OSVERSIONINFOW*);
 
-# if defined(__cplusplus) && \
+# if defined(__cplusplus) &&\
      __cplusplus >= 201402L
 
     using std::memcpy;
@@ -459,8 +762,8 @@ BDUT_windows_build_number_(void)
         /* Avoid -Wcast-function-type (MinGW -Werror): FARPROC is not a
          * compatible function-pointer type for a direct cast.
          */
-        FARPROC const proc = GetProcAddress(ntdll, "RtlGetVersion");
-        BDUT_RtlGetVersion_fn_t_ RtlGetVersion = NULL;
+        FARPROC const               proc            =   GetProcAddress(ntdll, "RtlGetVersion");
+        BDUT_RtlGetVersion_fn_t_    RtlGetVersion   =   NULL;
 
         if (NULL != proc)
         {
@@ -580,7 +883,7 @@ BDUT_strcontains_(
 ,   char const* needle
 )
 {
-# if defined(__cplusplus) && \
+# if defined(__cplusplus) &&\
      __cplusplus >= 201402L
 
     using std::strstr;
@@ -596,6 +899,446 @@ BDUT_strcontains_(
     }
 
     return NULL != strstr(haystack, needle);
+}
+
+/** @brief Compares \c expected and \c actual with `strcmp()`. A NULL
+ *   pointer is an empty string.
+ */
+BDUT_INLINE_
+int
+BDUT_streq_(
+    char const* expected
+,   char const* actual
+)
+{
+# if defined(__cplusplus) &&\
+     __cplusplus >= 201402L
+
+    using std::strcmp;
+# endif
+
+    if (NULL == expected)
+    {
+        expected = "";
+    }
+    if (NULL == actual)
+    {
+        actual = "";
+    }
+
+    return 0 == strcmp(expected, actual);
+}
+
+/** @brief Compares the first \c n characters with `strncmp()`. A NULL
+ *   pointer is an empty string.
+ */
+BDUT_INLINE_
+int
+BDUT_strneq_(
+    char const* expected
+,   char const* actual
+,   size_t      n
+)
+{
+# if defined(__cplusplus) &&\
+     __cplusplus >= 201402L
+
+    using std::strncmp;
+# endif
+
+    if (NULL == expected)
+    {
+        expected = "";
+    }
+    if (NULL == actual)
+    {
+        actual = "";
+    }
+
+    return 0 == strncmp(expected, actual, n);
+}
+
+/** @brief Absolute margin approximate equality. A negative factor fails.
+ *   Exact equality passes first. Does not call `libm`.
+ */
+BDUT_INLINE_
+int
+BDUT_fp_eq_margin_(
+    double expected
+,   double actual
+,   double margin_factor
+)
+{
+    if (expected == actual)
+    {
+        return 1;
+    }
+
+    if (margin_factor <= 0.0)
+    {
+        return 0;
+    }
+    else
+    {
+        double const expected_lo = expected - margin_factor;
+        double const expected_hi = expected + margin_factor;
+
+        return expected_lo <= actual && actual <= expected_hi;
+    }
+}
+
+/** @brief Relative multiplier approximate equality. A negative factor
+ *   fails. Exact equality passes first. Does not call `libm`.
+ */
+BDUT_INLINE_
+int
+BDUT_fp_eq_multiplier_(
+    double expected
+,   double actual
+,   double multiplier_factor
+)
+{
+    if (expected == actual)
+    {
+        return 1;
+    }
+
+    if (multiplier_factor <= 0.0)
+    {
+        return 0;
+    }
+    else
+    {
+        double const expected_lo = expected * (1.0 - multiplier_factor);
+        double const expected_hi = expected * (1.0 + multiplier_factor);
+        double lo;
+        double hi;
+
+        if (expected_lo <= expected_hi)
+        {
+            lo = expected_lo;
+            hi = expected_hi;
+        }
+        else
+        {
+            lo = expected_hi;
+            hi = expected_lo;
+        }
+
+        return lo <= actual && actual <= hi;
+    }
+}
+
+/** @brief Multiplier when neither operand is zero; otherwise margin.
+ */
+BDUT_INLINE_
+int
+BDUT_fp_eq_zero_margin_or_multiplier_(
+    double expected
+,   double actual
+,   double multiplier_factor
+,   double zero_margin_factor
+)
+{
+    if (expected == actual)
+    {
+        return 1;
+    }
+
+    if (0.0 == expected ||
+        0.0 == actual)
+    {
+        return BDUT_fp_eq_margin_(expected, actual, zero_margin_factor);
+    }
+    else
+    {
+        return BDUT_fp_eq_multiplier_(expected, actual, multiplier_factor);
+    }
+}
+
+#ifdef __cplusplus
+
+/* User-defined conversion ranks below the arithmetic overloads, so a type
+ * with no dedicated formatter still compares and prints "?".
+ */
+struct BDUT_fmt_fallback_
+{
+    template <typename T>
+    BDUT_fmt_fallback_(T const&)
+    {}
+};
+
+BDUT_INLINE_
+void
+BDUT_fmt_value_(
+    char*                       buf
+,   size_t                      n
+,   BDUT_fmt_fallback_ const&
+)
+{
+# if __cplusplus >= 201402L
+
+    using std::snprintf;
+# endif
+
+    snprintf(buf, n, "?");
+}
+
+BDUT_INLINE_
+void
+BDUT_fmt_value_(
+    char*                       buf
+,   size_t                      n
+,   bool                        v
+)
+{
+# if __cplusplus >= 201402L
+
+    using std::snprintf;
+# endif
+
+    snprintf(buf, n, "%s", v ? "true" : "false");
+}
+
+BDUT_INLINE_
+void
+BDUT_fmt_value_(
+    char*                       buf
+,   size_t                      n
+,   long long                   v
+)
+{
+# if __cplusplus >= 201402L
+
+    using std::snprintf;
+# endif
+
+    snprintf(buf, n, "%lld", v);
+}
+
+BDUT_INLINE_
+void
+BDUT_fmt_value_(
+    char*                       buf
+,   size_t                      n
+,   unsigned long long          v
+)
+{
+# if __cplusplus >= 201402L
+
+    using std::snprintf;
+# endif
+
+    snprintf(buf, n, "%llu", v);
+}
+
+BDUT_INLINE_
+void
+BDUT_fmt_value_(
+    char*                       buf
+,   size_t                      n
+,   double                      v
+)
+{
+# if __cplusplus >= 201402L
+
+    using std::snprintf;
+# endif
+
+    snprintf(buf, n, "%g", v);
+}
+
+/* Exact arithmetic overloads. A literal `1` otherwise converts equally well
+ * to bool, long long, unsigned long long, and double.
+ */
+# define BDUT_DEFINE_FMT_SINT_(t) \
+    BDUT_INLINE_ \
+    void \
+    BDUT_fmt_value_( \
+        char*                       buf \
+    ,   size_t                      n \
+    ,   t                           v \
+    ) \
+    { \
+        BDUT_fmt_value_(buf, n, BDUT_STATIC_CAST_(long long, v)); \
+    }
+
+# define BDUT_DEFINE_FMT_UINT_(t) \
+    BDUT_INLINE_ \
+    void \
+    BDUT_fmt_value_( \
+        char*                       buf \
+    ,   size_t                      n \
+    ,   t                           v \
+    ) \
+    { \
+        BDUT_fmt_value_(buf, n, BDUT_STATIC_CAST_(unsigned long long, v)); \
+    }
+
+BDUT_DEFINE_FMT_SINT_(char)
+BDUT_DEFINE_FMT_SINT_(signed char)
+BDUT_DEFINE_FMT_UINT_(unsigned char)
+BDUT_DEFINE_FMT_SINT_(short)
+BDUT_DEFINE_FMT_UINT_(unsigned short)
+BDUT_DEFINE_FMT_SINT_(int)
+BDUT_DEFINE_FMT_UINT_(unsigned int)
+BDUT_DEFINE_FMT_SINT_(long)
+BDUT_DEFINE_FMT_UINT_(unsigned long)
+
+# undef BDUT_DEFINE_FMT_SINT_
+# undef BDUT_DEFINE_FMT_UINT_
+
+# define BDUT_DEFINE_FMT_DBL_(t) \
+    BDUT_INLINE_ \
+    void \
+    BDUT_fmt_value_( \
+        char*                       buf \
+    ,   size_t                      n \
+    ,   t                           v \
+    ) \
+    { \
+        BDUT_fmt_value_(buf, n, BDUT_STATIC_CAST_(double, v)); \
+    }
+
+BDUT_DEFINE_FMT_DBL_(float)
+BDUT_DEFINE_FMT_DBL_(long double)
+
+# undef BDUT_DEFINE_FMT_DBL_
+
+BDUT_INLINE_
+void
+BDUT_fmt_value_(
+    char*                       buf
+,   size_t                      n
+,   void const*                 v
+)
+{
+# if __cplusplus >= 201402L
+
+    using std::snprintf;
+# endif
+
+    snprintf(buf, n, "%p", const_cast<void*>(v));
+}
+#else /* ? __cplusplus */
+
+/* C90 has no `long long`. These formatters exist only for the C11
+ * `_Generic` value printer.
+ */
+# if BDUT_HAS_GENERIC_
+
+BDUT_INLINE_
+void
+BDUT_fmt_sint_(
+    char*                       buf
+,   size_t                      n
+,   long long                   v
+)
+{
+    snprintf(buf, n, "%lld", v);
+}
+
+BDUT_INLINE_
+void
+BDUT_fmt_uint_(
+    char*                       buf
+,   size_t                      n
+,   unsigned long long          v
+)
+{
+    snprintf(buf, n, "%llu", v);
+}
+
+BDUT_INLINE_
+void
+BDUT_fmt_dbl_(
+    char*                       buf
+,   size_t                      n
+,   double                      v
+)
+{
+    snprintf(buf, n, "%g", v);
+}
+
+BDUT_INLINE_
+void
+BDUT_fmt_ptr_(
+    char*                       buf
+,   size_t                      n
+,   void const*                 v
+)
+{
+    snprintf(buf, n, "%p", BDUT_STATIC_CAST_(void*, v));
+}
+
+BDUT_INLINE_
+void
+BDUT_fmt_unk_(
+    char*                       buf
+,   size_t                      n
+,   ...
+)
+{
+    snprintf(buf, n, "?");
+}
+
+# endif /* BDUT_HAS_GENERIC_ */
+#endif /* !__cplusplus */
+
+BDUT_NORETURN_
+BDUT_INLINE_
+void
+BDUT_report_assertion_failure_and_abort_(
+    char const*     file
+,   int             line
+,   char const*     function
+,   char const*     expr
+,   char const*     message
+,   char const*     detail
+);
+
+/** @brief TBC
+ *
+ * @param file The source file
+ * @param line The source line
+ * @param function The source function. May be NULL if the compiler is not
+ *  recognised to support function identification
+ * @param message The comparison message
+ * @param expected The rendered expected value
+ * @param actual The rendered actual value
+ */
+BDUT_NORETURN_
+BDUT_INLINE_
+void
+BDUT_report_compare_failure_and_abort_(
+    char const*     file
+,   int             line
+,   char const*     function
+,   char const*     message
+,   char const*     expected
+,   char const*     actual
+,   char const*     detail
+)
+{
+# if defined(__cplusplus) &&\
+     __cplusplus >= 201402L
+
+    using std::snprintf;
+# endif
+
+    char composed[1024];
+
+    if (NULL != detail &&
+        '\0' != detail[0])
+    {
+        snprintf(composed, sizeof composed, "%s: %s (expected %s, actual %s)", message, detail, expected, actual);
+    }
+    else
+    {
+        snprintf(composed, sizeof composed, "%s (expected %s, actual %s)", message, expected, actual);
+    }
+
+    BDUT_report_assertion_failure_and_abort_(file, line, function, "", composed, NULL);
 }
 
 /** @brief TBC
@@ -616,25 +1359,29 @@ BDUT_report_assertion_failure_and_abort_(
 ,   char const*     function
 ,   char const*     expr
 ,   char const*     message
+,   char const*     detail
 )
 {
-# if defined(__cplusplus) && \
+# if defined(__cplusplus) &&\
     __cplusplus >= 201402L
 
     using std::exit;
     using std::fprintf;
-# endif
-
-#if  1 && \
-     !defined(__cplusplus) && \
-     defined(__clang__) && \
-     1
-
-    ((void)&BDUT_reference_all_impl_functions_);
+    using std::snprintf;
 # endif
 
     char const* clr_pre = "";
     char const* clr_post = "";
+    char        detail_buf[1536];
+    char const* reported = message;
+
+#if  1 &&\
+     !defined(__cplusplus) &&\
+     defined(__clang__) &&\
+     1
+
+    ((void)&BDUT_reference_all_impl_functions_);
+# endif
 
     if (BDUT_isatty_(stderr) &&
         BDUT_console_supports_ansi_())
@@ -644,6 +1391,13 @@ BDUT_report_assertion_failure_and_abort_(
     }
 
     ((void)&expr);
+
+    if (NULL != detail &&
+        '\0' != detail[0])
+    {
+        snprintf(detail_buf, sizeof detail_buf, "%s: %s", message, detail);
+        reported = detail_buf;
+    }
 
     if (NULL == function ||
         '\0' == function[0])
@@ -655,7 +1409,7 @@ BDUT_report_assertion_failure_and_abort_(
         ,   line
         ,   clr_pre
         ,   clr_post
-        ,   message
+        ,   reported
         );
     }
     else
@@ -668,7 +1422,7 @@ BDUT_report_assertion_failure_and_abort_(
         ,   function
         ,   clr_pre
         ,   clr_post
-        ,   message
+        ,   reported
         );
     }
 
@@ -693,9 +1447,10 @@ BDUT_report_string_contains_failure_and_abort_(
 ,   char const*     function
 ,   char const*     needle
 ,   char const*     haystack
+,   char const*     detail
 )
 {
-# if defined(__cplusplus) && \
+# if defined(__cplusplus) &&\
      __cplusplus >= 201402L
 
     using std::size_t;
@@ -781,21 +1536,23 @@ BDUT_report_string_contains_failure_and_abort_(
             }
         }
 
-        int const r = snprintf(
-            message
-        ,   cch_message
-        ,   fmt
-        ,   width_haystack
-        ,   haystack
-        ,   width_e_haystack
-        ,   ellipsis
-        ,   width_needle
-        ,   needle
-        ,   width_e_needle
-        ,   ellipsis
-        );
+        {
+            int const r = snprintf(
+                message
+            ,   cch_message
+            ,   fmt
+            ,   width_haystack
+            ,   haystack
+            ,   width_e_haystack
+            ,   ellipsis
+            ,   width_needle
+            ,   needle
+            ,   width_e_needle
+            ,   ellipsis
+            );
 
-        ((void)&r);
+            ((void)&r);
+        }
 
         BDUT_report_assertion_failure_and_abort_(
             file
@@ -803,8 +1560,195 @@ BDUT_report_string_contains_failure_and_abort_(
         ,   function
         ,   ""
         ,   message
+        ,   detail
         );
     }
+}
+
+/** @brief Reports a failed string-equality assertion and terminates.
+ *
+ * @param file The source file
+ * @param line The source line
+ * @param function The source function. May be NULL if the compiler is not
+ *  recognised to support function identification
+ * @param expected The expected string. NULL is reported as empty
+ * @param actual The actual string. NULL is reported as empty
+ * @param with_count Non-zero when the comparison was limited to \c n
+ *  characters
+ * @param n The character count used by `strncmp()`
+ * @param detail Optional message. NULL or empty leaves the text unchanged
+ */
+BDUT_NORETURN_
+BDUT_INLINE_
+void
+BDUT_report_string_equal_failure_and_abort_(
+    char const*     file
+,   int             line
+,   char const*     function
+,   char const*     expected
+,   char const*     actual
+,   int             with_count
+,   size_t          n
+,   char const*     detail
+)
+{
+# if defined(__cplusplus) &&\
+     __cplusplus >= 201402L
+
+    using std::size_t;
+    using std::snprintf;
+    using std::strlen;
+# endif
+
+    char        message[1000];
+    size_t      expected_length;
+    size_t      actual_length;
+    int         expected_width;
+    int         actual_width;
+    char const* expected_ellipsis;
+    char const* actual_ellipsis;
+    int const   sample_max = 200;
+
+    if (NULL == expected)
+    {
+        expected = "";
+    }
+    if (NULL == actual)
+    {
+        actual = "";
+    }
+
+    expected_length = strlen(expected);
+    actual_length = strlen(actual);
+
+    if (expected_length > BDUT_STATIC_CAST_(size_t, sample_max))
+    {
+        expected_width = sample_max;
+        expected_ellipsis = "...";
+    }
+    else
+    {
+        expected_width = BDUT_STATIC_CAST_(int, expected_length);
+        expected_ellipsis = "";
+    }
+
+    if (actual_length > BDUT_STATIC_CAST_(size_t, sample_max))
+    {
+        actual_width = sample_max;
+        actual_ellipsis = "...";
+    }
+    else
+    {
+        actual_width = BDUT_STATIC_CAST_(int, actual_length);
+        actual_ellipsis = "";
+    }
+
+    if (with_count)
+    {
+        int const r = snprintf(
+            message
+        ,   sizeof message
+        ,   "actual string '%.*s%s' not equal-to expected string '%.*s%s' in the first %lu characters"
+        ,   actual_width
+        ,   actual
+        ,   actual_ellipsis
+        ,   expected_width
+        ,   expected
+        ,   expected_ellipsis
+        ,   BDUT_STATIC_CAST_(unsigned long, n)
+        );
+
+        ((void)&r);
+    }
+    else
+    {
+        int const r = snprintf(
+            message
+        ,   sizeof message
+        ,   "actual string '%.*s%s' not equal-to expected string '%.*s%s'"
+        ,   actual_width
+        ,   actual
+        ,   actual_ellipsis
+        ,   expected_width
+        ,   expected
+        ,   expected_ellipsis
+        );
+
+        ((void)&r);
+    }
+
+    BDUT_report_assertion_failure_and_abort_(
+        file
+    ,   line
+    ,   function
+    ,   ""
+    ,   message
+    ,   detail
+    );
+}
+
+/** @brief Reports a failed floating-point approximate equality and
+ *   terminates.
+ *
+ * @param file The source file
+ * @param line The source line
+ * @param function The source function. May be NULL if the compiler is not
+ *  recognised to support function identification
+ * @param expected_expr The expected expression text
+ * @param actual_expr The actual expression text
+ * @param expected The expected value
+ * @param actual The actual value
+ * @param by_multiplier Non-zero when a multiplier was applied; zero when a
+ *  margin was applied
+ * @param factor The margin or multiplier that was applied
+ * @param detail Optional message. NULL or empty leaves the text unchanged
+ */
+BDUT_NORETURN_
+BDUT_INLINE_
+void
+BDUT_report_fp_eq_failure_and_abort_(
+    char const*     file
+,   int             line
+,   char const*     function
+,   char const*     expected_expr
+,   char const*     actual_expr
+,   double          expected
+,   double          actual
+,   int             by_multiplier
+,   double          factor
+,   char const*     detail
+)
+{
+# if defined(__cplusplus) &&\
+     __cplusplus >= 201402L
+
+    using std::snprintf;
+# endif
+
+    char        message[1000];
+    char const* kind = by_multiplier ? "multiplier" : "margin";
+    int const   r = snprintf(
+        message
+    ,   sizeof message
+    ,   "actual value of `%s` not within %s %g of expected value `%s` (expected %g, actual %g)"
+    ,   actual_expr
+    ,   kind
+    ,   factor
+    ,   expected_expr
+    ,   expected
+    ,   actual
+    );
+
+    ((void)&r);
+
+    BDUT_report_assertion_failure_and_abort_(
+        file
+    ,   line
+    ,   function
+    ,   ""
+    ,   message
+    ,   detail
+    );
 }
 
 BDUT_INLINE_
@@ -817,19 +1761,19 @@ BDUT_report_tests_passed_(
 ,   char*           argv[]
 )
 {
-# if defined(__cplusplus) && \
+# if defined(__cplusplus) &&\
     __cplusplus >= 201402L
 
     using std::exit;
     using std::fprintf;
 # endif
 
+    char const* clr_pre = "";
+    char const* clr_post = "";
+
     ((void)&file);
     ((void)&line);
     ((void)&function);
-
-    char const* clr_pre = "";
-    char const* clr_post = "";
 
     if (BDUT_isatty_(stdout) &&
         BDUT_console_supports_ansi_())
@@ -850,9 +1794,9 @@ BDUT_report_tests_passed_(
     return 0;
 }
 
-# if 1 && \
-     !defined(__cplusplus) && \
-     defined(__clang__) && \
+# if 1 &&\
+     !defined(__cplusplus) &&\
+     defined(__clang__) &&\
      1
 
 static
@@ -860,9 +1804,27 @@ void
 BDUT_reference_all_impl_functions_(void)
 {
     ((void)&BDUT_console_supports_ansi_);
+    ((void)&BDUT_fp_eq_margin_);
+    ((void)&BDUT_fp_eq_multiplier_);
+    ((void)&BDUT_fp_eq_zero_margin_or_multiplier_);
     ((void)&BDUT_strcontains_);
+    ((void)&BDUT_streq_);
+    ((void)&BDUT_strneq_);
+
+# if BDUT_HAS_GENERIC_
+
+    ((void)&BDUT_fmt_sint_);
+    ((void)&BDUT_fmt_uint_);
+    ((void)&BDUT_fmt_dbl_);
+    ((void)&BDUT_fmt_ptr_);
+    ((void)&BDUT_fmt_unk_);
+# endif /* BDUT_HAS_GENERIC_ */
+
+    ((void)&BDUT_report_compare_failure_and_abort_);
     ((void)&BDUT_report_assertion_failure_and_abort_);
     ((void)&BDUT_report_string_contains_failure_and_abort_);
+    ((void)&BDUT_report_string_equal_failure_and_abort_);
+    ((void)&BDUT_report_fp_eq_failure_and_abort_);
     ((void)&BDUT_report_tests_passed_);
 }
 # endif

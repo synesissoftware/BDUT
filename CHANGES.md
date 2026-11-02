@@ -1,6 +1,19 @@
 # BDUT - Changes <!-- omit in toc -->
 
 
+## 0.6.0-beta1 - 22nd October 2026
+
+* **bdut.h** — C11 and C++ comparison failures append the rendered expected and actual values; C99, including **TinyCC**, keeps the message-only report;
+* **bdut.h** — comparison operands are evaluated once when `decltype` or `__typeof__` is available; otherwise a formatting failure path evaluates them again;
+* **bdut.h** — each assertion has a `_MSG` form that appends a `char const*` after the standard failure text;
+* **bdut.h** — `BDUT_ASSERT_STRING_EQUAL` and `BDUT_ASSERT_STRING_EQUAL_N` compare with `strcmp()` and `strncmp()`; NULL is an empty string, as with `BDUT_ASSERT_STRING_CONTAINS`;
+* **bdut.h** — `BDUT_ASSERT_PTR_EQ` and `BDUT_ASSERT_PTR_NE` compare object addresses, including NULL;
+* **bdut.h** — `BDUT_ASSERT_FP_EQ`, `_MARGIN`, `_MULTIPLIER`, and `_ZERO_MARGIN_OR_MULTIPLIER` approximate floating-point equality (margin / multiplier, as in **test_help-rs**);
+* Each example shows a passing literal, a passing `actual` variable, a passing `_MSG` call, then one intentional `_MSG` failure on an `actual` variable;
+* Unit tests call each `_MSG` form, including an empty string and NULL;
+* Scratch demos call the `_MSG` form, including the intentional failures;
+
+
 ## 0.6.0-alpha1 - 21st October 2026
 
 * Replaced **examples/c/example_1** and **examples/cpp/example_1** with one C program and one C++ program for each public assertion macro;
@@ -97,17 +110,17 @@
 * .gitattributes;
 
 
-## 0.4.0 (alpha 3) - 30th August 2025
+## 0.4.0-alpha3 - 30th August 2025
 
 * GitHub Actions;
 
 
-## 0.4.0 (alpha 2) - 30th August 2025
+## 0.4.0-alpha2 - 30th August 2025
 
 * CTest compatibility;
 
 
-## 0.4.0 (alpha 1) - 30th August 2025
+## 0.4.0-alpha1 - 30th August 2025
 
 * added `BDUT_TESTS_PASSED()`;
 
