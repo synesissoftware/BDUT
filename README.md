@@ -247,9 +247,8 @@ Defect reports, feature requests, and pull requests are welcome on https://githu
 
 Projects in which **BDUT** is used for testing include:
 
-* [**b64**](https://github.com/synesissoftware/b64)
-* [**cstring**](https://github.com/synesissoftware/cstring)
-* [**shwild**](https://github.com/synesissoftware/shwild)
+* [**p99**](https://github.com/synesissoftware/p99);
+* [**shwild**](https://github.com/synesissoftware/shwild);
 
 
 ### License
