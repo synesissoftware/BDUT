@@ -30,9 +30,9 @@ The **examples/** tree and most **test/scratch/** programs are in the second gro
 | Program | Source | Macros exercised |
 |---------|--------|------------------|
 | **test.unit.version** | [test/unit/test.unit.version/entry.c](./test/unit/test.unit.version/entry.c) | Version macros (`BDUT_VER_*`) |
-| **test.unit.assert_true_false** | [test/unit/test.unit.assert_true_false/entry.c](./test/unit/test.unit.assert_true_false/entry.c) | `BDUT_ASSERT_TRUE`, `BDUT_ASSERT_FALSE` |
-| **test.unit.compare** | [test/unit/test.unit.compare/entry.c](./test/unit/test.unit.compare/entry.c) | `BDUT_ASSERT_EQ`, `BDUT_ASSERT_NE`, `BDUT_ASSERT_GE`, `BDUT_ASSERT_GT`, `BDUT_ASSERT_LE`, `BDUT_ASSERT_LT` |
-| **test.unit.string_contains** | [test/unit/test.unit.string_contains/entry.c](./test/unit/test.unit.string_contains/entry.c) | `BDUT_ASSERT_STRING_CONTAINS` |
+| **test.unit.assert_true_false** | [test/unit/test.unit.assert_true_false/entry.c](./test/unit/test.unit.assert_true_false/entry.c) | `BDUT_ASSERT_TRUE`, `BDUT_ASSERT_FALSE`, and their `_MSG` forms |
+| **test.unit.compare** | [test/unit/test.unit.compare/entry.c](./test/unit/test.unit.compare/entry.c) | `BDUT_ASSERT_EQ`, `BDUT_ASSERT_NE`, `BDUT_ASSERT_GE`, `BDUT_ASSERT_GT`, `BDUT_ASSERT_LE`, `BDUT_ASSERT_LT`, and their `_MSG` forms |
+| **test.unit.string_contains** | [test/unit/test.unit.string_contains/entry.c](./test/unit/test.unit.string_contains/entry.c) | `BDUT_ASSERT_STRING_CONTAINS` and `BDUT_ASSERT_STRING_CONTAINS_MSG` |
 | **test.scratch.all_pass** | [test/scratch/test.scratch.all_pass/main.c](./test/scratch/test.scratch.all_pass/main.c) | Combined macro smoke test (manual) |
 
 All **test.unit.*** programs are registered with **CTest** and run in CI.
@@ -46,36 +46,36 @@ These programs contain at least one assertion that fails, to show file, line, fu
 
 ### examples/
 
-Each public assertion has one C program and one C++ program. Each program shows a passing literal, a passing `actual` variable, then one failing call on an `actual` variable.
+Each public assertion has one C program and one C++ program. Each program shows a passing literal, a passing `actual` variable, a passing `_MSG` call, then one failing `_MSG` call on an `actual` variable.
 
 | Program | Source | Demonstrates |
 |---------|--------|--------------|
-| **example.c.BDUT_ASSERT_EQ** | [examples/c/example.c.BDUT_ASSERT_EQ/main.c](./examples/c/example.c.BDUT_ASSERT_EQ/main.c) | `BDUT_ASSERT_EQ` |
-| **example.c.BDUT_ASSERT_FALSE** | [examples/c/example.c.BDUT_ASSERT_FALSE/main.c](./examples/c/example.c.BDUT_ASSERT_FALSE/main.c) | `BDUT_ASSERT_FALSE` |
-| **example.c.BDUT_ASSERT_GE** | [examples/c/example.c.BDUT_ASSERT_GE/main.c](./examples/c/example.c.BDUT_ASSERT_GE/main.c) | `BDUT_ASSERT_GE` |
-| **example.c.BDUT_ASSERT_GT** | [examples/c/example.c.BDUT_ASSERT_GT/main.c](./examples/c/example.c.BDUT_ASSERT_GT/main.c) | `BDUT_ASSERT_GT` |
-| **example.c.BDUT_ASSERT_LE** | [examples/c/example.c.BDUT_ASSERT_LE/main.c](./examples/c/example.c.BDUT_ASSERT_LE/main.c) | `BDUT_ASSERT_LE` |
-| **example.c.BDUT_ASSERT_LT** | [examples/c/example.c.BDUT_ASSERT_LT/main.c](./examples/c/example.c.BDUT_ASSERT_LT/main.c) | `BDUT_ASSERT_LT` |
-| **example.c.BDUT_ASSERT_NE** | [examples/c/example.c.BDUT_ASSERT_NE/main.c](./examples/c/example.c.BDUT_ASSERT_NE/main.c) | `BDUT_ASSERT_NE` |
-| **example.c.BDUT_ASSERT_STRING_CONTAINS** | [examples/c/example.c.BDUT_ASSERT_STRING_CONTAINS/main.c](./examples/c/example.c.BDUT_ASSERT_STRING_CONTAINS/main.c) | `BDUT_ASSERT_STRING_CONTAINS` |
-| **example.c.BDUT_ASSERT_TRUE** | [examples/c/example.c.BDUT_ASSERT_TRUE/main.c](./examples/c/example.c.BDUT_ASSERT_TRUE/main.c) | `BDUT_ASSERT_TRUE` |
-| **example.cpp.BDUT_ASSERT_EQ** | [examples/cpp/example.cpp.BDUT_ASSERT_EQ/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_EQ/main.cpp) | `BDUT_ASSERT_EQ` |
-| **example.cpp.BDUT_ASSERT_FALSE** | [examples/cpp/example.cpp.BDUT_ASSERT_FALSE/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_FALSE/main.cpp) | `BDUT_ASSERT_FALSE` |
-| **example.cpp.BDUT_ASSERT_GE** | [examples/cpp/example.cpp.BDUT_ASSERT_GE/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_GE/main.cpp) | `BDUT_ASSERT_GE` |
-| **example.cpp.BDUT_ASSERT_GT** | [examples/cpp/example.cpp.BDUT_ASSERT_GT/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_GT/main.cpp) | `BDUT_ASSERT_GT` |
-| **example.cpp.BDUT_ASSERT_LE** | [examples/cpp/example.cpp.BDUT_ASSERT_LE/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_LE/main.cpp) | `BDUT_ASSERT_LE` |
-| **example.cpp.BDUT_ASSERT_LT** | [examples/cpp/example.cpp.BDUT_ASSERT_LT/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_LT/main.cpp) | `BDUT_ASSERT_LT` |
-| **example.cpp.BDUT_ASSERT_NE** | [examples/cpp/example.cpp.BDUT_ASSERT_NE/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_NE/main.cpp) | `BDUT_ASSERT_NE` |
-| **example.cpp.BDUT_ASSERT_STRING_CONTAINS** | [examples/cpp/example.cpp.BDUT_ASSERT_STRING_CONTAINS/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_STRING_CONTAINS/main.cpp) | `BDUT_ASSERT_STRING_CONTAINS` |
-| **example.cpp.BDUT_ASSERT_TRUE** | [examples/cpp/example.cpp.BDUT_ASSERT_TRUE/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_TRUE/main.cpp) | `BDUT_ASSERT_TRUE` |
+| **example.c.BDUT_ASSERT_EQ** | [examples/c/example.c.BDUT_ASSERT_EQ/main.c](./examples/c/example.c.BDUT_ASSERT_EQ/main.c) | `BDUT_ASSERT_EQ` / `BDUT_ASSERT_EQ_MSG` |
+| **example.c.BDUT_ASSERT_FALSE** | [examples/c/example.c.BDUT_ASSERT_FALSE/main.c](./examples/c/example.c.BDUT_ASSERT_FALSE/main.c) | `BDUT_ASSERT_FALSE` / `BDUT_ASSERT_FALSE_MSG` |
+| **example.c.BDUT_ASSERT_GE** | [examples/c/example.c.BDUT_ASSERT_GE/main.c](./examples/c/example.c.BDUT_ASSERT_GE/main.c) | `BDUT_ASSERT_GE` / `BDUT_ASSERT_GE_MSG` |
+| **example.c.BDUT_ASSERT_GT** | [examples/c/example.c.BDUT_ASSERT_GT/main.c](./examples/c/example.c.BDUT_ASSERT_GT/main.c) | `BDUT_ASSERT_GT` / `BDUT_ASSERT_GT_MSG` |
+| **example.c.BDUT_ASSERT_LE** | [examples/c/example.c.BDUT_ASSERT_LE/main.c](./examples/c/example.c.BDUT_ASSERT_LE/main.c) | `BDUT_ASSERT_LE` / `BDUT_ASSERT_LE_MSG` |
+| **example.c.BDUT_ASSERT_LT** | [examples/c/example.c.BDUT_ASSERT_LT/main.c](./examples/c/example.c.BDUT_ASSERT_LT/main.c) | `BDUT_ASSERT_LT` / `BDUT_ASSERT_LT_MSG` |
+| **example.c.BDUT_ASSERT_NE** | [examples/c/example.c.BDUT_ASSERT_NE/main.c](./examples/c/example.c.BDUT_ASSERT_NE/main.c) | `BDUT_ASSERT_NE` / `BDUT_ASSERT_NE_MSG` |
+| **example.c.BDUT_ASSERT_STRING_CONTAINS** | [examples/c/example.c.BDUT_ASSERT_STRING_CONTAINS/main.c](./examples/c/example.c.BDUT_ASSERT_STRING_CONTAINS/main.c) | `BDUT_ASSERT_STRING_CONTAINS` / `BDUT_ASSERT_STRING_CONTAINS_MSG` |
+| **example.c.BDUT_ASSERT_TRUE** | [examples/c/example.c.BDUT_ASSERT_TRUE/main.c](./examples/c/example.c.BDUT_ASSERT_TRUE/main.c) | `BDUT_ASSERT_TRUE` / `BDUT_ASSERT_TRUE_MSG` |
+| **example.cpp.BDUT_ASSERT_EQ** | [examples/cpp/example.cpp.BDUT_ASSERT_EQ/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_EQ/main.cpp) | `BDUT_ASSERT_EQ` / `BDUT_ASSERT_EQ_MSG` |
+| **example.cpp.BDUT_ASSERT_FALSE** | [examples/cpp/example.cpp.BDUT_ASSERT_FALSE/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_FALSE/main.cpp) | `BDUT_ASSERT_FALSE` / `BDUT_ASSERT_FALSE_MSG` |
+| **example.cpp.BDUT_ASSERT_GE** | [examples/cpp/example.cpp.BDUT_ASSERT_GE/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_GE/main.cpp) | `BDUT_ASSERT_GE` / `BDUT_ASSERT_GE_MSG` |
+| **example.cpp.BDUT_ASSERT_GT** | [examples/cpp/example.cpp.BDUT_ASSERT_GT/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_GT/main.cpp) | `BDUT_ASSERT_GT` / `BDUT_ASSERT_GT_MSG` |
+| **example.cpp.BDUT_ASSERT_LE** | [examples/cpp/example.cpp.BDUT_ASSERT_LE/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_LE/main.cpp) | `BDUT_ASSERT_LE` / `BDUT_ASSERT_LE_MSG` |
+| **example.cpp.BDUT_ASSERT_LT** | [examples/cpp/example.cpp.BDUT_ASSERT_LT/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_LT/main.cpp) | `BDUT_ASSERT_LT` / `BDUT_ASSERT_LT_MSG` |
+| **example.cpp.BDUT_ASSERT_NE** | [examples/cpp/example.cpp.BDUT_ASSERT_NE/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_NE/main.cpp) | `BDUT_ASSERT_NE` / `BDUT_ASSERT_NE_MSG` |
+| **example.cpp.BDUT_ASSERT_STRING_CONTAINS** | [examples/cpp/example.cpp.BDUT_ASSERT_STRING_CONTAINS/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_STRING_CONTAINS/main.cpp) | `BDUT_ASSERT_STRING_CONTAINS` / `BDUT_ASSERT_STRING_CONTAINS_MSG` |
+| **example.cpp.BDUT_ASSERT_TRUE** | [examples/cpp/example.cpp.BDUT_ASSERT_TRUE/main.cpp](./examples/cpp/example.cpp.BDUT_ASSERT_TRUE/main.cpp) | `BDUT_ASSERT_TRUE` / `BDUT_ASSERT_TRUE_MSG` |
 
 ### test/scratch/
 
 | Program | Source | Demonstrates |
 |---------|--------|--------------|
-| **test.scratch.BDUT_ASSERT_TRUE** | [test/scratch/test.scratch.BDUT_ASSERT_TRUE/main.c](./test/scratch/test.scratch.BDUT_ASSERT_TRUE/main.c) | `BDUT_ASSERT_TRUE` / `BDUT_ASSERT_FALSE` (passing cases, then failing `BDUT_ASSERT_TRUE(0)`) |
-| **test.scratch.BDUT_ASSERT_LE** | [test/scratch/test.scratch.BDUT_ASSERT_LE/main.c](./test/scratch/test.scratch.BDUT_ASSERT_LE/main.c) | `BDUT_ASSERT_LE` failure |
-| **test.scratch.BDUT_ASSERT_STRING_CONTAINS** | [test/scratch/test.scratch.BDUT_ASSERT_STRING_CONTAINS/main.c](./test/scratch/test.scratch.BDUT_ASSERT_STRING_CONTAINS/main.c) | `BDUT_ASSERT_STRING_CONTAINS` failure |
+| **test.scratch.BDUT_ASSERT_TRUE** | [test/scratch/test.scratch.BDUT_ASSERT_TRUE/main.c](./test/scratch/test.scratch.BDUT_ASSERT_TRUE/main.c) | `BDUT_ASSERT_TRUE` / `BDUT_ASSERT_FALSE` and their `_MSG` forms (passing cases, then failing `BDUT_ASSERT_TRUE_MSG`) |
+| **test.scratch.BDUT_ASSERT_LE** | [test/scratch/test.scratch.BDUT_ASSERT_LE/main.c](./test/scratch/test.scratch.BDUT_ASSERT_LE/main.c) | `BDUT_ASSERT_LE` / `BDUT_ASSERT_LE_MSG` failure |
+| **test.scratch.BDUT_ASSERT_STRING_CONTAINS** | [test/scratch/test.scratch.BDUT_ASSERT_STRING_CONTAINS/main.c](./test/scratch/test.scratch.BDUT_ASSERT_STRING_CONTAINS/main.c) | `BDUT_ASSERT_STRING_CONTAINS` / `BDUT_ASSERT_STRING_CONTAINS_MSG` failure |
 
 
 ## Building and running

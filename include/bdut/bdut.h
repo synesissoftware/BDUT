@@ -54,7 +54,7 @@
 # define BDUT_VER_BDUT_H_BDUT_MAJOR     2
 # define BDUT_VER_BDUT_H_BDUT_MINOR     3
 # define BDUT_VER_BDUT_H_BDUT_REVISION  4
-# define BDUT_VER_BDUT_H_BDUT_EDIT      37
+# define BDUT_VER_BDUT_H_BDUT_EDIT      38
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 
 
@@ -147,8 +147,14 @@
  * @brief Asserts that the expression is falsey
  */
 
+/* `_MSG` macros append `message` (`char const*`) after the standard text.
+ * NULL or an empty string leaves that text unchanged.
+ */
+
 #define BDUT_ASSERT_TRUE(expr)                              BDUT_ASSERT_(expr, "`" #expr "` was not true")
+#define BDUT_ASSERT_TRUE_MSG(expr, message)                 BDUT_ASSERT_EX_(expr, "`" #expr "` was not true", (message))
 #define BDUT_ASSERT_FALSE(expr)                             BDUT_ASSERT_(!(expr), "`" #expr "` was not false")
+#define BDUT_ASSERT_FALSE_MSG(expr, message)                BDUT_ASSERT_EX_(!(expr), "`" #expr "` was not false", (message))
 
 /** @def BDUT_ASSERT_EQ(expected, actual)
  *
@@ -166,8 +172,10 @@
  * @param actual The actual value
  */
 
-#define BDUT_ASSERT_EQ(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), ==, "actual value of `" #actual "` not equal-to expected value `" #expected "`")
-#define BDUT_ASSERT_NE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), !=, "actual value of `" #actual "` not unequal-to expected value `" #expected "`")
+#define BDUT_ASSERT_EQ(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), ==, "actual value of `" #actual "` not equal-to expected value `" #expected "`", NULL)
+#define BDUT_ASSERT_EQ_MSG(expected, actual, message)       BDUT_CHECK_COMPARE_((expected), (actual), ==, "actual value of `" #actual "` not equal-to expected value `" #expected "`", (message))
+#define BDUT_ASSERT_NE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), !=, "actual value of `" #actual "` not unequal-to expected value `" #expected "`", NULL)
+#define BDUT_ASSERT_NE_MSG(expected, actual, message)       BDUT_CHECK_COMPARE_((expected), (actual), !=, "actual value of `" #actual "` not unequal-to expected value `" #expected "`", (message))
 
 /** @def BDUT_ASSERT_GE(expected, actual)
  *
@@ -201,10 +209,14 @@
  * @param actual The actual value
  */
 
-#define BDUT_ASSERT_GE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), <=, "actual value of `" #actual "` not greater-than-or-equal-to expected value `" #expected "`")
-#define BDUT_ASSERT_GT(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), <, "actual value of `" #actual "` not greater-than expected value `" #expected "`")
-#define BDUT_ASSERT_LE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), >=, "actual value of `" #actual "` not less-than-or-equal-to expected value `" #expected "`")
-#define BDUT_ASSERT_LT(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), >, "actual value of `" #actual "` not less-than expected value `" #expected "`")
+#define BDUT_ASSERT_GE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), <=, "actual value of `" #actual "` not greater-than-or-equal-to expected value `" #expected "`", NULL)
+#define BDUT_ASSERT_GE_MSG(expected, actual, message)       BDUT_CHECK_COMPARE_((expected), (actual), <=, "actual value of `" #actual "` not greater-than-or-equal-to expected value `" #expected "`", (message))
+#define BDUT_ASSERT_GT(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), <, "actual value of `" #actual "` not greater-than expected value `" #expected "`", NULL)
+#define BDUT_ASSERT_GT_MSG(expected, actual, message)       BDUT_CHECK_COMPARE_((expected), (actual), <, "actual value of `" #actual "` not greater-than expected value `" #expected "`", (message))
+#define BDUT_ASSERT_LE(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), >=, "actual value of `" #actual "` not less-than-or-equal-to expected value `" #expected "`", NULL)
+#define BDUT_ASSERT_LE_MSG(expected, actual, message)       BDUT_CHECK_COMPARE_((expected), (actual), >=, "actual value of `" #actual "` not less-than-or-equal-to expected value `" #expected "`", (message))
+#define BDUT_ASSERT_LT(expected, actual)                    BDUT_CHECK_COMPARE_((expected), (actual), >, "actual value of `" #actual "` not less-than expected value `" #expected "`", NULL)
+#define BDUT_ASSERT_LT_MSG(expected, actual, message)       BDUT_CHECK_COMPARE_((expected), (actual), >, "actual value of `" #actual "` not less-than expected value `" #expected "`", (message))
 
 /** @def BDUT_ASSERT_STRING_CONTAINS(needle, haystack)
  *
@@ -219,10 +231,11 @@
  *   assertions
  */
 
-#define BDUT_ASSERT_STRING_CONTAINS(needle, haystack) \
+#define BDUT_ASSERT_STRING_CONTAINS(needle, haystack)       BDUT_ASSERT_STRING_CONTAINS_MSG((needle), (haystack), NULL)
+#define BDUT_ASSERT_STRING_CONTAINS_MSG(needle, haystack, message) \
     do { \
         if (!BDUT_strcontains_((haystack), (needle))) { \
-            BDUT_report_string_contains_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, (needle), (haystack)); \
+            BDUT_report_string_contains_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, (needle), (haystack), (message)); \
         } \
     } while (0)
 
@@ -273,10 +286,12 @@
  */
 
 
-# define BDUT_ASSERT_(expr, msg)                                            \
+# define BDUT_ASSERT_(expr, msg)                            BDUT_ASSERT_EX_((expr), msg, NULL)
+
+# define BDUT_ASSERT_EX_(expr, msg, detail)                                 \
     do {                                                                    \
         if (!(expr)) {                                                      \
-            BDUT_report_assertion_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, #expr, msg); \
+            BDUT_report_assertion_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, #expr, msg, (detail)); \
         }                                                                   \
     } while (0)
 
@@ -349,7 +364,7 @@
 
 #  if defined(BDUT_TYPEOF_)
 
-#   define BDUT_CHECK_COMPARE_(expected, actual, op, msg)                   \
+#   define BDUT_CHECK_COMPARE_(expected, actual, op, msg, detail)           \
                                                                             \
     do {                                                                    \
         BDUT_TYPEOF_(expected) bdut_expected_ = expected;                   \
@@ -360,12 +375,12 @@
             char bdut_abuf_[64];                                            \
             BDUT_FMT_COMPARE_VALUE_(bdut_ebuf_, sizeof bdut_ebuf_, bdut_expected_); \
             BDUT_FMT_COMPARE_VALUE_(bdut_abuf_, sizeof bdut_abuf_, bdut_actual_); \
-            BDUT_report_compare_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, (msg), bdut_ebuf_, bdut_abuf_); \
+            BDUT_report_compare_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, (msg), bdut_ebuf_, bdut_abuf_, (detail)); \
         }                                                                   \
     } while (0)
 #  else /* ? BDUT_TYPEOF_ */
 
-#   define BDUT_CHECK_COMPARE_(expected, actual, op, msg)                   \
+#   define BDUT_CHECK_COMPARE_(expected, actual, op, msg, detail)           \
                                                                             \
     do {                                                                    \
         if (!((expected) op (actual))) {                                    \
@@ -373,13 +388,14 @@
             char bdut_abuf_[64];                                            \
             BDUT_FMT_COMPARE_VALUE_(bdut_ebuf_, sizeof bdut_ebuf_, (expected)); \
             BDUT_FMT_COMPARE_VALUE_(bdut_abuf_, sizeof bdut_abuf_, (actual)); \
-            BDUT_report_compare_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, (msg), bdut_ebuf_, bdut_abuf_); \
+            BDUT_report_compare_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, (msg), bdut_ebuf_, bdut_abuf_, (detail)); \
         }                                                                   \
     } while (0)
 #  endif /* !BDUT_TYPEOF_ */
 # else
 
-#  define BDUT_CHECK_COMPARE_(expected, actual, op, msg)    BDUT_ASSERT_((expected) op (actual), msg)
+#  define BDUT_CHECK_COMPARE_(expected, actual, op, msg, detail) \
+    BDUT_ASSERT_EX_((expected) op (actual), msg, detail)
 # endif /* formatting compare */
 
 
@@ -936,6 +952,7 @@ BDUT_report_assertion_failure_and_abort_(
 ,   char const*     function
 ,   char const*     expr
 ,   char const*     message
+,   char const*     detail
 );
 
 /** @brief TBC
@@ -958,6 +975,7 @@ BDUT_report_compare_failure_and_abort_(
 ,   char const*     message
 ,   char const*     expected
 ,   char const*     actual
+,   char const*     detail
 )
 {
 # if defined(__cplusplus) &&\
@@ -966,10 +984,19 @@ BDUT_report_compare_failure_and_abort_(
     using std::snprintf;
 # endif
 
-    char composed[512];
+    char composed[1024];
 
-    snprintf(composed, sizeof composed, "%s (expected %s, actual %s)", message, expected, actual);
-    BDUT_report_assertion_failure_and_abort_(file, line, function, "", composed);
+    if (NULL != detail &&
+        '\0' != detail[0])
+    {
+        snprintf(composed, sizeof composed, "%s: %s (expected %s, actual %s)", message, detail, expected, actual);
+    }
+    else
+    {
+        snprintf(composed, sizeof composed, "%s (expected %s, actual %s)", message, expected, actual);
+    }
+
+    BDUT_report_assertion_failure_and_abort_(file, line, function, "", composed, NULL);
 }
 
 /** @brief TBC
@@ -990,6 +1017,7 @@ BDUT_report_assertion_failure_and_abort_(
 ,   char const*     function
 ,   char const*     expr
 ,   char const*     message
+,   char const*     detail
 )
 {
 # if defined(__cplusplus) &&\
@@ -997,10 +1025,13 @@ BDUT_report_assertion_failure_and_abort_(
 
     using std::exit;
     using std::fprintf;
+    using std::snprintf;
 # endif
 
     char const* clr_pre = "";
     char const* clr_post = "";
+    char        detail_buf[1536];
+    char const* reported = message;
 
 #if  1 &&\
      !defined(__cplusplus) &&\
@@ -1019,6 +1050,13 @@ BDUT_report_assertion_failure_and_abort_(
 
     ((void)&expr);
 
+    if (NULL != detail &&
+        '\0' != detail[0])
+    {
+        snprintf(detail_buf, sizeof detail_buf, "%s: %s", message, detail);
+        reported = detail_buf;
+    }
+
     if (NULL == function ||
         '\0' == function[0])
     {
@@ -1029,7 +1067,7 @@ BDUT_report_assertion_failure_and_abort_(
         ,   line
         ,   clr_pre
         ,   clr_post
-        ,   message
+        ,   reported
         );
     }
     else
@@ -1042,7 +1080,7 @@ BDUT_report_assertion_failure_and_abort_(
         ,   function
         ,   clr_pre
         ,   clr_post
-        ,   message
+        ,   reported
         );
     }
 
@@ -1067,6 +1105,7 @@ BDUT_report_string_contains_failure_and_abort_(
 ,   char const*     function
 ,   char const*     needle
 ,   char const*     haystack
+,   char const*     detail
 )
 {
 # if defined(__cplusplus) &&\
@@ -1179,6 +1218,7 @@ BDUT_report_string_contains_failure_and_abort_(
         ,   function
         ,   ""
         ,   message
+        ,   detail
         );
     }
 }

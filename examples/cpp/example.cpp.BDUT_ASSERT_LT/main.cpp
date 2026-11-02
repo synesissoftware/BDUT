@@ -7,9 +7,10 @@ int main(int argc, char* argv[])
 
     BDUT_ASSERT_LT(2, 1);
     BDUT_ASSERT_LT(2, actual1);
+    BDUT_ASSERT_LT_MSG(2, actual1, "match");
 
     /* this one will fail */
-    BDUT_ASSERT_LT(1, actual1);
+    BDUT_ASSERT_LT_MSG(1, actual1, "intentional failure");
 
     return BDUT_TESTS_PASSED(argc, argv);
 }

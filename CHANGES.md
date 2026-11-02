@@ -5,7 +5,10 @@
 
 * **bdut.h** — C11 and C++ comparison failures append the rendered expected and actual values; C99, including **TinyCC**, keeps the message-only report;
 * **bdut.h** — comparison operands are evaluated once when `decltype` or `__typeof__` is available; otherwise a formatting failure path evaluates them again;
-* Each example shows a passing literal, a passing `actual` variable, then one intentional failure on an `actual` variable;
+* **bdut.h** — each assertion has a `_MSG` form that appends a `char const*` after the standard failure text;
+* Each example shows a passing literal, a passing `actual` variable, a passing `_MSG` call, then one intentional `_MSG` failure on an `actual` variable;
+* Unit tests call each `_MSG` form, including an empty string and NULL;
+* Scratch demos call the `_MSG` form, including the intentional failures;
 
 
 ## 0.6.0-alpha1 - 21st October 2026

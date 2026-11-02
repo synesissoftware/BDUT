@@ -86,17 +86,26 @@ Write tests as sequential assertions in `main()`. When all pass, return `BDUT_TE
 | Macro | Description |
 |-------|-------------|
 | `BDUT_ASSERT_TRUE(expr)` | Asserts that `expr` is true |
+| `BDUT_ASSERT_TRUE_MSG(expr, message)` | Same, then appends `message` |
 | `BDUT_ASSERT_FALSE(expr)` | Asserts that `expr` is false |
+| `BDUT_ASSERT_FALSE_MSG(expr, message)` | Same, then appends `message` |
 | `BDUT_ASSERT_EQ(expected, actual)` | Asserts `actual == expected` |
+| `BDUT_ASSERT_EQ_MSG(expected, actual, message)` | Same, then appends `message` |
 | `BDUT_ASSERT_NE(expected, actual)` | Asserts `actual != expected` |
+| `BDUT_ASSERT_NE_MSG(expected, actual, message)` | Same, then appends `message` |
 | `BDUT_ASSERT_GE(expected, actual)` | Asserts `actual >= expected` |
+| `BDUT_ASSERT_GE_MSG(expected, actual, message)` | Same, then appends `message` |
 | `BDUT_ASSERT_GT(expected, actual)` | Asserts `actual > expected` |
+| `BDUT_ASSERT_GT_MSG(expected, actual, message)` | Same, then appends `message` |
 | `BDUT_ASSERT_LE(expected, actual)` | Asserts `actual <= expected` |
+| `BDUT_ASSERT_LE_MSG(expected, actual, message)` | Same, then appends `message` |
 | `BDUT_ASSERT_LT(expected, actual)` | Asserts `actual < expected` |
+| `BDUT_ASSERT_LT_MSG(expected, actual, message)` | Same, then appends `message` |
 | `BDUT_ASSERT_STRING_CONTAINS(needle, haystack)` | Asserts `needle` is a substring of `haystack` |
+| `BDUT_ASSERT_STRING_CONTAINS_MSG(needle, haystack, message)` | Same, then appends `message` |
 | `BDUT_TESTS_PASSED(argc, argv)` | Call after all assertions pass; prints success and returns 0 |
 
-On failure, **BDUT** prints file, line, optional function name, and a message to **stderr**, then calls `exit(1)`.
+On failure, **BDUT** prints file, line, optional function name, and a message to **stderr**, then calls `exit(1)`. Each `_MSG` macro takes a `char const* message` and appends it after the standard text. NULL or `""` leaves that text unchanged.
 
 Version macros (`BDUT_VER_MAJOR`, `BDUT_VER_MINOR`, `BDUT_VER_PATCH`, `BDUT_VER`, etc.) are defined in **include/bdut/bdut.h**.
 
@@ -120,6 +129,7 @@ The following program (adapted from **test/scratch/test.scratch.all_pass**) exer
 int main(int argc, char* argv[])
 {
   BDUT_ASSERT_EQ(123, 123);
+  BDUT_ASSERT_EQ_MSG(123, 123, "ok");
   BDUT_ASSERT_NE(123, 321);
 
   BDUT_ASSERT_LE(123, 123);
@@ -154,9 +164,10 @@ int main(int argc, char* argv[])
 
     BDUT_ASSERT_EQ(1, 1);
     BDUT_ASSERT_EQ(1, actual1);
+    BDUT_ASSERT_EQ_MSG(1, actual1, "match");
 
     /* this one will fail */
-    BDUT_ASSERT_EQ(1, actual2);
+    BDUT_ASSERT_EQ_MSG(1, actual2, "intentional failure");
 
     return BDUT_TESTS_PASSED(argc, argv);
 }
@@ -165,7 +176,7 @@ int main(int argc, char* argv[])
 The output of this will be along the lines of:
 
 ```bash
-~/open-source/BDUT/examples/c/example.c.BDUT_ASSERT_EQ/main.c:13:main: assertion failed: actual value of `actual2` not equal-to expected value `1` (expected 1, actual 2)
+~/open-source/BDUT/examples/c/example.c.BDUT_ASSERT_EQ/main.c:14:main: assertion failed: actual value of `actual2` not equal-to expected value `1`: intentional failure (expected 1, actual 2)
 ```
 
 Similarly, **examples/cpp/example.cpp.BDUT_ASSERT_STRING_CONTAINS** demonstrates string containment failure:
@@ -182,9 +193,10 @@ int main(int argc, char* argv[])
 
     BDUT_ASSERT_STRING_CONTAINS("", "abcdefghijklmnopqrstuvwxyz");
     BDUT_ASSERT_STRING_CONTAINS(actual_abc, "abcdefghijklmnopqrstuvwxyz");
+    BDUT_ASSERT_STRING_CONTAINS_MSG(actual_abc, "abcdefghijklmnopqrstuvwxyz", "match");
 
     /* this one will fail */
-    BDUT_ASSERT_STRING_CONTAINS(actual_abd, "abcdefghijklmnopqrstuvwxyz");
+    BDUT_ASSERT_STRING_CONTAINS_MSG(actual_abd, "abcdefghijklmnopqrstuvwxyz", "intentional failure");
 
     return BDUT_TESTS_PASSED(argc, argv);
 }
@@ -193,7 +205,7 @@ int main(int argc, char* argv[])
 The output of this will be along the lines of:
 
 ```bash
-~/open-source/BDUT/examples/cpp/example.cpp.BDUT_ASSERT_STRING_CONTAINS/main.cpp:13:main: assertion failed: actual string 'abcdefghijklmnopqrstuvwxyz' does not contain search string 'abd'
+~/open-source/BDUT/examples/cpp/example.cpp.BDUT_ASSERT_STRING_CONTAINS/main.cpp:14:main: assertion failed: actual string 'abcdefghijklmnopqrstuvwxyz' does not contain search string 'abd': intentional failure
 ```
 
 
