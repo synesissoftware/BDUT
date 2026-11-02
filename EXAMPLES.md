@@ -46,7 +46,7 @@ These programs contain at least one assertion that fails, to show file, line, fu
 
 ### examples/
 
-Each public assertion has one C program and one C++ program. Each program shows the assertion succeeding, then one call that fails.
+Each public assertion has one C program and one C++ program. Each program shows a passing literal, a passing `actual` variable, then one failing call on an `actual` variable.
 
 | Program | Source | Demonstrates |
 |---------|--------|--------------|
