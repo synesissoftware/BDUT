@@ -3,16 +3,22 @@
 
 ## 0.6.0-beta1 - 3rd November 2026
 
-* **bdut.h** — C11 and C++ comparison failures append the rendered expected and actual values; C99, including **TinyCC**, keeps the message-only report;
-* **bdut.h** — comparison operands are evaluated once when `decltype` or `__typeof__` is available; otherwise a formatting failure path evaluates them again;
-* **bdut.h** — each assertion has a `_MSG` form that appends a `char const*` after the standard failure text;
-* **bdut.h** — `BDUT_ASSERT_STRING_EQUAL` and `BDUT_ASSERT_STRING_EQUAL_N` compare with `strcmp()` and `strncmp()`; NULL is an empty string, as with `BDUT_ASSERT_STRING_CONTAINS`;
-* **bdut.h** — `BDUT_ASSERT_PTR_EQ` and `BDUT_ASSERT_PTR_NE` compare object addresses, including NULL;
-* **bdut.h** — `BDUT_ASSERT_FP_EQ`, `_MARGIN`, `_MULTIPLIER`, and `_ZERO_MARGIN_OR_MULTIPLIER` approximate floating-point equality (margin / multiplier, as in **test_help-rs**);
-* Each example shows a passing literal, a passing `actual` variable, a passing `_MSG` call, then one intentional `_MSG` failure on an `actual` variable;
-* Unit tests call each `_MSG` form, including an empty string and NULL;
-* Scratch demos call the `_MSG` form, including the intentional failures;
-* **remove_cmake_artefacts.sh** — also removes a `doxygen/` tree under the CMake build directory;
+* additions:
+  * **include/bdut/bdut.h** — each public assertion has a `_MSG` form that appends a `char const*` after the standard failure text; NULL or `""` leaves that text unchanged;
+  * **include/bdut/bdut.h** — `BDUT_ASSERT_STRING_EQUAL` and `BDUT_ASSERT_STRING_EQUAL_N` compare with `strcmp()` and `strncmp()`; NULL is an empty string, as with `BDUT_ASSERT_STRING_CONTAINS`; a count of 0 on `_N` passes;
+  * **include/bdut/bdut.h** — `BDUT_ASSERT_PTR_EQ` and `BDUT_ASSERT_PTR_NE` compare object addresses (via `void const*`), including NULL;
+* behaviour:
+  * **include/bdut/bdut.h** — C11 and C++ comparison failures append the rendered expected and actual values; C99, including **TinyCC**, keeps the message-only report;
+  * **include/bdut/bdut.h** — comparison operands are evaluated once when `decltype` or `__typeof__` / `typeof` is available; otherwise the formatting failure path evaluates them again;
+* testing:
+  * Each example shows a passing literal, a passing `actual` variable, a passing `_MSG` call, then one intentional `_MSG` failure on an `actual` variable;
+  * Unit tests call each `_MSG` form, including an empty string and NULL; **test.unit.string_equal** and **test.unit.pointer** cover the new string and pointer macros;
+  * Scratch demos call the `_MSG` form, including the intentional failures;
+* documentation and boilerplate:
+  * **README.md**, **EXAMPLES.md**, **FAQ.md**, and **doc/mainpage.md** document `_MSG`, `STRING_EQUAL` / `_N`, and `PTR_EQ` / `PTR_NE`;
+  * **remove_cmake_artefacts.sh** also removes a `doxygen/` tree under the CMake build directory;
+* version:
+  * **BDUT_VER** is **0.6.0-beta1** (`BDUT_VER_RELSTATUS` = `0x81`);
 
 
 ## 0.6.0-alpha1 - 21st October 2026
