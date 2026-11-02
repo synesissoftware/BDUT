@@ -2,4 +2,5 @@
 add_subdirectory(test.unit.assert_true_false)
 add_subdirectory(test.unit.compare)
 add_subdirectory(test.unit.string_contains)
+add_subdirectory(test.unit.string_equal)
 add_subdirectory(test.unit.version)

@@ -16,6 +16,7 @@ int main(int argc, char* argv[])
     BDUT_ASSERT_EQ(123, 123);
     BDUT_ASSERT_NE(123, 321);
     BDUT_ASSERT_STRING_CONTAINS("abc", "abcdef");
+    BDUT_ASSERT_STRING_EQUAL("abc", "abc");
 
     return BDUT_TESTS_PASSED(argc, argv);
 }
@@ -39,6 +40,8 @@ On failure, **BDUT** prints diagnostics to **stderr** and calls `exit(1)`.
 | \ref BDUT_ASSERT_LE | Asserts `actual <= expected` |
 | \ref BDUT_ASSERT_LT | Asserts `actual < expected` |
 | \ref BDUT_ASSERT_STRING_CONTAINS | Asserts `needle` is found in `haystack` |
+| \ref BDUT_ASSERT_STRING_EQUAL | Asserts `actual` equals `expected` (`strcmp`) |
+| \ref BDUT_ASSERT_STRING_EQUAL_N | Asserts the first `n` characters are equal (`strncmp`) |
 | \ref BDUT_TESTS_PASSED | Reports success and returns `0` |
 
 Version macros (\ref BDUT_VER_MAJOR, \ref BDUT_VER_MINOR,
