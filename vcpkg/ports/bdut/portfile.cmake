@@ -2,7 +2,7 @@ vcpkg_from_github(
     OUT_SOURCE_PATH SOURCE_PATH
     REPO synesissoftware/BDUT
     REF "${VERSION}"
-    SHA512 6642ffd39ac68a540cffc99f9982dabef8db508e375f20ccab2d3bd45148bcb131ebcabfe8339d5c7caa41e40598a9758171de57325027ee092e16aa993e01eb
+    SHA512 0
     HEAD_REF master
 )
 
