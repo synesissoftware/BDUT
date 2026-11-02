@@ -53,8 +53,8 @@
 #ifndef BDUT_DOCUMENTATION_SKIP_SECTION
 # define BDUT_VER_BDUT_H_BDUT_MAJOR     2
 # define BDUT_VER_BDUT_H_BDUT_MINOR     3
-# define BDUT_VER_BDUT_H_BDUT_REVISION  3
-# define BDUT_VER_BDUT_H_BDUT_EDIT      36
+# define BDUT_VER_BDUT_H_BDUT_REVISION  4
+# define BDUT_VER_BDUT_H_BDUT_EDIT      37
 #endif /* !BDUT_DOCUMENTATION_SKIP_SECTION */
 
 
@@ -273,17 +273,32 @@
  */
 
 
-# define BDUT_ASSERT_(expr, msg) \
-    do { \
-        if (!(expr)) { \
+# define BDUT_ASSERT_(expr, msg)                                            \
+    do {                                                                    \
+        if (!(expr)) {                                                      \
             BDUT_report_assertion_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, #expr, msg); \
-        } \
+        }                                                                   \
     } while (0)
 
 /* C11 `_Generic` (and C++ overloads) print values after a failed compare.
- * The operands are evaluated again on that path. C99, including TinyCC,
- * keeps the message-only report.
+ * Where `decltype` or `__typeof__` exists, each operand is evaluated once
+ * and that stored value is printed. Otherwise the failure path evaluates
+ * the operands again. C99, including TinyCC, keeps the message-only report.
  */
+# if defined(__cplusplus) &&\
+     __cplusplus >= 201103L
+
+#  define BDUT_TYPEOF_(expr)                                decltype(expr)
+# elif !defined(__cplusplus) &&\
+       defined(__STDC_VERSION__) &&\
+       __STDC_VERSION__ >= 202311L
+
+#  define BDUT_TYPEOF_(expr)                                typeof(expr)
+# elif defined(__GNUC__) || defined(__clang__)
+
+#  define BDUT_TYPEOF_(expr)                                __extension__ __typeof__(expr)
+# endif
+
 # if !defined(__cplusplus) &&\
      defined(__STDC_VERSION__) &&\
      __STDC_VERSION__ >= 201112L
@@ -296,17 +311,7 @@
 
 # if defined(__cplusplus)
 
-#  define BDUT_CHECK_COMPARE_(expected, actual, op, msg)                    \
-                                                                            \
-    do {                                                                    \
-        if (!((expected) op (actual))) {                                    \
-            char bdut_ebuf_[64];                                            \
-            char bdut_abuf_[64];                                            \
-            BDUT_fmt_value_(bdut_ebuf_, sizeof bdut_ebuf_, (expected));     \
-            BDUT_fmt_value_(bdut_abuf_, sizeof bdut_abuf_, (actual));       \
-            BDUT_report_compare_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, (msg), bdut_ebuf_, bdut_abuf_); \
-        }                                                                   \
-    } while (0)
+#  define BDUT_FMT_COMPARE_VALUE_(buf, buflen, val)         BDUT_fmt_value_((buf), (buflen), (val))
 # elif BDUT_HAS_GENERIC_
 
 /* Associations are function designators. Clang type-checks every arm, so
@@ -337,20 +342,45 @@
         , default:                BDUT_fmt_unk_                             \
     )((buf), (buflen), (expr))
 
-#  define BDUT_CHECK_COMPARE_(expected, actual, op, msg)                    \
+#  define BDUT_FMT_COMPARE_VALUE_(buf, buflen, val)         BDUT_FMT_VALUE_((buf), (buflen), (val))
+# endif /* C++ / C11 */
+
+# if defined(__cplusplus) || BDUT_HAS_GENERIC_
+
+#  if defined(BDUT_TYPEOF_)
+
+#   define BDUT_CHECK_COMPARE_(expected, actual, op, msg)                   \
+                                                                            \
+    do {                                                                    \
+        BDUT_TYPEOF_(expected) bdut_expected_ = expected;                   \
+        BDUT_TYPEOF_(actual) bdut_actual_ = actual;                         \
+                                                                            \
+        if (!(bdut_expected_ op bdut_actual_)) {                            \
+            char bdut_ebuf_[64];                                            \
+            char bdut_abuf_[64];                                            \
+            BDUT_FMT_COMPARE_VALUE_(bdut_ebuf_, sizeof bdut_ebuf_, bdut_expected_); \
+            BDUT_FMT_COMPARE_VALUE_(bdut_abuf_, sizeof bdut_abuf_, bdut_actual_); \
+            BDUT_report_compare_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, (msg), bdut_ebuf_, bdut_abuf_); \
+        }                                                                   \
+    } while (0)
+#  else /* ? BDUT_TYPEOF_ */
+
+#   define BDUT_CHECK_COMPARE_(expected, actual, op, msg)                   \
+                                                                            \
     do {                                                                    \
         if (!((expected) op (actual))) {                                    \
             char bdut_ebuf_[64];                                            \
             char bdut_abuf_[64];                                            \
-            BDUT_FMT_VALUE_(bdut_ebuf_, sizeof bdut_ebuf_, (expected));     \
-            BDUT_FMT_VALUE_(bdut_abuf_, sizeof bdut_abuf_, (actual));       \
+            BDUT_FMT_COMPARE_VALUE_(bdut_ebuf_, sizeof bdut_ebuf_, (expected)); \
+            BDUT_FMT_COMPARE_VALUE_(bdut_abuf_, sizeof bdut_abuf_, (actual)); \
             BDUT_report_compare_failure_and_abort_(__FILE__, __LINE__, BDUT_FUNCTION_, (msg), bdut_ebuf_, bdut_abuf_); \
         }                                                                   \
     } while (0)
+#  endif /* !BDUT_TYPEOF_ */
 # else
 
 #  define BDUT_CHECK_COMPARE_(expected, actual, op, msg)    BDUT_ASSERT_((expected) op (actual), msg)
-# endif
+# endif /* formatting compare */
 
 
 

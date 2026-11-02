@@ -4,6 +4,7 @@
 ## 0.6.0-beta1 - 22nd October 2026
 
 * **bdut.h** — C11 and C++ comparison failures append the rendered expected and actual values; C99, including **TinyCC**, keeps the message-only report;
+* **bdut.h** — comparison operands are evaluated once when `decltype` or `__typeof__` is available; otherwise a formatting failure path evaluates them again;
 * Each example shows a passing literal, a passing `actual` variable, then one intentional failure on an `actual` variable;
 
 
