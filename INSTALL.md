@@ -48,9 +48,9 @@ You can obtain a **.zip** or **.tar.gz** at the [Releases page](https://github.c
 ```bash
 $ mkdir -p ~/open-source
 $ cd ~/open-source
-$ curl -L -O https://github.com/synesissoftware/BDUT/archive/refs/tags/0.6.0-beta1.tar.gz
-$ tar xzf 0.6.0-beta1.tar.gz
-$ cd BDUT-0.6.0-beta1
+$ curl -L -O https://github.com/synesissoftware/BDUT/archive/refs/tags/0.6.0.tar.gz
+$ tar xzf 0.6.0.tar.gz
+$ cd BDUT-0.6.0
 ```
 
 Or clone the repository:
@@ -203,7 +203,7 @@ set(BUILD_EXAMPLES OFF CACHE BOOL "" FORCE)
 FetchContent_Declare(
     BDUT
     GIT_REPOSITORY https://github.com/synesissoftware/BDUT.git
-    GIT_TAG        0.6.0-beta1
+    GIT_TAG        0.6.0
 )
 FetchContent_MakeAvailable(BDUT)
 

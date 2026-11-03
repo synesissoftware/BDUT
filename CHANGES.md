@@ -1,6 +1,11 @@
 # BDUT - Changes <!-- omit in toc -->
 
 
+## 0.6.0 - 4th November 2026
+
+* Promoted **BDUT_VER** from **0.6.0-beta1** to release status `0xFF`;
+
+
 ## 0.6.0-beta1 - 3rd November 2026
 
 * additions:
