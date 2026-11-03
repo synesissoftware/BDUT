@@ -15,18 +15,18 @@
 
 - [Introduction](#introduction)
 - [Installation](#installation)
-	- [Manual installation](#manual-installation)
-	- [CMake installation](#cmake-installation)
+  - [Manual installation](#manual-installation)
+  - [CMake installation](#cmake-installation)
 - [API reference](#api-reference)
 - [Examples](#examples)
-	- [Passing example](#passing-example)
-	- [Failure output examples](#failure-output-examples)
+  - [Passing example](#passing-example)
+  - [Failure output examples](#failure-output-examples)
 - [Project Information](#project-information)
-	- [Where to get help](#where-to-get-help)
-	- [Contribution guidelines](#contribution-guidelines)
-	- [Dependencies](#dependencies)
-	- [Related projects](#related-projects)
-	- [License](#license)
+  - [Where to get help](#where-to-get-help)
+  - [Contribution guidelines](#contribution-guidelines)
+  - [Dependencies](#dependencies)
+  - [Related projects](#related-projects)
+  - [License](#license)
 
 
 ## Introduction
@@ -86,17 +86,42 @@ Write tests as sequential assertions in `main()`. When all pass, return `BDUT_TE
 | Macro | Description |
 |-------|-------------|
 | `BDUT_ASSERT_TRUE(expr)` | Asserts that `expr` is true |
+| `BDUT_ASSERT_TRUE_MSG(expr, message)` | Same, then appends `message` |
 | `BDUT_ASSERT_FALSE(expr)` | Asserts that `expr` is false |
+| `BDUT_ASSERT_FALSE_MSG(expr, message)` | Same, then appends `message` |
 | `BDUT_ASSERT_EQ(expected, actual)` | Asserts `actual == expected` |
+| `BDUT_ASSERT_EQ_MSG(expected, actual, message)` | Same, then appends `message` |
 | `BDUT_ASSERT_NE(expected, actual)` | Asserts `actual != expected` |
+| `BDUT_ASSERT_NE_MSG(expected, actual, message)` | Same, then appends `message` |
 | `BDUT_ASSERT_GE(expected, actual)` | Asserts `actual >= expected` |
+| `BDUT_ASSERT_GE_MSG(expected, actual, message)` | Same, then appends `message` |
 | `BDUT_ASSERT_GT(expected, actual)` | Asserts `actual > expected` |
+| `BDUT_ASSERT_GT_MSG(expected, actual, message)` | Same, then appends `message` |
 | `BDUT_ASSERT_LE(expected, actual)` | Asserts `actual <= expected` |
+| `BDUT_ASSERT_LE_MSG(expected, actual, message)` | Same, then appends `message` |
 | `BDUT_ASSERT_LT(expected, actual)` | Asserts `actual < expected` |
+| `BDUT_ASSERT_LT_MSG(expected, actual, message)` | Same, then appends `message` |
+| `BDUT_ASSERT_PTR_EQ(expected, actual)` | Asserts `actual` and `expected` are the same address |
+| `BDUT_ASSERT_PTR_EQ_MSG(expected, actual, message)` | Same, then appends `message` |
+| `BDUT_ASSERT_PTR_NE(expected, actual)` | Asserts `actual` and `expected` are different addresses |
+| `BDUT_ASSERT_PTR_NE_MSG(expected, actual, message)` | Same, then appends `message` |
+| `BDUT_ASSERT_FP_EQ(expected, actual)` | Asserts approximate equality (stock margin/multiplier) |
+| `BDUT_ASSERT_FP_EQ_MSG(expected, actual, message)` | Same, then appends `message` |
+| `BDUT_ASSERT_FP_EQ_MARGIN(expected, actual, margin_factor)` | Asserts absolute-margin approximate equality |
+| `BDUT_ASSERT_FP_EQ_MARGIN_MSG(expected, actual, margin_factor, message)` | Same, then appends `message` |
+| `BDUT_ASSERT_FP_EQ_MULTIPLIER(expected, actual, multiplier_factor)` | Asserts relative-multiplier approximate equality |
+| `BDUT_ASSERT_FP_EQ_MULTIPLIER_MSG(expected, actual, multiplier_factor, message)` | Same, then appends `message` |
+| `BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER(expected, actual, multiplier_factor, zero_margin_factor)` | Multiplier, or margin when either is zero |
+| `BDUT_ASSERT_FP_EQ_ZERO_MARGIN_OR_MULTIPLIER_MSG(expected, actual, multiplier_factor, zero_margin_factor, message)` | Same, then appends `message` |
 | `BDUT_ASSERT_STRING_CONTAINS(needle, haystack)` | Asserts `needle` is a substring of `haystack` |
+| `BDUT_ASSERT_STRING_CONTAINS_MSG(needle, haystack, message)` | Same, then appends `message` |
+| `BDUT_ASSERT_STRING_EQUAL(expected, actual)` | Asserts `strcmp(expected, actual) == 0` |
+| `BDUT_ASSERT_STRING_EQUAL_MSG(expected, actual, message)` | Same, then appends `message` |
+| `BDUT_ASSERT_STRING_EQUAL_N(expected, actual, n)` | Asserts `strncmp(expected, actual, n) == 0` |
+| `BDUT_ASSERT_STRING_EQUAL_N_MSG(expected, actual, n, message)` | Same, then appends `message` |
 | `BDUT_TESTS_PASSED(argc, argv)` | Call after all assertions pass; prints success and returns 0 |
 
-On failure, **BDUT** prints file, line, optional function name, and a message to **stderr**, then calls `exit(1)`.
+On failure, **BDUT** prints file, line, optional function name, and a message to **stderr**, then calls `exit(1)`. Each `_MSG` macro takes a `char const* message` and appends it after the standard text. NULL or `""` leaves that text unchanged. String comparisons treat a NULL pointer as an empty string. `BDUT_ASSERT_STRING_EQUAL_N` with a count of 0 passes. `BDUT_ASSERT_PTR_EQ` and `BDUT_ASSERT_PTR_NE` compare object addresses, including NULL. Floating-point approximate equality uses an absolute **margin** or a relative **multiplier** (from **test_help-rs**); `BDUT_ASSERT_FP_EQ` uses a multiplier of `BDUT_FP_DEFAULT_MULTIPLIER` (0.000001), or a margin of `BDUT_FP_DEFAULT_MARGIN` (0.0001) when either operand is zero.
 
 Version macros (`BDUT_VER_MAJOR`, `BDUT_VER_MINOR`, `BDUT_VER_PATCH`, `BDUT_VER`, etc.) are defined in **include/bdut/bdut.h**.
 
@@ -120,12 +145,14 @@ The following program (adapted from **test/scratch/test.scratch.all_pass**) exer
 int main(int argc, char* argv[])
 {
   BDUT_ASSERT_EQ(123, 123);
+  BDUT_ASSERT_EQ_MSG(123, 123, "ok");
   BDUT_ASSERT_NE(123, 321);
 
   BDUT_ASSERT_LE(123, 123);
   BDUT_ASSERT_GE(123, 123);
 
   BDUT_ASSERT_STRING_CONTAINS("abc", "abcdef");
+  BDUT_ASSERT_STRING_EQUAL("abc", "abc");
 
   return BDUT_TESTS_PASSED(argc, argv);
 }
@@ -149,10 +176,15 @@ The **examples/** programs under this repository are deliberately written to fai
 
 int main(int argc, char* argv[])
 {
+    int const actual1 = 1;
+    int const actual2 = 2;
+
     BDUT_ASSERT_EQ(1, 1);
+    BDUT_ASSERT_EQ(1, actual1);
+    BDUT_ASSERT_EQ_MSG(1, actual1, "match");
 
     /* this one will fail */
-    BDUT_ASSERT_EQ(1, 2);
+    BDUT_ASSERT_EQ_MSG(1, actual2, "intentional failure");
 
     return BDUT_TESTS_PASSED(argc, argv);
 }
@@ -161,7 +193,7 @@ int main(int argc, char* argv[])
 The output of this will be along the lines of:
 
 ```bash
-~/open-source/BDUT/examples/c/example.c.BDUT_ASSERT_EQ/main.c:9:main: assertion failed: actual value of `2` not equal-to expected value `1`
+~/open-source/BDUT/examples/c/example.c.BDUT_ASSERT_EQ/main.c:14:main: assertion failed: actual value of `actual2` not equal-to expected value `1`: intentional failure (expected 1, actual 2)
 ```
 
 Similarly, **examples/cpp/example.cpp.BDUT_ASSERT_STRING_CONTAINS** demonstrates string containment failure:
@@ -173,11 +205,15 @@ Similarly, **examples/cpp/example.cpp.BDUT_ASSERT_STRING_CONTAINS** demonstrates
 
 int main(int argc, char* argv[])
 {
+    char const* const actual_abc = "abc";
+    char const* const actual_abd = "abd";
+
     BDUT_ASSERT_STRING_CONTAINS("", "abcdefghijklmnopqrstuvwxyz");
-    BDUT_ASSERT_STRING_CONTAINS("abc", "abcdefghijklmnopqrstuvwxyz");
+    BDUT_ASSERT_STRING_CONTAINS(actual_abc, "abcdefghijklmnopqrstuvwxyz");
+    BDUT_ASSERT_STRING_CONTAINS_MSG(actual_abc, "abcdefghijklmnopqrstuvwxyz", "match");
 
     /* this one will fail */
-    BDUT_ASSERT_STRING_CONTAINS("abd", "abcdefghijklmnopqrstuvwxyz");
+    BDUT_ASSERT_STRING_CONTAINS_MSG(actual_abd, "abcdefghijklmnopqrstuvwxyz", "intentional failure");
 
     return BDUT_TESTS_PASSED(argc, argv);
 }
@@ -186,7 +222,7 @@ int main(int argc, char* argv[])
 The output of this will be along the lines of:
 
 ```bash
-~/open-source/BDUT/examples/cpp/example.cpp.BDUT_ASSERT_STRING_CONTAINS/main.cpp:10:main: assertion failed: actual string 'abcdefghijklmnopqrstuvwxyz' does not contain search string 'abd'
+~/open-source/BDUT/examples/cpp/example.cpp.BDUT_ASSERT_STRING_CONTAINS/main.cpp:14:main: assertion failed: actual string 'abcdefghijklmnopqrstuvwxyz' does not contain search string 'abd': intentional failure
 ```
 
 
@@ -211,9 +247,8 @@ Defect reports, feature requests, and pull requests are welcome on https://githu
 
 Projects in which **BDUT** is used for testing include:
 
-* [**b64**](https://github.com/synesissoftware/b64)
-* [**cstring**](https://github.com/synesissoftware/cstring)
-* [**shwild**](https://github.com/synesissoftware/shwild)
+* [**p99**](https://github.com/synesissoftware/p99);
+* [**shwild**](https://github.com/synesissoftware/shwild);
 
 
 ### License

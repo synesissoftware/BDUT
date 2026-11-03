@@ -22,7 +22,7 @@ body:
     attributes:
       label: BDUT version
       description: Release tag or BDUT_VER_* from include/bdut/bdut.h
-      placeholder: e.g. 0.4.1
+      placeholder: e.g. 0.6.0-beta1
     validations:
       required: true
 

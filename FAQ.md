@@ -25,12 +25,15 @@ If you are working on **BDUT** itself, or want to run its examples and tests, us
 
 ## Q2: "Does BDUT have its own unit-tests?"
 
-Yes. Four unit-test programs under **test/unit/** are registered with **CTest** and run in CI:
+Yes. Seven unit-test programs under **test/unit/** are registered with **CTest** and run in CI:
 
 * **test.unit.version** — version macros in **bdut.h**
 * **test.unit.assert_true_false** — `BDUT_ASSERT_TRUE` / `BDUT_ASSERT_FALSE`
 * **test.unit.compare** — equality and ordering comparison macros
+* **test.unit.fp_eq** — `BDUT_ASSERT_FP_EQ` and the margin / multiplier forms
+* **test.unit.pointer** — `BDUT_ASSERT_PTR_EQ` / `BDUT_ASSERT_PTR_NE`
 * **test.unit.string_contains** — `BDUT_ASSERT_STRING_CONTAINS`
+* **test.unit.string_equal** — `BDUT_ASSERT_STRING_EQUAL` / `BDUT_ASSERT_STRING_EQUAL_N`
 
 See [EXAMPLES.md](./EXAMPLES.md) for paths and macro coverage.
 
